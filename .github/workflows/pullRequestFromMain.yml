@@ -1,0 +1,23 @@
+name: Syn main to sync
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: sync
+      - name: Reset sync branch
+        run: |
+          git fetch origin main:main
+          git reset --hard main
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: Publish repository
+          branch: sync-promotion
+          token: ${{ secrets.OMAN }}
+          

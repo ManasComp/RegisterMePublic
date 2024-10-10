@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Constants
+@{
+    ViewBag.Title = "Domů";
+}
+
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1>Výstava koček SCHK</h1>
+        <p class="lead">Chcete se přihlásit na výstavu koček SCHK? Jste na správném místě.</p>
+        <a class="btn btn-primary btn-lg" asp-area="Visitor" asp-controller="Exhibition" asp-action="Index" role="button">Přihlásit se na výstavu</a>
+
+        @if (!User.IsInRole(Roles.OrganizationAdministrator))
+        {
+            <hr class="my-4">
+            <p>Pořádáte výstavu koček SCHK a chtěli byste ji zde mít vystavenou? Jste na správném místě.</p>
+            <a class="btn btn-secondary btn-lg" role="button" asp-action="CreateOrganization" asp-controller="Organization">Informace pro pořadatele</a>
+        }
+
+        <hr class="my-4">
+        <p class="small">Tato stránka vznikla v rámci bakalářské práce na FI MUNI, pod katedrou počítačových systémů a komunikací, vedená doc. RNDr. Evou Hladkou, Ph.D. Aplikace je nasazena pro účely testování. Celý vývoj proběhl bez nároku na finanční či jiné odměny. Aplikace je zveřejněna pod licencí MIT a její kód je dostupný na adrese: <a href="https://github.com/ManasComp/RegisterMePublic">github.com/ManasComp/RegisterMePublic</a>. <b>Jedná se o zkušební provoz.</b></p>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfxSI-VIXVyV6VO17Nu6faxuVFQbp1j6u9sXS9m6uqihQtBJQ/viewform?embedded=true" width="100%" height="600">Načítání formuláře na odeslání chyby…</iframe>
+            </div>
+            <div class="col-xl-6">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeKTzovQnee20rsLo44CWt2QPjs8P3Iqgw3XGqxRTPtEdsWGA/viewform?embedded=true" width="100%" height="600">Načítání formuláře se zpětnou vazbou…</iframe>
+            </div>
+        </div>
+    </div>
+</div>

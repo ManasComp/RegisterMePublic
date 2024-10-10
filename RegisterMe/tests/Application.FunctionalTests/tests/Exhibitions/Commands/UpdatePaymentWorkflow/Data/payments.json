@@ -1,0 +1,11 @@
+[
+  {
+    "WorkflowName": "Payment",
+    "Rules": [
+      {
+        "RuleName": "PayByBankTransfer_CZK",
+        "Expression": "registrationToExhibition.PersonRegistration.IsPartOfCsch"
+      }
+    ]
+  }
+]

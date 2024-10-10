@@ -1,0 +1,23 @@
+name: Syn features to main
+on:
+  push:
+    branches:
+      - features
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Reset main branch
+        run: |
+          git fetch origin features:features
+          git reset --hard features
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: Deploy code to azure
+          branch: main-promotion
+          token: ${{ secrets.OMAN }}
+          

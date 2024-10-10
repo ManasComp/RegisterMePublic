@@ -1,0 +1,34 @@
+@startuml
+
+hide empty description
+
+[*] --> InkrementálníPrototypování
+
+state InkrementálníPrototypování {
+
+[*] --> PrototypováImplemetace
+DiskuzeSeZákazníkem --> SběrPožadavků: nOK
+SběrPožadavků -> PrototypováImplemetace
+PrototypováImplemetace -> NasazeníNaTestServer
+NasazeníNaTestServer -> DiskuzeSeZákazníkem
+DiskuzeSeZákazníkem -> [*] : OK
+}
+
+InkrementálníPrototypování --> Vodopádový
+
+state Vodopádový {
+[*] --> DojasněníPožadavků
+DojasněníPožadavků --> VýběrTechnologií
+DojasněníPožadavků: bussiness rules
+DojasněníPožadavků: návrh GUI
+DojasněníPožadavků: návrh API
+VýběrTechnologií --> NávrhDatabáze
+NávrhDatabáze --> Implementace
+Implementace --> Testování
+Testování --> ProdukčníNasazení
+ProdukčníNasazení --> Údržba
+Údržba --> [*]
+}
+
+Vodopádový --> [*]
+@enduml

@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>RegisterMe.Application.FunctionalTests</RootNamespace>
+    <AssemblyName>RegisterMe.Application.FunctionalTests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="nunit"/>
+    <PackageReference Include="NUnit.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit3TestAdapter"/>
+    <PackageReference Include="coverlet.collector"/>
+    <PackageReference Include="FluentAssertions"/>
+    <PackageReference Include="Moq"/>
+    <PackageReference Include="Respawn"/>
+    <PackageReference Include="Stripe.net"/>
+    <PackageReference Include="Testcontainers.MsSql"/>
+    <PackageReference Include="Testcontainers.PostgreSql"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Application\Application.csproj"/>
+    <ProjectReference Include="..\..\src\WebApi\WebApi.csproj"/>
+    <ProjectReference Include="..\..\src\DAL.Migrations.Postgres\DAL.Migrations.Postgres.csproj"/>
+    <ProjectReference Include="..\..\src\DAL.Migrations.SqlServer\DAL.Migrations.SqlServer.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageVersion Update="Microsoft.AspNetCore.Authorization" Version="8.0.7"/>
+  </ItemGroup>
+
+</Project>

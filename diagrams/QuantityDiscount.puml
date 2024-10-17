@@ -1,0 +1,12 @@
+@startuml
+entity "Discounts" as Discounts{
+    <<PK>> ID: int
+    ---
+    NumberOfCatsEnabledFrom: int
+    DiscountCZK: int
+    DiscountEUR: int
+}
+
+"Exhibitions" ||--o{ "Discounts"
+"Discounts" }o--o{ "CatRegistrations"
+@enduml

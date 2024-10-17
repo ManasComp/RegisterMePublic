@@ -1,0 +1,266 @@
+@startuml
+
+skinparam  class {
+    BackgroundColor<<registrationtoexhibitio_agr>> #d3ffd8
+}
+
+skinparam  class {
+    BackgroundColor<<catregistration_agr>> #f6d6ad
+}
+
+skinparam  class {
+    BackgroundColor<<exhibition_agr>> #cfb9ec
+}
+
+skinparam  class {
+    BackgroundColor<<user_agr>> #f7c0c8
+}
+
+skinparam  class {
+    BackgroundColor<<cage_agr>> #c9d8b8
+}
+
+skinparam  class {
+    BackgroundColor<<default>> #ffffff
+}
+
+skinparam  class {
+    BackgroundColor<<organization_agr>> #ffc6c6
+}
+
+skinparam  class {
+    BackgroundColor<<group_agr>> #bae1ff
+}
+
+
+
+entity "Exhibition" as Exhibition <<exhibition_agr>>{
+  <<PK>> ID: UUID
+  ---
+    Name: string
+    Url: string
+    RegistrationStartDate: DateTime
+    RegisrationEndDate: DateTime
+    LocationId: int
+    OrganizationId: int
+}
+
+entity "Breeder" as Breeder <<catregistration_agr>>{
+  <<PK>> ID: UUID
+  ---
+  Id: string
+  FirstName?: string
+  LastName?: string
+  Country?: string
+}
+
+entity "Cage" as Cage <<cage_agr>>{
+  <<PK>> ID: UUID
+  ---
+  Length: decimal
+  Wight: decimal
+}
+
+entity "RentedCage" as RentedCage <<cage_agr>>{
+  <<PK>> ID: UUID
+  ---
+  Length: decimal
+  Wight: decimal
+
+}
+
+
+entity "RegistrationToExhibition" as RegistrationToExhibition <<registrationtoexhibitio_agr>>{
+  <<PK>> ID: UUID
+  ---
+ExhibitionId: int
+PersonRegistrationId: int
+Step: int
+}
+
+entity "PersonRegistration" as PersonRegistration <<registrationtoexhibitio_agr>>{
+  <<PK>> ID: UUID
+  ---
+    Id: string
+    FirstName: string
+    LastName: string
+    DateOfBirth: DateTime
+    Email: string
+    PhoneNumber: string
+    Password: string
+    
+    OrganizationMail: string
+    Number: int
+}
+
+
+entity "Pricing" as Pricing <<exhibition_agr>>{
+  <<PK>> ID: UUID
+  ---
+  PriceKc: decimal
+    PriceEur: decimal
+    NumberOfDays: int
+}
+
+entity "ExhibitedCat" as ExhibitedCat <<catregistration_agr>>{
+  <<PK>> ID: UUID
+  ---
+TitleBeforeName: string?
+TitleAfterName: string?
+Name: string
+PedigreeName: string?
+Colour: string
+Breed: string
+}
+
+entity "CatRegistration" as CatRegistration <<catregistration_agr>>
+{
+  <<PK>> ID: UUID
+  ---
+  Note: string?
+  ExhibitedCatId: int
+}
+
+entity "CatDay" as CatDay <<catregistration_agr>>
+{
+  <<PK>> ID: UUID
+  ---
+  Date: DateTime
+ Visited: bool
+ RentedCageID: int?
+ CageId: int?
+}
+
+entity "User" as User <<user_agr>>
+{
+  <<PK>> ID: UUID
+  ---
+    Id: string
+    FirstName: string
+    LastName: string
+    DateOfBirth: DateTime
+    Email: string
+    PhoneNumber: string
+    Password: string
+ }
+
+entity "CompatiotuinGroup" as CompatiotuinGroup <<group_agr>>{
+  <<PK>> ID: UUID
+  ---
+}
+
+entity "Advartisement" as Advartisement <<exhibition_agr>>{
+  <<PK>> ID: UUID
+  ---
+    Description: string?
+    Price: decimal?
+    ExhibitionId: int
+}
+
+entity "Cat" as Cat <<catregistration_agr>>{
+  <<PK>> ID: UUID
+  ---
+    TitleBeforeName: string?
+    TitleAfterName: string?
+    Name: string
+    PedigreeName: string?
+    Colour: string
+    Breed: string
+    ExhibiterId: int
+    PlemenoId: int
+}
+
+entity "Organization" as Organization <<organization_agr>>{
+  <<PK>> ID: UUID
+  ---
+    Name: string
+    Url: string
+    Ico: string
+    Dic: string
+    Email: string
+    Telephone: string
+    LocationId: int
+}
+
+entity "ExhibitionDay" as ExhibitionDay <<exhibition_agr>>{
+  <<PK>> ID: UUID
+  ---
+    Date: DateTime
+}
+
+
+entity "Exhibiter" as Exhibiter <<user_agr>>{
+  <<PK>> ID: UUID
+  ---
+OrganizationMail: string
+Number: int
+
+}
+
+entity "Role" as Role <<user_agr>>{
+  <<PK>> ID: UUID
+  ---
+   RoleName: string
+}
+
+entity "RentedType" as RentedType <<cage_agr>>{
+  <<PK>> ID: UUID
+  ---
+   Enum: string
+}
+
+entity "Vrh" as Vrh <<catregistration_agr>>{
+  <<PK>> ID: UUID
+  ---
+   Date: Date
+}
+
+entity "PaymentInfo" as PaymentInfo <<"PaymentInfo">>{
+  <<PK>> ID: UUID
+  ---
+   PaymentRequested: Date:
+   PeymentRecived: Date:
+   AmountPaid: decimal
+   PaymentIntentId: string
+   SessionId: string
+}
+
+RegistrationToExhibition ||--o| PaymentInfo
+
+
+
+RegistrationToExhibition }|--|| Exhibition
+RegistrationToExhibition ||--o{  CatRegistration
+RegistrationToExhibition ||--|| PersonRegistration
+RegistrationToExhibition ||..o| Advartisement
+CatRegistration ||--o| ExhibitedCat
+CatRegistration ||--o| Vrh
+ExhibitedCat ||--o{ Cat
+Vrh ||--o{ Cat
+RegistrationToExhibition }|--|| Exhibiter
+ExhibitedCat ||--|| Breeder
+Vrh ||--|| Breeder
+Exhibition ||--|{ Pricing
+Exhibition }o--|| Organization
+Role }|--|{ User
+Organization }o--|{ Role
+RentedCage ||--|{ RentedType
+ExhibitionDay }|--|{ RentedCage
+User ||--o| Exhibiter
+Exhibition ||--o{ Advartisement 
+CatRegistration ||--|{ CatDay
+Cage |o..o{ CatDay
+CatDay }|..o| RentedType
+Exhibition ||--o{ Workflows
+
+ExhibitionDay }|--|| Exhibition
+
+Pricing }o..|{ CompatiotuinGroup
+CatDay }o..|| ExhibitionDay
+
+
+' using jointables
+
+CatDay }o..|{ CompatiotuinGroup
+
+@enduml

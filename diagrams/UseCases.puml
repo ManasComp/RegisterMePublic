@@ -1,0 +1,68 @@
+@startuml
+left to right direction
+
+  note "not logged user - web visitor" as note2
+  actor "Anonym" as anonym
+   note2 .- anonym
+   
+  note "web visitor with its account who is logged in" as note3
+  actor "LoggedUser" as logged
+  note3 .- logged
+  anonym <-- logged
+  
+  actor "Exhibitor" as exhibitor
+   logged <-- exhibitor
+  actor "OrganizationManager" as manager
+    logged <-- manager
+  actor "Administrator" as admin
+    logged <-- admin
+
+
+package System {
+  usecase "read all organizations" as usecase1
+  anonym --> usecase1
+  
+  usecase "read all exhibitions" as usecase2
+  anonym --> usecase2
+  
+  usecase "create new organization" as usecase3
+  logged --> usecase3
+  
+  usecase "create exhibition for managed organizations" as usecase4
+  manager --> usecase4
+  
+  usecase "register cat or litters to exhibition" as usecase5
+  exhibitor --> usecase5
+  
+  usecase "view exhibition statistics" as usecase6
+  manager --> usecase6
+  
+  note "it is value object" as note1
+  usecase "read/add/delete cages" as usecase7
+  manager --> usecase7
+  note1 .- usecase7
+ 
+  usecase "CRUD discounts" as usecase8
+  manager --> usecase8
+
+  usecase "CRUD prices" as usecase9
+  manager --> usecase9
+  
+  usecase "confirm/withdraw legitimity of created organization" as usecase10
+  admin --> usecase10
+  
+  usecase "compute price for registration" as usecase11
+  manager --> usecase11
+  exhibitor --> usecase11
+  
+  usecase "pay by cash/bank transfer" as usecase12
+   exhibitor --> usecase12
+   
+   usecase "confirm cash/bank transfer payment" as usecase13
+   exhibitor --> usecase13
+  
+   usecase "login/register" as usecase14
+   anonym --> usecase14
+}
+
+@enduml

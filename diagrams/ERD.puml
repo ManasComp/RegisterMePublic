@@ -1,0 +1,375 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype polyline
+
+class Addresses {
+   StreetAddress: text
+   Latitude: text
+   Longitude: text
+   ExhibitionId: integer
+   Id: integer
+}
+class Advertisements {
+   Description: text
+   PriceCzk: numeric
+   PriceEur: numeric
+   IsDefault: boolean
+   ExhibitionId: integer
+   Id: integer
+}
+class AspNetRoleClaims {
+   RoleId: text
+   ClaimType: text
+   ClaimValue: text
+   Id: integer
+}
+class AspNetRoles {
+   Name: varchar(256)
+   NormalizedName: varchar(256)
+   ConcurrencyStamp: text
+   Id: text
+}
+class AspNetUserClaims {
+   UserId: text
+   ClaimType: text
+   ClaimValue: text
+   Id: integer
+}
+class AspNetUserLogins {
+   ProviderDisplayName: text
+   UserId: text
+   LoginProvider: text
+   ProviderKey: text
+}
+class AspNetUserRoles {
+   UserId: text
+   RoleId: text
+}
+class AspNetUserTokens {
+   Value: text
+   UserId: text
+   LoginProvider: text
+   Name: text
+}
+class AspNetUsers {
+   DateOfBirth: date
+   FirstName: text
+   LastName: text
+   OrganizationId: integer
+   UserName: varchar(256)
+   NormalizedUserName: varchar(256)
+   Email: varchar(256)
+   NormalizedEmail: varchar(256)
+   EmailConfirmed: boolean
+   PasswordHash: text
+   SecurityStamp: text
+   ConcurrencyStamp: text
+   PhoneNumber: text
+   PhoneNumberConfirmed: boolean
+   TwoFactorEnabled: boolean
+   LockoutEnd: timestamp with time zone
+   LockoutEnabled: boolean
+   AccessFailedCount: integer
+   Id: text
+}
+class Breeders {
+   BreederIsSameAsExhibitor: boolean
+   FirstName: text
+   LastName: text
+   Country: text
+   ExhibitedCatId: integer
+   LitterId: integer
+   Id: integer
+}
+class Cages {
+   Length: integer
+   Width: integer
+   Height: integer
+   RegistrationToExhibitionId: integer
+   Id: integer
+}
+class CatDayToGroupsJoinTable {
+   CatDaysId: integer
+   GroupsGroupId: text
+}
+class CatDays {
+   RentedCageTypeId: integer
+   ExhibitorsCage: integer
+   ExhibitionDayId: integer
+   CatRegistrationId: integer
+   Id: integer
+}
+class CatRegistrations {
+   Note: text
+   RegistrationToExhibitionId: integer
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class DataProtectionKeys {
+   FriendlyName: text
+   Xml: text
+   Id: integer
+}
+class ExhibitedCats {
+   Sex: integer
+   Neutered: boolean
+   TitleBeforeName: text
+   TitleAfterName: text
+   Name: text
+   Ems: text
+   PedigreeNumber: text
+   Colour: text
+   Group: integer
+   BirthDate: date
+   Breed: text
+   CatRegistrationId: integer
+   Id: integer
+}
+class ExhibitionDayPrice {
+   ExhibitionDayId: integer
+   PriceId: integer
+}
+class ExhibitionDays {
+   Date: date
+   ExhibitionId: integer
+   Id: integer
+}
+class Exhibitions {
+   Email: text
+   Phone: text
+   Name: text
+   IsPublished: boolean
+   Url: text
+   BankAccount: text
+   Iban: text
+   Description: text
+   RegistrationStart: date
+   RegistrationEnd: date
+   OrganizationId: integer
+   IsCancelled: boolean
+   DeleteNotFinishedRegistrationsAfterHours: integer
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class Exhibitors {
+   Country: text
+   City: text
+   Street: text
+   HouseNumber: text
+   ZipCode: text
+   Organization: text
+   MemberNumber: text
+   AspNetUserId: text
+   IsPartOfCsch: boolean
+   IsPartOfFife: boolean
+   EmailToOrganization: text
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class Groups {
+   Name: text
+   GroupId: text
+}
+class Litters {
+   PassOfOrigin: text
+   NameOfBreedingStation: text
+   BirthDate: date
+   Breed: text
+   CatRegistrationId: integer
+   Id: integer
+}
+class MyRule {
+   RuleName: text
+   Properties: text
+   Operator: text
+   ErrorMessage: text
+   Enabled: boolean
+   RuleExpressionType: integer
+   Expression: text
+   Actions: text
+   SuccessEvent: text
+   MyWorkflowId: integer
+   PriceTypeWorkflowId: integer
+   RuleIDFK: integer
+   Id: integer
+}
+class MyScopedParam {
+   Name: text
+   Expression: text
+   MyRuleId: integer
+   MyWorkflowId: integer
+   PriceTypeWorkflowId: integer
+   Id: integer
+}
+class MyWorkflows {
+   ExhibitionId: integer
+   WorkflowName: text
+   RuleExpressionType: integer
+   Id: integer
+}
+class Organizations {
+   Name: text
+   Email: text
+   Ico: text
+   TelNumber: text
+   Website: text
+   Address: text
+   IsConfirmed: boolean
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class Parent {
+   TitleBeforeName: text
+   TitleAfterName: text
+   Name: text
+   Ems: text
+   PedigreeNumber: text
+   Colour: text
+   Breed: text
+   ExhibitedCatIsMotherOfId: integer
+   ExhibitedCatIsFatherOfId: integer
+   LitterIsMotherOfId: integer
+   LitterIsFatherOfId: integer
+   Id: integer
+}
+class PaymentInfos {
+   PaymentRequestDate: timestamp with time zone
+   PaymentCompletedDate: timestamp with time zone
+   PaymentIntentId: text
+   Amount: numeric
+   PaymentType: integer
+   Currency: integer
+   SessionId: text
+   RegistrationToExhibitionId: integer
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class PersonRegistrations {
+   City: text
+   Street: text
+   HouseNumber: text
+   ZipCode: text
+   Organization: text
+   MemberNumber: text
+   FirstName: text
+   LastName: text
+   Country: text
+   DateOfBirth: date
+   Email: text
+   PhoneNumber: text
+   RegistrationToExhibitionId: integer
+   IsPartOfCsch: boolean
+   EmailToOrganization: text
+   Id: integer
+}
+class PriceToGroupsJoinTable {
+   GroupsGroupId: text
+   PricesId: integer
+}
+class PriceTypeWorkflows {
+   ExhibitionId: integer
+   WorkflowName: text
+   RuleExpressionType: integer
+   Id: integer
+}
+class Prices {
+   PriceKc: numeric
+   PriceEur: numeric
+   Id: integer
+}
+class RegistrationToExhibitions {
+   ExhibitionId: integer
+   ExhibitorId: integer
+   AdvertisementId: integer
+   Created: timestamp with time zone
+   CreatedBy: text
+   LastModified: timestamp with time zone
+   LastModifiedBy: text
+   Id: integer
+}
+class RentedCageAndExhibitionDayJoinTable {
+   CagesForRentId: integer
+   ExhibitionDaysId: integer
+}
+class RentedCages {
+   Length: integer
+   Width: integer
+   Height: integer
+   Id: integer
+}
+class RentedTypes {
+   CageId: integer
+   RentedType: integer
+   Id: integer
+}
+class __EFMigrationsHistory {
+   ProductVersion: varchar(32)
+   MigrationId: varchar(150)
+}
+
+Addresses                            -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+Advertisements                       -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+AspNetRoleClaims                     -[#595959,plain]-^  AspNetRoles                         : "RoleId:Id"
+AspNetUserClaims                     -[#595959,plain]-^  AspNetUsers                         : "UserId:Id"
+AspNetUserLogins                     -[#595959,plain]-^  AspNetUsers                         : "UserId:Id"
+AspNetUserRoles                      -[#595959,plain]-^  AspNetRoles                         : "RoleId:Id"
+AspNetUserRoles                      -[#595959,plain]-^  AspNetUsers                         : "UserId:Id"
+AspNetUserTokens                     -[#595959,plain]-^  AspNetUsers                         : "UserId:Id"
+AspNetUsers                          -[#595959,plain]-^  Organizations                       : "OrganizationId:Id"
+Breeders                             -[#595959,plain]-^  ExhibitedCats                       : "ExhibitedCatId:Id"
+Breeders                             -[#595959,plain]-^  Litters                             : "LitterId:Id"
+Cages                                -[#595959,plain]-^  RegistrationToExhibitions           : "RegistrationToExhibitionId:Id"
+CatDayToGroupsJoinTable              -[#595959,plain]-^  CatDays                             : "CatDaysId:Id"
+CatDayToGroupsJoinTable              -[#595959,plain]-^  Groups                              : "GroupsGroupId:GroupId"
+CatDays                              -[#595959,plain]-^  Cages                               : "ExhibitorsCage:Id"
+CatDays                              -[#595959,plain]-^  CatRegistrations                    : "CatRegistrationId:Id"
+CatDays                              -[#595959,plain]-^  ExhibitionDays                      : "ExhibitionDayId:Id"
+CatDays                              -[#595959,plain]-^  RentedTypes                         : "RentedCageTypeId:Id"
+CatRegistrations                     -[#595959,plain]-^  RegistrationToExhibitions           : "RegistrationToExhibitionId:Id"
+ExhibitedCats                        -[#595959,plain]-^  CatRegistrations                    : "CatRegistrationId:Id"
+ExhibitionDayPrice                   -[#595959,plain]-^  ExhibitionDays                      : "ExhibitionDayId:Id"
+ExhibitionDayPrice                   -[#595959,plain]-^  Prices                              : "PriceId:Id"
+ExhibitionDays                       -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+Exhibitions                          -[#595959,plain]-^  Organizations                       : "OrganizationId:Id"
+Exhibitors                           -[#595959,plain]-^  AspNetUsers                         : "AspNetUserId:Id"
+Litters                              -[#595959,plain]-^  CatRegistrations                    : "CatRegistrationId:Id"
+MyRule                               -[#595959,plain]-^  MyRule                              : "RuleIDFK:Id"
+MyRule                               -[#595959,plain]-^  MyWorkflows                         : "MyWorkflowId:Id"
+MyRule                               -[#595959,plain]-^  PriceTypeWorkflows                  : "PriceTypeWorkflowId:Id"
+MyScopedParam                        -[#595959,plain]-^  MyRule                              : "MyRuleId:Id"
+MyScopedParam                        -[#595959,plain]-^  MyWorkflows                         : "MyWorkflowId:Id"
+MyScopedParam                        -[#595959,plain]-^  PriceTypeWorkflows                  : "PriceTypeWorkflowId:Id"
+MyWorkflows                          -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+Parent                               -[#595959,plain]-^  ExhibitedCats                       : "ExhibitedCatIsMotherOfId:Id"
+Parent                               -[#595959,plain]-^  ExhibitedCats                       : "ExhibitedCatIsFatherOfId:Id"
+Parent                               -[#595959,plain]-^  Litters                             : "LitterIsFatherOfId:Id"
+Parent                               -[#595959,plain]-^  Litters                             : "LitterIsMotherOfId:Id"
+PaymentInfos                         -[#595959,plain]-^  RegistrationToExhibitions           : "RegistrationToExhibitionId:Id"
+PersonRegistrations                  -[#595959,plain]-^  RegistrationToExhibitions           : "RegistrationToExhibitionId:Id"
+PriceToGroupsJoinTable               -[#595959,plain]-^  Groups                              : "GroupsGroupId:GroupId"
+PriceToGroupsJoinTable               -[#595959,plain]-^  Prices                              : "PricesId:Id"
+PriceTypeWorkflows                   -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+RegistrationToExhibitions            -[#595959,plain]-^  Advertisements                      : "AdvertisementId:Id"
+RegistrationToExhibitions            -[#595959,plain]-^  Exhibitions                         : "ExhibitionId:Id"
+RegistrationToExhibitions            -[#595959,plain]-^  Exhibitors                          : "ExhibitorId:Id"
+RentedCageAndExhibitionDayJoinTable  -[#595959,plain]-^  ExhibitionDays                      : "ExhibitionDaysId:Id"
+RentedCageAndExhibitionDayJoinTable  -[#595959,plain]-^  RentedCages                         : "CagesForRentId:Id"
+RentedTypes                          -[#595959,plain]-^  RentedCages                         : "CageId:Id"
+@enduml

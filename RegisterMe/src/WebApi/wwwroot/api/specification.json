@@ -1,0 +1,7565 @@
+{
+  "x-generator": "NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RegisterMe API",
+    "description": "API for RegisterMe",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/cages/available": {
+      "get": {
+        "tags": [
+          "cages"
+        ],
+        "description": "Get available rented cage types",
+        "operationId": "GetAvailableRentedCageTypes",
+        "parameters": [
+          {
+            "name": "ExhibitionDayId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "RegistrationToExhibitionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "IsLitter",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "CatRegistrationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CagesPerDayDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cages/{PersonCageId}": {
+      "get": {
+        "tags": [
+          "cages"
+        ],
+        "description": "Get person cage by id",
+        "operationId": "GetPersonCageById",
+        "parameters": [
+          {
+            "name": "PersonCageId",
+            "x-originalName": "personCageId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cages/exhibition-day/{exhibitionDayId}": {
+      "get": {
+        "tags": [
+          "cages"
+        ],
+        "description": "Get person cages by exhibition day",
+        "operationId": "GetPersonCagesByExhibitionDay",
+        "parameters": [
+          {
+            "name": "exhibitionDayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CageDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cages/rented-cage-group/{cagesId}": {
+      "get": {
+        "tags": [
+          "cages"
+        ],
+        "description": "Get rented cage group by id",
+        "operationId": "GetRentedCageGroupById",
+        "parameters": [
+          {
+            "name": "cagesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BriefCageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cages/exists": {
+      "get": {
+        "tags": [
+          "cages"
+        ],
+        "description": "Check if record exists",
+        "operationId": "GetRecordWithGivenExhibitionDayIdAndCatRegistrationIdExistWithCageIdQuery",
+        "parameters": [
+          {
+            "name": "CageId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "CatRegistrationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "ExhibitionDayId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cat-registrations/cat": {
+      "post": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Create cat registration",
+        "operationId": "CreateCatRegistrationWithCat",
+        "requestBody": {
+          "x-name": "creteCatRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreteCatRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cat-registrations/litter": {
+      "post": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Create cat registration",
+        "operationId": "CreateCatRegistrationWithLitter",
+        "requestBody": {
+          "x-name": "creteCatRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreteLitterRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cat-registrations/{catRegistrationId}": {
+      "delete": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Delete cat registration",
+        "operationId": "DeleteCatRegistration",
+        "parameters": [
+          {
+            "name": "catRegistrationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Update cat registration",
+        "operationId": "UpdateCatRegistration",
+        "parameters": [
+          {
+            "name": "catRegistrationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateCatRegistration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCatRegistrationDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Get cat registration by id",
+        "operationId": "GetCatRegistrationById",
+        "parameters": [
+          {
+            "name": "catRegistrationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatRegistrationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/cat-registrations/user-cats-not-in-exhibition/{registrationToExhibitionId}": {
+      "get": {
+        "tags": [
+          "cat-registrations"
+        ],
+        "description": "Get user cats not in exhibition",
+        "operationId": "GetUserCatsNotInExhibition",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CatRegistrationType"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatModelP"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions": {
+      "post": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Create exhibition",
+        "operationId": "CreateExhibition",
+        "requestBody": {
+          "x-name": "createExhibition",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExhibitionDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get exhibitions",
+        "operationId": "GetExhibitions",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "OrganizationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "SearchString",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "OrganizationPublishStatus",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationPublishStatus"
+            },
+            "x-position": 6
+          },
+          {
+            "name": "ExhibitionStatus",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ExhibitionRegistrationStatus"
+            },
+            "x-position": 7
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfExhibitionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get exhibition by id",
+        "operationId": "GetExhibitionById",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BriefExhibitionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Delete unpublished exhibition",
+        "operationId": "DeleteUnpublishedExhibition",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update exhibition",
+        "operationId": "UpdateExhibition",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExhibitionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/publish": {
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Publish exhibition",
+        "operationId": "PublishExhibition",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/cancel": {
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Cancel exhibition",
+        "operationId": "CancelExhibition",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/payments": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get payments",
+        "operationId": "GetPayments",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/prices": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get prices",
+        "operationId": "GetPrices",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BigPriceDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Create prices",
+        "operationId": "CreatePrices",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePriceGroupCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/advertisements/{advertisementId}": {
+      "delete": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Delete advertisement by id",
+        "operationId": "DeleteAdvertisementById",
+        "parameters": [
+          {
+            "name": "advertisementId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get advertisement by id",
+        "operationId": "GetAdvertisementById",
+        "parameters": [
+          {
+            "name": "advertisementId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvertisementDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/advertisements": {
+      "post": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Create advertisement",
+        "operationId": "CreateAdvertisement",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdvertisementCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get advertisements by exhibition id",
+        "operationId": "GetAdvertisementsByExhibitionId",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdvertisementDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/prices/{pricesId}": {
+      "delete": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Delete prices",
+        "operationId": "DeletePrices",
+        "parameters": [
+          {
+            "name": "pricesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update price group",
+        "operationId": "UpdatePriceGroup",
+        "parameters": [
+          {
+            "name": "pricesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateDiscountWorkflow",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePriceGroupCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/advertisement/{advertisementId}": {
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update advertisement",
+        "operationId": "UpdateAdvertisement",
+        "parameters": [
+          {
+            "name": "advertisementId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdvertisementCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/rented-cages": {
+      "post": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Create rented cage",
+        "operationId": "CreateRentedCage",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRentedRentedCageDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/workflow": {
+      "post": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Create workflow command",
+        "operationId": "CreateWorkflowCommand",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkflowCommandCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/rented-cages/{cagesId}": {
+      "delete": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Delete rented cages",
+        "operationId": "DeleteRentedCages",
+        "parameters": [
+          {
+            "name": "cagesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update rented cage",
+        "operationId": "UpdateRentedCage",
+        "parameters": [
+          {
+            "name": "cagesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateDiscountWorkflow",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRentedCageGroupCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/payments/{discountId}": {
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update payment workflow",
+        "operationId": "UpdatePaymentWorkflow",
+        "parameters": [
+          {
+            "name": "discountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateDiscountWorkflow",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDiscountWorkflowCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/days": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get all days groups can be registered to",
+        "operationId": "GetAllDaysGroupsCanBeRegisteredTo",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExhibitionDayDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/groups-can-be-registered/{exhibitionDayId}": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get groups can be registered to",
+        "operationId": "GetGroupsCanBeRegisteredTo",
+        "parameters": [
+          {
+            "name": "exhibitionDayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetGroupsCanBeRegisteredInQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatabaseGroupDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/groups/{groupsId}/groups": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get groups by price group id",
+        "operationId": "GetGroupsByPriceGroupIdQuery",
+        "parameters": [
+          {
+            "name": "groupsId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatabaseGroupDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/groups/{groupsId}": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get exhibition price group by id",
+        "operationId": "GetExhibitionGroupByIdQuery",
+        "parameters": [
+          {
+            "name": "groupsId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BigPriceDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/has-drafts": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get has drafts query",
+        "operationId": "GetHasDraftsQuery",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{registrationToExhibitionId}/cages-statistics": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get cages statistics",
+        "operationId": "GetCagesStatistics",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatRegistrationStatistics"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/days/{priceGroupIds}": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get days by group id",
+        "operationId": "GetDaysByGroupId",
+        "parameters": [
+          {
+            "name": "priceGroupIds",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExhibitionDayDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/discounts/{discountId}": {
+      "put": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Update discount workflow",
+        "operationId": "UpdateDiscountWorkflow",
+        "parameters": [
+          {
+            "name": "discountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateDiscountWorkflow",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDiscountWorkflowCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Delete discount command",
+        "operationId": "DeleteDiscountCommandCommand",
+        "parameters": [
+          {
+            "name": "discountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get discount by id",
+        "operationId": "GetDiscountById",
+        "parameters": [
+          {
+            "name": "discountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/discounts": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get discounts by exhibition id",
+        "operationId": "GetDiscountsByExhibitionId",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkflowDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/cages-info": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get exhibition cages info query",
+        "operationId": "GetExhibitionCagesInfoQuery",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibitionDayId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "doNotIncludeCatRegistrationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExhibitionCagesInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/rented-cages": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get rented cages by exhibition id",
+        "operationId": "GetRentedCagesByExhibitionIdQuery",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BriefCageDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitions/{exhibitionId}/groups": {
+      "get": {
+        "tags": [
+          "exhibitions"
+        ],
+        "description": "Get all groups that are not fully registered",
+        "operationId": "GetAllGroupsThatAreNotFullyRegistered",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatabaseGroupDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitors/{userId}": {
+      "post": {
+        "tags": [
+          "exhibitors"
+        ],
+        "description": "Create exhibitor",
+        "operationId": "CreateExhibitor",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "createExhibitorCommand",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExhibitorCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "exhibitors"
+        ],
+        "description": "Get exhibitor by user id",
+        "operationId": "GetExhibitorByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExhibitorAndUserDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "exhibitors"
+        ],
+        "description": "Update exhibitor",
+        "operationId": "UpdateExhibitor",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExhibitorCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/exhibitors/by-exhibitor-id/{exhibitorId}": {
+      "get": {
+        "tags": [
+          "exhibitors"
+        ],
+        "description": "Get exhibitor by id",
+        "operationId": "GetExhibitorById",
+        "parameters": [
+          {
+            "name": "exhibitorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExhibitorAndUserDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/organizations": {
+      "post": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Create organization",
+        "operationId": "CreateOrganization",
+        "requestBody": {
+          "x-name": "createOrganization",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Get organizations",
+        "operationId": "GetOrganizations",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "OrganizationConfirmationStatus",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationConfirmationStatus"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "SearchString",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "HasExhibitions",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/HasExhibitions"
+                }
+              ]
+            },
+            "x-position": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfOrganizationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/organizations/{organizationId}": {
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Get organization by id",
+        "operationId": "GetOrganizationById",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Update organization",
+        "operationId": "UpdateOrganization",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "updateOrganization",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Delete organization",
+        "operationId": "DeleteOrganizationCommand",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/organizations/{organizationId}/confirm": {
+      "put": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Confirm organization",
+        "operationId": "ConfirmOrganization",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/organizations/{organizationId}/is-administrator/{userId}": {
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "description": "Check if user is organization administrator",
+        "operationId": "IsOrganizationAdministratorQuery",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/pricing/available-payment-types/{registrationToExhibitionId}": {
+      "get": {
+        "tags": [
+          "pricing"
+        ],
+        "description": "Get available payment types",
+        "operationId": "GetAvailablePaymentTypes",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentTypeWithCurrency"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/pricing/beneficiary-message/{registrationToExhibitionId}": {
+      "get": {
+        "tags": [
+          "pricing"
+        ],
+        "description": "Get beneficiary message",
+        "operationId": "GetBeneficiaryMessageQuery",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/pricing/price/{registrationToExhibitionId}": {
+      "get": {
+        "tags": [
+          "pricing"
+        ],
+        "description": "Get price",
+        "operationId": "GetPrice",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationToExhibitionPrice"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/exhibition/{exhibitionId}": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Create registration to exhibition",
+        "operationId": "CreateRegistrationToExhibition",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "createRegistrationToExhibitionCommand",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRegistrationToExhibitionDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}": {
+      "put": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Update registration to exhibition",
+        "operationId": "UpdateRegistrationToExhibition",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeAdvertisementsCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Delete registration to exhibition",
+        "operationId": "DeleteRegistrationToExhibition",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Get registration to exhibition by id",
+        "operationId": "GetRegistrationToExhibitionById",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationToExhibitionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/start-online-payment": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Start online payment",
+        "operationId": "StartOnlinePayment",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartOnlinePaymentCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/request-delayed-payment": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Request delayed payment",
+        "operationId": "RequestDelayedPayment",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PaymentType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PaymentType"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Currency",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Currency"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{exhibitionId}/exhibitor-and-user/{exhibitorId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Get registration to exhibition by exhibitor id and exhibition id",
+        "operationId": "GetRegistrationToExhibitionByExhibitorIdAndExhibitionId",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibitorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{exhibitionId}/existing-cat-registrations/{userId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Has active registrations",
+        "operationId": "HasActiveRegistrations",
+        "parameters": [
+          {
+            "name": "paid",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/exhibitions/{exhibitionId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Get cat registration to exhibition by exhibition id",
+        "operationId": "GetCatRegistrationToExhibitionByExhibitionId",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistrationToExhibitionDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/exhibitors/{exhibitorId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Get registrations to exhibition by exhibitor id",
+        "operationId": "GetRegistrationsToExhibitionByExhibitorId",
+        "parameters": [
+          {
+            "name": "exhibitorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistrationToExhibitionDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/ems": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Has valid ems",
+        "operationId": "HasValidEmsQuery",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/balance-payment": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Balance payment",
+        "operationId": "BalancePaymentCommand",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/finish-online-payment": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Finish online payment",
+        "operationId": "FinishOnlinePaymentCommand",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/finish-delayed-payment": {
+      "post": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Finish delayed payment",
+        "operationId": "FinishDelayedPaymentCommand",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{exhibitionId}/temporary-registration": {
+      "delete": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Delete temporary registration to exhibition",
+        "operationId": "DeleteTemporaryRegistrationToExhibitionCommand",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/export-all/{exhibitionId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Export all registrations to exhibition",
+        "operationId": "ExportAllRegistrationsToExhibitionQuery",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/{registrationToExhibitionId}/export-to-zip": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "description": "Export registration to exhibition to zip",
+        "operationId": "ExportRegistrationToExhibitionToZipQuery",
+        "parameters": [
+          {
+            "name": "registrationToExhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/registrations-to-exhibition/export-to-zip/{exhibitionId}": {
+      "get": {
+        "tags": [
+          "registrations-to-exhibition"
+        ],
+        "operationId": "ExportRegistrationToExhibitionByExhibitionToZipQuery",
+        "parameters": [
+          {
+            "name": "exhibitionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/system/cats": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "description": "Get all supported cats",
+        "operationId": "GetAllSupportedCatsQuery",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeOfCat"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/system/countries": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "description": "Get supported countries",
+        "operationId": "GetSupportedCountriesQuery",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/system/parse-ems": {
+      "post": {
+        "tags": [
+          "system"
+        ],
+        "description": "Parse ems",
+        "operationId": "ParseEms",
+        "parameters": [
+          {
+            "name": "Ems",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Breed",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Colour",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/system/payment-by-card-is-configured": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "description": "Check if payment by card is configured",
+        "operationId": "PaymentByCardIsConfiguredQuery",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/system/requires-group/{ems}": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "description": "Check if requires group",
+        "operationId": "RequiresGroupQuery",
+        "parameters": [
+          {
+            "name": "ems",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/users/register": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersRegister",
+        "requestBody": {
+          "x-name": "registration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersLogin",
+        "parameters": [
+          {
+            "name": "useCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "useSessionCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/refresh": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersRefresh",
+        "requestBody": {
+          "x-name": "refreshRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/confirmEmail": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "GetApiV1UsersConfirmEmail",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "changedEmail",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/users/resendConfirmationEmail": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersResendConfirmationEmail",
+        "requestBody": {
+          "x-name": "resendRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendConfirmationEmailReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/users/forgotPassword": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersForgotPassword",
+        "requestBody": {
+          "x-name": "resetRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/resetPassword": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersResetPassword",
+        "requestBody": {
+          "x-name": "resetRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/manage/2fa": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersManage2fa",
+        "requestBody": {
+          "x-name": "tfaRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFactorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/users/manage/info": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "GetApiV1UsersManageInfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "PostApiV1UsersManageInfo",
+        "requestBody": {
+          "x-name": "infoRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InfoReq"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/users/delete-personal-data/{userId}": {
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "description": "Delete personal data",
+        "operationId": "DeletePersonalDataCommand",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "403": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CagesPerDayDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "availableCagesForRent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CageGroupDtoDescription"
+            }
+          },
+          "availableAlreadyRentedCagesByExhibitor": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CageGroupDtoDescription"
+            }
+          },
+          "exhibitorsCages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CageDtoDescription"
+            }
+          }
+        }
+      },
+      "CageGroupDtoDescription": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rentedTypeId": {
+            "$ref": "#/components/schemas/RentedCageGroup"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "RentedCageGroup": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CageDtoDescription": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "CageDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateCageDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "numberOfCatsInCage": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "CreateCageDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "length": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BriefCageDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentedTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RentedType"
+            }
+          },
+          "exhibitionDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SmallExhibitionDayDto"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RentedType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Double",
+          "Single"
+        ],
+        "enum": [
+          1,
+          2
+        ]
+      },
+      "SmallExhibitionDayDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CreteCatRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "registrationToExhibitionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "catDay": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateCatDayDto"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "exhibitedCat": {
+            "$ref": "#/components/schemas/ExhibitedCatDto"
+          }
+        }
+      },
+      "CreateCatDayDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "groupsIds"
+        ],
+        "properties": {
+          "rentedCageTypeId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RentedCageGroup"
+              }
+            ]
+          },
+          "exhibitorsCage": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "exhibitionDayId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          },
+          "cage": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CreateCageDto"
+              }
+            ]
+          },
+          "groupsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ExhibitedCatDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateExhibitedCatDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "CreateExhibitedCatDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "ems",
+          "pedigreeNumber",
+          "birthDate",
+          "colour",
+          "breed",
+          "group",
+          "sex"
+        ],
+        "properties": {
+          "neutered": {
+            "type": "boolean"
+          },
+          "titleBeforeName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "titleAfterName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "ems": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "pedigreeNumber": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "colour": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "breed": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "group": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "nullable": true
+          },
+          "sex": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "breeder": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BreederDto"
+              }
+            ]
+          },
+          "father": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FatherDto"
+              }
+            ]
+          },
+          "mother": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MotherDto"
+              }
+            ]
+          },
+          "fullName": {
+            "type": "string"
+          }
+        }
+      },
+      "Gender": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Male",
+          "Female"
+        ],
+        "enum": [
+          1,
+          2
+        ]
+      },
+      "BreederDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "country"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 0
+          },
+          "breederIsSameAsExhibitor": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FatherDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ParentDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sex": {
+                "$ref": "#/components/schemas/Gender"
+              }
+            }
+          }
+        ]
+      },
+      "ParentDto": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "ems",
+          "pedigreeNumber",
+          "colour"
+        ],
+        "properties": {
+          "titleBeforeName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "titleAfterName": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "ems": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "pedigreeNumber": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "colour": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1,
+            "nullable": true
+          },
+          "breed": {
+            "type": "string"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "fullName": {
+            "type": "string"
+          }
+        }
+      },
+      "MotherDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ParentDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sex": {
+                "$ref": "#/components/schemas/Gender"
+              }
+            }
+          }
+        ]
+      },
+      "CreteLitterRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "registrationToExhibitionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "catDay": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateCatDayDto"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "litter": {
+            "$ref": "#/components/schemas/LitterDto"
+          }
+        }
+      },
+      "LitterDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateLitterDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "CreateLitterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nameOfBreedingStation",
+          "breed",
+          "breeder",
+          "father",
+          "mother"
+        ],
+        "properties": {
+          "passOfOrigin": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 0,
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "nameOfBreedingStation": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "breed": {
+            "type": "string",
+            "maxLength": 75,
+            "minLength": 1
+          },
+          "breeder": {
+            "$ref": "#/components/schemas/BreederDto"
+          },
+          "father": {
+            "$ref": "#/components/schemas/FatherDto"
+          },
+          "mother": {
+            "$ref": "#/components/schemas/MotherDto"
+          }
+        }
+      },
+      "UpdateCatRegistrationDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractCatRegistrationDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "catDays": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateCatDayDto"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AbstractCatRegistrationDto": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "properties": {
+          "exhibitedCat": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CreateExhibitedCatDto"
+              }
+            ]
+          },
+          "litter": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CreateLitterDto"
+              }
+            ]
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationType": {
+            "$ref": "#/components/schemas/RegistrationType"
+          }
+        }
+      },
+      "RegistrationType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "HomeExhibitedCat",
+          "NonHomeExhibitedCat",
+          "Litter"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "CatRegistrationDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractCatRegistrationDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "registrationToExhibitionId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "catDays": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CatDayDto"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "CatDayDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateCatDayDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "CatModelP": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "birthdate": {
+            "type": "string",
+            "format": "date"
+          },
+          "label": {
+            "type": "string"
+          },
+          "catRegistrationId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CatRegistrationType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Cat",
+          "Litter"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "CreateExhibitionDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseExhibitionValidatedDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BaseExhibitionValidatedDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/AddressDto"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "bankAccount": {
+            "type": "string"
+          },
+          "iban": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "registrationStart": {
+            "type": "string",
+            "format": "date"
+          },
+          "registrationEnd": {
+            "type": "string",
+            "format": "date"
+          },
+          "exhibitionStart": {
+            "type": "string",
+            "format": "date"
+          },
+          "exhibitionEnd": {
+            "type": "string",
+            "format": "date"
+          },
+          "deleteNotFinishedRegistrationsAfterHours": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AddressDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "streetAddress": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          }
+        }
+      },
+      "BriefExhibitionDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractExhibitionDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "address": {
+                "$ref": "#/components/schemas/AddressDto"
+              },
+              "status": {
+                "$ref": "#/components/schemas/ExhibitionStatus"
+              }
+            }
+          }
+        ]
+      },
+      "ExhibitionStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "BeforeRegistration",
+          "RegistrationInProgress",
+          "AfterRegistration",
+          "ExhibitionInProgress",
+          "Finished"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "AbstractExhibitionDto": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "bankAccount": {
+            "type": "string"
+          },
+          "iban": {
+            "type": "string"
+          },
+          "isPublished": {
+            "type": "boolean"
+          },
+          "isCancelled": {
+            "type": "boolean"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "registrationStart": {
+            "type": "string",
+            "format": "date"
+          },
+          "registrationEnd": {
+            "type": "string",
+            "format": "date"
+          },
+          "exhibitionStart": {
+            "type": "string",
+            "format": "date"
+          },
+          "exhibitionEnd": {
+            "type": "string",
+            "format": "date"
+          },
+          "organizationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "canBeEdited": {
+            "type": "boolean"
+          },
+          "deleteNotFinishedRegistrationsAfterHours": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfExhibitionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExhibitionDto"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExhibitionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exhibitionStart": {
+            "type": "string",
+            "format": "date"
+          },
+          "exhibitionEnd": {
+            "type": "string",
+            "format": "date"
+          },
+          "location": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isCancelled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrganizationPublishStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "All",
+          "Published",
+          "NotPublished"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "ExhibitionRegistrationStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "All",
+          "CanRegisterTo",
+          "Future",
+          "Old"
+        ],
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "UpdateExhibitionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "updateExhibitionDto": {
+            "$ref": "#/components/schemas/UpdateExhibitionDto"
+          }
+        }
+      },
+      "UpdateExhibitionDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseExhibitionValidatedDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "Workflow": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workflowName": {
+            "type": "string",
+            "nullable": true
+          },
+          "workflowRulesToInject": {
+            "type": "array",
+            "deprecated": true,
+            "x-deprecatedMessage": "WorkflowRulesToInject is deprecated. Use WorkflowsToInject instead.",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "workflowsToInject": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "ruleExpressionType": {
+            "$ref": "#/components/schemas/RuleExpressionType"
+          },
+          "globalParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ScopedParam"
+            }
+          },
+          "rules": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            }
+          }
+        }
+      },
+      "RuleExpressionType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "LambdaExpression"
+        ],
+        "enum": [
+          0
+        ]
+      },
+      "ScopedParam": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "expression": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Rule": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ruleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "properties": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          },
+          "operator": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "ruleExpressionType": {
+            "$ref": "#/components/schemas/RuleExpressionType2"
+          },
+          "workflowsToInject": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "rules": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            }
+          },
+          "localParams": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ScopedParam"
+            }
+          },
+          "expression": {
+            "type": "string",
+            "nullable": true
+          },
+          "actions": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RuleActions"
+              }
+            ]
+          },
+          "successEvent": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RuleExpressionType2": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "LambdaExpression"
+        ],
+        "enum": [
+          "LambdaExpression"
+        ]
+      },
+      "RuleActions": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "onSuccess": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ActionInfo"
+              }
+            ]
+          },
+          "onFailure": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ActionInfo"
+              }
+            ]
+          }
+        }
+      },
+      "ActionInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "context": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "BigPriceDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "priceIds": {
+            "type": "string"
+          },
+          "groups": {
+            "type": "string"
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SmallPriceDto"
+            }
+          },
+          "exhibitionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SmallPriceDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "price": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          },
+          "exhibitionDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SmallExhibitionDayDto"
+            }
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MultiCurrencyPrice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "priceCzk": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "priceEur": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "CreateAdvertisementCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "advertisement": {
+            "$ref": "#/components/schemas/UpsertAdvertisementDto"
+          },
+          "exhibitionId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          }
+        }
+      },
+      "UpsertAdvertisementDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          },
+          "isDefault": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreatePriceGroupCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "groupsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exhibitionId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          },
+          "priceDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceDays"
+            }
+          }
+        }
+      },
+      "PriceDays": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exhibitionDayIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "price": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          }
+        }
+      },
+      "UpdateAdvertisementCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "advertisementDto": {
+            "$ref": "#/components/schemas/UpsertAdvertisementDto"
+          },
+          "advertisementId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          }
+        }
+      },
+      "CreateRentedRentedCageDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractRentedCageDtoDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "rentedCageTypes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RentedType"
+                }
+              },
+              "count": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "AbstractRentedCageDtoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exhibitionDaysId": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateWorkflowCommandCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "workflow"
+        ],
+        "properties": {
+          "workflow": {
+            "$ref": "#/components/schemas/Workflow"
+          },
+          "exhibitionId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          }
+        }
+      },
+      "UpdateDiscountWorkflowCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "workflow"
+        ],
+        "properties": {
+          "workflow": {
+            "$ref": "#/components/schemas/Workflow"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          }
+        }
+      },
+      "UpdatePriceGroupCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "originalPricesId"
+        ],
+        "properties": {
+          "groupsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceDays"
+            }
+          },
+          "originalPricesId": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateRentedCageGroupCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rentedCage"
+        ],
+        "properties": {
+          "cagesId": {
+            "type": "string"
+          },
+          "rentedCage": {
+            "$ref": "#/components/schemas/CreateRentedRentedCageDto"
+          }
+        }
+      },
+      "AdvertisementDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpsertAdvertisementDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "exhibitionId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "ExhibitionDayDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "cagesForRentIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "DatabaseGroupDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "string"
+          }
+        }
+      },
+      "GetGroupsCanBeRegisteredInQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "catRegistration",
+          "exhibitionDayId"
+        ],
+        "properties": {
+          "catRegistration": {
+            "$ref": "#/components/schemas/LitterOrExhibitedCatDto"
+          },
+          "exhibitionDayId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LitterOrExhibitedCatDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exhibitedCat": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CreateExhibitedCatDto"
+              }
+            ]
+          },
+          "litterDto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CreateLitterDto"
+              }
+            ]
+          },
+          "exhibitorDto": {
+            "$ref": "#/components/schemas/UpsertExhibitorDto"
+          }
+        }
+      },
+      "UpsertExhibitorDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "type": "string"
+          },
+          "memberNumber": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "houseNumber": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          },
+          "isPartOfCsch": {
+            "type": "boolean"
+          },
+          "emailToOrganization": {
+            "type": "string"
+          },
+          "isPartOfFife": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CatRegistrationStatistics": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ownCages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentedCages": {
+            "$ref": "#/components/schemas/CagesRec"
+          },
+          "numberOfCats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "CagesRec": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "numberOfSingleCages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfDoubleCages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalNumber": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "WorkflowDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Workflow"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "ExhibitionCagesInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cageGroupInfos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CageGroupInfo"
+            }
+          },
+          "numberOfPersonCages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string"
+          },
+          "exhibitionDayId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CageGroupInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "totalNumberOfRentedCages": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "numberOfUsedCages": {
+            "$ref": "#/components/schemas/CagesRec"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "availableTypes": {
+            "type": "object",
+            "x-dictionaryKey": {
+              "$ref": "#/components/schemas/RentedType"
+            },
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        }
+      },
+      "CreateExhibitorCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "exhibitor": {
+            "$ref": "#/components/schemas/UpsertExhibitorDto"
+          }
+        }
+      },
+      "ExhibitorAndUserDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UpsertExhibitorDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "phoneNumber": {
+                "type": "string"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "format": "date"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "UpdateExhibitorCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "aspNetUserId"
+        ],
+        "properties": {
+          "exhibitor": {
+            "$ref": "#/components/schemas/UpsertExhibitorDto"
+          },
+          "aspNetUserId": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateOrganizationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "ico": {
+            "type": "string"
+          },
+          "telNumber": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "adminId": {
+            "type": "string"
+          }
+        }
+      },
+      "OrganizationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "ico": {
+            "type": "string"
+          },
+          "telNumber": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "exhibitionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "isConfirmed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PaginatedListOfOrganizationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationDto"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrganizationConfirmationStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "All",
+          "NotConfirmed",
+          "Confirmed"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "HasExhibitions": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Yes",
+          "No",
+          "YesConfirmedOnly",
+          "YesNotConfirmedOnly"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "Result": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "isFailure": {
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateOrganizationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telNumber": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaymentTypeWithCurrency": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentType": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        }
+      },
+      "PaymentType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "PayInPlaceByCache",
+          "PayOnlineByCard",
+          "PayByBankTransfer"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "Currency": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Czk",
+          "Eur"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "RegistrationToExhibitionPrice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "registrationToExhibitionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "advertisementPrice": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          },
+          "catRegistrationPrices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatRegistrationPrice"
+            }
+          },
+          "gExhibitorPrice": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          },
+          "gTotalPrice": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          }
+        }
+      },
+      "CatRegistrationPrice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "catRegistrationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "catRegistrationPriceWithoutFees": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          },
+          "catRegistrationFees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeeRecord"
+            }
+          },
+          "catName": {
+            "type": "string"
+          }
+        }
+      },
+      "FeeRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "feeName": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/MultiCurrencyPrice"
+          }
+        }
+      },
+      "CreateRegistrationToExhibitionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exhibitionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "exhibitorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "advertisementId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ChangeAdvertisementsCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "advertisementId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          },
+          "registrationToExhibitionId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          }
+        }
+      },
+      "SessionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "StartOnlinePaymentCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "successUrl",
+          "cancelUrl"
+        ],
+        "properties": {
+          "successUrl": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "cancelUrl": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "registrationToExhibitionId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        }
+      },
+      "RegistrationToExhibitionDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateRegistrationToExhibitionDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "paymentInfo": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/PaymentInfoDto"
+                  }
+                ]
+              },
+              "personRegistration": {
+                "$ref": "#/components/schemas/PersonRegistrationDto"
+              },
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "catRegistrationIds": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "PaymentInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentRequestDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentCompletedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "paymentIntentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "paymentType": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "sessionId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PersonRegistrationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "houseNumber": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          },
+          "organization": {
+            "type": "string"
+          },
+          "memberNumber": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "isPartOfCsch": {
+            "type": "boolean"
+          },
+          "isPartOfFife": {
+            "type": "boolean"
+          },
+          "emailToOrganization": {
+            "type": "string"
+          }
+        }
+      },
+      "Stream": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MarshalByRefObject"
+          },
+          {
+            "type": "object",
+            "x-abstract": true,
+            "additionalProperties": false,
+            "properties": {
+              "canRead": {
+                "type": "boolean"
+              },
+              "canWrite": {
+                "type": "boolean"
+              },
+              "canSeek": {
+                "type": "boolean"
+              },
+              "canTimeout": {
+                "type": "boolean"
+              },
+              "length": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "position": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "readTimeout": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "writeTimeout": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "MarshalByRefObject": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false
+      },
+      "TypeOfCat": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kodSnizenePigmentace": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodZbarveniOci": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodSrsti": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodZkraceniOcasu": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodDepigmentaceSrsti": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodTypuKresbVSrsti": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodyBileSkvrnitosti": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "kodyStupneDepigmentace": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          },
+          "breed": {
+            "$ref": "#/components/schemas/BreedDto"
+          },
+          "zbarveniSrsti": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+            }
+          }
+        }
+      },
+      "EmsCodePartPerCatTypeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attribute": {
+            "$ref": "#/components/schemas/EmsCodePartDto"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          }
+        }
+      },
+      "EmsCodePartDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "potentialCodePartInCzech": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Status": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Valid",
+          "Error"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "BreedDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmsCodePartPerCatTypeDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "requiresGroup": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      "CountryDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "countryName": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "properties": {
+              "errors": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RegisterReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email address which acts as a user name.\n            "
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password.\n            "
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The user's first name.\n            "
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The user's last name.\n            "
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "description": "The user's date of birth.\n            ",
+            "format": "date"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The user's phone number.\n            "
+          }
+        }
+      },
+      "AccessTokenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tokenType": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email address which acts as a user name.\n            "
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password.\n            "
+          },
+          "twoFactorCode": {
+            "type": "string",
+            "description": "The optional two-factor authenticator code. This may be required for users who have enabled two-factor\nauthentication.\nThis is not required if a TwoFactorRecoveryCode is sent.\n            ",
+            "nullable": true
+          },
+          "twoFactorRecoveryCode": {
+            "type": "string",
+            "description": "An optional two-factor recovery code.\nThis is required for users who have enabled two-factor authentication but lost access to their\nTwoFactorCode.\n            ",
+            "nullable": true
+          }
+        }
+      },
+      "RefreshReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "The last \"/login\" or \"/refresh\" response used to get a new\nwith an extended expiration.\n            "
+          }
+        }
+      },
+      "ResendConfirmationEmailReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address to resend the confirmation email to if a user with that email exists.\n            "
+          }
+        }
+      },
+      "ForgotPasswordReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address to send the reset password code to if a user with that confirmed email address already exists.\n            "
+          }
+        }
+      },
+      "ResetPasswordReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address for the user requesting a password reset. This should match\nEmail.\n            "
+          },
+          "resetCode": {
+            "type": "string",
+            "description": "The code sent to the user's email to reset the password. To get the reset code, first make a \"/forgotPassword\"\nrequest.\n            "
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The new password the user with the given Email should login with. This will replace the previous\npassword.\n            "
+          }
+        }
+      },
+      "TwoFactorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sharedKey": {
+            "type": "string",
+            "description": "The shared key generally for TOTP authenticator apps that is usually presented to the user as a QR code.\n            "
+          },
+          "recoveryCodesLeft": {
+            "type": "integer",
+            "description": "The number of unused RecoveryCodes remaining.\n            ",
+            "format": "int32"
+          },
+          "recoveryCodes": {
+            "type": "array",
+            "description": "The recovery codes to use if the SharedKey is lost. This will be omitted from the response unless\n            ",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "isTwoFactorEnabled": {
+            "type": "boolean",
+            "description": "Whether or not two-factor login is required for the current authenticated user.\n            "
+          },
+          "isMachineRemembered": {
+            "type": "boolean",
+            "description": "Whether or not the current client has been remembered by two-factor authentication cookies. This is always\nfalse for non-cookie authentication schemes.\n            "
+          }
+        }
+      },
+      "TwoFactorReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enable": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "twoFactorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "resetSharedKey": {
+            "type": "boolean"
+          },
+          "resetRecoveryCodes": {
+            "type": "boolean"
+          },
+          "forgetMachine": {
+            "type": "boolean"
+          }
+        }
+      },
+      "InfoResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address associated with the authenticated user.\n            "
+          },
+          "isEmailConfirmed": {
+            "type": "boolean",
+            "description": "Indicates whether or not the Email has been confirmed yet.\n            "
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number associated with the authenticated user.\n            "
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "InfoReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "newEmail": {
+            "type": "string",
+            "description": "The optional new email address for the authenticated user. This will replace the old email address if there was\none. The email will not be updated until it is confirmed.\n            ",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The optional new password for the authenticated user. If a new password is provided, the OldPassword\nis required.\nIf the user forgot the old password, use the \"/forgotPassword\" endpoint instead.\n            ",
+            "nullable": true
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "The old password for the authenticated user. This is only required if a NewPassword is provided.\n            ",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the user.\n            ",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}

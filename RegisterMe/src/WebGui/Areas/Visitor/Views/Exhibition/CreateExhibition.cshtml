@@ -1,0 +1,188 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Controllers
+@model WebGui.Areas.Visitor.Models.CreateExhibitionModel
+
+@{
+    ViewBag.Title = "Nová výstava";
+}
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1>Nová výstava</h1>
+
+        <form method="post" asp-controller="Exhibition" asp-action="CreateExhibition" class="row">
+
+            <input asp-for="@Model.OrganizationId" type="hidden"/>
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Název výstavy
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Name" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Email k výstavě
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Email" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Tel. k výstavě
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Phone" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+            </div>
+
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Propozice v ČJ (včetně <i>https://www.</i>)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Url" placeholder="https://wwww.organizace.cz/propozice.pdf"
+                           class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Url" class="text-danger"></span>
+            </div>
+
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Popis výstavy
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Description" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Číslo účtu
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.NormalAccount" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.NormalAccount" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    IBAN (bez mezer)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Iban" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Iban" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Začátek registrace
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.RegistrationStart" type="date" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.RegistrationStart" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Konec registrace
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.RegistrationEnd" type="date" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.RegistrationEnd" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Začátek výstavy
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.ExhibitionStart" type="date" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.ExhibitionStart" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Konec výstavy
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.ExhibitionEnd" type="date" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.ExhibitionEnd" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Zeměpisná šířka (N)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Address.Latitude" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Address.Latitude" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Zeměpisná délka (E)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Address.Longitude" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Address.Longitude" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Adresa výstavy
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Address.StreetAddress" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Address.StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Doba na dokončení registrace (hodiny)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.DeleteNotFinishedRegistrationsAfterHours" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.DeleteNotFinishedRegistrationsAfterHours" class="text-danger"></span>
+            </div>
+
+            @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+            <div class="col-12 row">
+                <div class="col-md-6">
+                    <a class="btn btn-secondary" style="width: 100%" asp-action="Index" asp-controller="Administrator">Zpět</a>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary col-md-6 form-control" style="width: 100%">
+                        Vytvořit
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="../_OrganizationScriptPartial"/>
+}

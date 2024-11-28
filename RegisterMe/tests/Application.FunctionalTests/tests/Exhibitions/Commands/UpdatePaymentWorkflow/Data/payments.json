@@ -1,0 +1,31 @@
+[
+  {
+    "WorkflowName": "Payment",
+    "Rules": [
+      {
+        "RuleName": "PayByBankTransfer_CZK",
+        "Expression": "true"
+      },
+      {
+        "RuleName": "PayOnlineByCard_CZK",
+        "Expression": "true"
+      },
+      {
+        "RuleName": "PayInPlaceByCache_CZK",
+        "Expression": "true"
+      },
+      {
+        "RuleName": "PayByBankTransfer_EUR",
+        "Expression": "true"
+      },
+      {
+        "RuleName": "PayOnlineByCard_EUR",
+        "Expression": "true"
+      },
+      {
+        "RuleName": "PayInPlaceByCache_EUR",
+        "Expression": "true"
+      }
+    ]
+  }
+]

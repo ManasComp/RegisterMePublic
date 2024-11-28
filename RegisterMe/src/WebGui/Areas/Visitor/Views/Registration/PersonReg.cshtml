@@ -1,0 +1,48 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Controllers.RegistrationController.PersonPostEditModel
+
+@{
+    ViewBag.Title = "Registrace vystavovatele";
+}
+
+
+<nav class="navbar sticky-top navbar-light bg-light px-3" data-bs-spy="scroll" sticky-top id="navbar-example2">
+    <a href="#" onClick="history.go(-1)"> Zpět</a>
+    @if (Model.CanBeEdited)
+    {
+        <a asp-controller="Registration" asp-action="PersonEdit"
+           asp-route-registrationToExhibitionId="@Model.PersonRegistrationModel.RegistrationToExhibitionId">Upravit</a>
+    }
+</nav>
+
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+
+            <h1 class="text-center p-1">@ViewBag.Title</h1>
+
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="PersonEdit"
+                  class="row row justify-content-center align-items-center">
+                <input asp-for="@Model.PersonRegistrationModel.RegistrationToExhibitionId" type="hidden"/>
+
+                <partial name="_personRePartial" Model="@Model.PersonRegistrationModel"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const button = document.getElementById("myButton");
+
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                placeholder: "Vyberte...",
+                minimumResultsForSearch: -1
+            });
+        });
+
+
+    </script>
+}

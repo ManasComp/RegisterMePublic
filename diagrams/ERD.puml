@@ -1,0 +1,464 @@
+@startuml
+
+!theme plain
+
+skinparam handwritten false
+hide circle
+skinparam linetype ortho
+skinparam linetype polyline
+skinparam linetype disabled
+skinparam roundcorner 20
+skinparam shadowing false
+hide empty members
+
+skinparam  class {
+    BackgroundColor<<RegistrationToExhibitionGroup>> #d3ffd8
+}
+
+skinparam  class {
+    BackgroundColor<<CatRegistrationGroup>> #f6d6ad
+}
+
+skinparam  class {
+    BackgroundColor<<ExhibitionGroup>> #cfb9ec
+}
+
+skinparam  class {
+    BackgroundColor<<UserGroup>> #f7c0c8
+}
+
+skinparam  class {
+    BackgroundColor<<CagesGroup>> #c9d8b8
+}
+
+skinparam  class {
+    BackgroundColor<<system>> #f1f1f1
+}
+
+skinparam  class {
+    BackgroundColor<<OrganizationGroup>> #ffc6c6
+}
+
+skinparam  class {
+    BackgroundColor<<WorkflowGroup>> #bae1ff
+}
+
+class Addresses as "Addresses" <<ExhibitionGroup>> {
+   * Id: integer<<PK>>
+   --
+   - StreetAddress: text
+   - Latitude: text
+   - Longitude: text
+   --
+   * ExhibitionId: integer <<FK>>
+}
+class Advertisements as "Advertisements" <<ExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Description: text
+   - IsDefault: boolean
+   --
+   * ExhibitionId: integer <<FK>>
+}
+class AspNetRoleClaims as "AspNetRoleClaims" <<UserGroup>> {
+   * Id: integer <<PK>>
+   --
+   - ClaimType: text
+   - ClaimValue: text
+   --
+   * RoleId: text <<FK>>
+
+}
+class AspNetRoles as "AspNetRoles" <<UserGroup>> {
+   * Id: text <<PK>>
+   --
+   - Name: varchar(256)
+   - NormalizedName: varchar(256)
+   - ConcurrencyStamp: text
+}
+class AspNetUserClaims as "AspNetUserClaims" <<UserGroup>> {
+   * Id: integer <<PK>>
+   --
+   - ClaimType: text
+   - ClaimValue: text
+   --
+   * UserId: text <<FK>>
+}
+class AspNetUserLogins as "AspNetUserLogins" <<UserGroup>> {
+   * LoginProvider: text <<PK>>
+   * ProviderKey: text <<PK>>
+   --
+   - ProviderDisplayName: text
+   --
+   * UserId: text <<FK>>
+}
+class AspNetUserTokens as "AspNetUserTokens" <<UserGroup>> {
+   * vUserId: text <<PK>>
+   * LoginProvider: text <<PK>>
+   * Name: text <<PK>>
+   --
+   - Value: text
+}
+class AspNetUsers as "AspNetUsers" <<UserGroup>> {
+   * Id: text <<PK>>
+   --
+   - DateOfBirth: date
+   - FirstName: text
+   - LastName: text
+   - UserName: varchar(256)
+   - NormalizedUserName: varchar(256)
+   - Email: varchar(256)
+   - NormalizedEmail: varchar(256)
+   - EmailConfirmed: boolean
+   - PasswordHash: text
+   - SecurityStamp: text
+   - ConcurrencyStamp: text
+   - PhoneNumber: text
+   - PhoneNumberConfirmed: boolean
+   - TwoFactorEnabled: boolean
+   - LockoutEnd: timestamp with time zone
+   - LockoutEnabled: boolean
+   - AccessFailedCount: integer
+   --
+   * OrganizationId: integer <<FK>>
+}
+class Breeders as "Breeders" <<CatRegistrationGroup>> {
+   * Id: integer <<PK>>
+   --
+   - BreederIsSameAsExhibitor: boolean
+   - FirstName: text
+   - LastName: text
+   - Country: text
+   --
+   * ExhibitedCatId: integer <<FK>>
+   * LitterId: integer <<FK>>
+}
+class Cages as "Cages" <<CagesGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Length: integer
+   - Width: integer
+   - Height: integer
+   --
+   * RegistrationToExhibitionId: integer <<FK>>
+}
+class CatDays as "CatDays" <<CatRegistrationGroup>> {
+   * Id: integer <<PK>>
+   --
+   * RentedCageTypeId: integer <<FK>>
+   * ExhibitorsCage: integer <<FK>>
+   * ExhibitionDayId: integer <<FK>>
+   * CatRegistrationId: integer <<FK>>
+}
+class CatRegistrations as "CatRegistrations" <<CatRegistrationGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Note: text
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * RegistrationToExhibitionId: integer <<FK>>
+}
+class Amounts as "Amounts"{
+   * Id: integer <<PK>>
+   --
+   - Currency: integer
+   - Amount: numeric
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * PriceId: integer <<FK>>
+   * PaymentInfoId: integer <<FK>>
+   * AdvertisementId: integer <<FK>>
+}
+class DataProtectionKeys as "DataProtectionKeys" <<system>> {
+   * Id: integer <<PK>>
+   --
+   - FriendlyName: text
+   - Xml: text
+}
+class ExhibitedCats as "ExhibitedCats" <<CatRegistrationGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Sex: integer
+   - Neutered: boolean
+   - TitleBeforeName: text
+   - TitleAfterName: text
+   - Name: text
+   - Ems: text
+   - PedigreeNumber: text
+   - Colour: text
+   - Group: integer
+   - BirthDate: date
+   - Breed: text
+   --
+   * CatRegistrationId: integer <<FK>>
+}
+class ExhibitionDays as "ExhibitionDays" <<ExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Date: date
+   --
+   * ExhibitionId: integer <<FK>>
+}
+class Exhibitions as "Exhibitions" <<ExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Email: text
+   - Phone: text
+   - Name: text
+   - IsPublished: boolean
+   - Url: text
+   - BankAccount: text
+   - Iban: text
+   - Description: text
+   - RegistrationStart: date
+   - RegistrationEnd: date
+   - IsCancelled: boolean
+   - DeleteNotFinishedRegistrationsAfterHours: integer
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * OrganizationId: integer <<FK>>
+}
+class Exhibitors as "Exhibitors" <<UserGroup>> {
+   Id: integer
+   --
+   - Country: text
+   - City: text
+   - Street: text
+   - HouseNumber: text
+   - ZipCode: text
+   - Organization: text
+   - MemberNumber: text
+   - IsPartOfCsch: boolean
+   - IsPartOfFife: boolean
+   - EmailToOrganization: text
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * AspNetUserId: text <<FK>>
+}
+class Groups as "Groups" <<system>> {
+   * GroupId: text <<PK>>
+   --
+   - Name: text
+}
+class Litters as "Litters" <<CatRegistrationGroup>> {
+   * Id: integer
+   --
+   - PassOfOrigin: text
+   - NameOfBreedingStation: text
+   - BirthDate: date
+   - Breed: text
+   --
+   * CatRegistrationId: integer <<FK>>
+}
+class RulesEngineRules as "RulesEngineRules" <<WorkflowGroup>> {
+   * Id: integer <<PK>>
+   --
+   - RuleName: text
+   - Properties: text
+   - Operator: text
+   - ErrorMessage: text
+   - Enabled: boolean
+   - RuleExpressionType: integer
+   - Expression: text
+   - Actions: text
+   - SuccessEvent: text
+   --
+   * PriceAdjustmentWorkflowId: integer <<FK>>
+   * PriceTypeWorkflowId: integer <<FK>>
+   * RuleIDFK: integer <<FK>>
+}
+class RulesEngineScopedParams as "RulesEngineScopedParams" <<WorkflowGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Name: text
+   - Expression: text
+   --
+   * RulesEngineRuleId: integer <<FK>>
+   * PriceAdjustmentWorkflowId: integer <<FK>>
+   * PriceTypeWorkflowId: integer <<FK>>
+}
+class PriceAdjustmentWorkflows as "PriceAdjustmentWorkflows" <<WorkflowGroup>> {
+   * Id: integer <<PK>>
+   --
+   - WorkflowName: text
+   - RuleExpressionType: integer
+   --
+   * ExhibitionId: integer <<FK>>
+}
+class Organizations as "Organizations" <<OrganizationGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Name: text
+   - Email: text
+   - Ico: text
+   - TelNumber: text
+   - Website: text
+   - Address: text
+   - IsConfirmed: boolean
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+}
+class Parents as "Parents" <<CatRegistrationGroup>> {
+   * Id: integer <<PK>>
+   --
+   - TitleBeforeName: text
+   - TitleAfterName: text
+   - Name: text
+   - Ems: text
+   - PedigreeNumber: text
+   - Colour: text
+   - Breed: text
+   --
+   * ExhibitedCatIsMotherOfId: integer <<FK>>
+   * ExhibitedCatIsFatherOfId: integer <<FK>>
+   * LitterIsMotherOfId: integer <<FK>>
+   * LitterIsFatherOfId: integer <<FK>>
+}
+class PaymentInfos as "PaymentInfos" <<RegistrationToExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - PaymentRequestDate: timestamp with time zone
+   - PaymentCompletedDate: timestamp with time zone
+   - PaymentIntentId: text
+   - PaymentType: integer
+   - SessionId: text
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * RegistrationToExhibitionId: integer <<FK>>
+}
+class PersonRegistrations as "PersonRegistrations" <<RegistrationToExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - City: text
+   - Street: text
+   - HouseNumber: text
+   - ZipCode: text
+   - Organization: text
+   - MemberNumber: text
+   - FirstName: text
+   - LastName: text
+   - Country: text
+   - DateOfBirth: date
+   - Email: text
+   - PhoneNumber: text
+   - IsPartOfCsch: boolean
+   - IsPartOfFife: boolean
+   - EmailToOrganization: text
+   --
+   * RegistrationToExhibitionId: integer <<FK>>
+}
+class PriceTypeWorkflows as "PriceTypeWorkflows" <<WorkflowGroup>> {
+   * Id: integer <<PK>>
+   --
+   WorkflowName: text
+   RuleExpressionType: integer
+   --
+   * ExhibitionId: integer <<FK>>
+}
+class Prices as "Prices" <<ExhibitionGroup>> {
+   * Id: integer <<PK>>
+}
+class RegistrationsToExhibition as "RegistrationsToExhibition" <<RegistrationToExhibitionGroup>> {
+   * Id: integer <<PK>>
+   --
+   - LastNotificationSendOn: timestamp with time zone
+   --
+   - Created: timestamp with time zone
+   - CreatedBy: text
+   - LastModified: timestamp with time zone
+   - LastModifiedBy: text
+   --
+   * ExhibitionId: integer <<FK>>
+   * ExhibitorId: integer <<FK>>
+   * AdvertisementId: integer <<FK>>
+}
+class RentedCages as "RentedCages" <<CagesGroup>> {
+   * Id: integer <<PK>>
+   --
+   - Length: integer
+   - Width: integer
+   - Height: integer
+}
+class RentedTypes as "RentedTypes" <<CagesGroup>> {
+   * Id: integer <<PK>>
+   --
+   - RentedType: integer
+   --
+   * CageId: integer <<FK>>
+}
+class __EFMigrationsHistory as "__EFMigrationsHistory" <<system>> {
+   * MigrationId: varchar(150) <<PK>>
+   --
+   - ProductVersion: varchar(32)
+}
+
+Addresses                            ||--||  Exhibitions                         : "ExhibitionId:Id"
+Advertisements                       }|--||  Exhibitions                         : "ExhibitionId:Id"
+AspNetRoleClaims                     }o--||  AspNetRoles                         : "RoleId:Id"
+AspNetUserClaims                     }o--||  AspNetUsers                         : "UserId:Id"
+AspNetUserLogins                     }o--||  AspNetUsers                         : "UserId:Id"
+AspNetUsers                          }o--o{  AspNetRoles   
+AspNetUserTokens                     }o--||  AspNetUsers                         : "UserId:Id"
+AspNetUsers                          }|--o|  Organizations                       : "OrganizationId:Id"
+Breeders                             ||--o|  ExhibitedCats                       : "ExhibitedCatId:Id"
+Breeders                             ||--o|  Litters                             : "LitterId:Id"
+Cages                                }o--o|  RegistrationsToExhibition           : "RegistrationToExhibitionId:Id"
+CatDays                              }o--|{  Groups
+CatDays                              }|--o|  Cages                               : "ExhibitorsCage:Id"
+CatDays                              }|--||  CatRegistrations                    : "CatRegistrationId:Id"
+CatDays                              }o--||  ExhibitionDays                      : "ExhibitionDayId:Id"
+CatDays                              }o--o|  RentedTypes                         : "RentedCageTypeId:Id"
+CatRegistrations                     }o--||  RegistrationsToExhibition           : "RegistrationToExhibitionId:Id"
+ExhibitedCats                        |o--||  CatRegistrations                    : "CatRegistrationId:Id"
+ExhibitionDays                       }|--o{  Prices                              : "PriceId:Id"
+ExhibitionDays                       }|--||  Exhibitions                         : "ExhibitionId:Id"
+Exhibitions                          }o--||  Organizations                       : "OrganizationId:Id"
+Exhibitors                           |o--||  AspNetUsers                         : "AspNetUserId:Id"
+Litters                              |o--||  CatRegistrations                    : "CatRegistrationId:Id"
+RulesEngineRules                     }o--||  RulesEngineRules                    : "RuleIDFK:Id"
+RulesEngineRules                     }|--o|  PriceAdjustmentWorkflows                : "PriceAdjustmentWorkflowId:Id"
+RulesEngineRules                     }|--o|  PriceTypeWorkflows                  : "PriceTypeWorkflowId:Id"
+RulesEngineScopedParams              }o--o|  RulesEngineRules                    : "RulesEngineRuleId:Id"
+RulesEngineScopedParams              }o--o|  PriceAdjustmentWorkflows                : "PriceAdjustmentWorkflowId:Id"
+RulesEngineScopedParams              }o--o|  PriceTypeWorkflows                  : "PriceTypeWorkflowId:Id"
+PriceAdjustmentWorkflows                 }o--||  Exhibitions                         : "ExhibitionId:Id"
+Parents                              |o--o|  ExhibitedCats                       : "ExhibitedCatIsMotherOfId:Id"
+Parents                              |o--o|  ExhibitedCats                       : "ExhibitedCatIsFatherOfId:Id"
+Parents                              |o--o|  Litters                             : "LitterIsFatherOfId:Id"
+Parents                              |o--o|  Litters                             : "LitterIsMotherOfId:Id"
+PaymentInfos                         |o--||  RegistrationsToExhibition           : "RegistrationToExhibitionId:Id"
+PersonRegistrations                  ||--||  RegistrationsToExhibition           : "RegistrationToExhibitionId:Id"
+Prices                               }o--|{  Groups 
+PriceTypeWorkflows                   ||--||  Exhibitions                         : "ExhibitionId:Id"
+RegistrationsToExhibition            ||--|{  Advertisements                      : "AdvertisementId:Id"
+RegistrationsToExhibition            }o--||  Exhibitions                         : "ExhibitionId:Id"
+RegistrationsToExhibition            }|--||  Exhibitors                          : "ExhibitorId:Id"
+ExhibitionDays                       }|--o{  RentedCages
+RentedTypes                          }|--||  RentedCages
+Amounts                              }|-o|  Advertisements                      : "AdvertisementId:Id"
+Amounts                              ||-o|  PaymentInfos                        : "PaymentInfoId:Id"
+Amounts                              }|-o|  Prices                              : "PriceId:Id"
+@enduml

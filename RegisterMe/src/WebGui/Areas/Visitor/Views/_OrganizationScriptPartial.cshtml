@@ -1,0 +1,28 @@
+@if (TempData["secret"] != null && TempData["secret"]?.ToString() != "")
+{
+    <script>
+        let autocomplete;
+
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                    componentRestrictions: {country: ['cz']},
+                    fields: ['place_id', 'formatted_address', 'geometry', 'name']
+                });
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+
+        function onPlaceChanged() {
+            const place = autocomplete.getPlace();
+            if (!place.geometry) {
+                document.getElementById('autocomplete').placeholder = 'Enter a location';
+            } else {
+                document.getElementById('autocomplete').placeholder = '';
+            }
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=@TempData["secret"]&libraries=places&callback=initAutocomplete"
+        async defer></script>
+}

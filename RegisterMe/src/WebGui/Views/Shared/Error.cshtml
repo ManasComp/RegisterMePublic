@@ -1,0 +1,17 @@
+﻿@model WebGui.Areas.Visitor.Models.ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Chyba.</h1>
+<h2 class="text-danger">V průběhu zpracování Vašeho požadavku nastala chyba.</h2>
+<h3>
+    <b>Popis chyby: </b>@Model.ExceptionMessage
+</h3>
+<p>Pokud si myslíte, že se jedná o chybu systému, kontaktujte prosím administrátora.</p>
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}

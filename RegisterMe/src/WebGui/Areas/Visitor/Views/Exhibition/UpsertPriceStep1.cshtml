@@ -1,0 +1,49 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Controllers
+@model WebGui.Areas.Visitor.Models.PriceModels.PriceModelStep1
+@* ReSharper disable AccessToModifiedClosure *@
+
+@{
+    ViewBag.Title = "Cena 1/3";
+    Layout = "_Layout";
+}
+
+<div class="container align-items-center text-center">
+    <h1>Cena 1/3</h1>
+    <h3>Výstavní skupiny</h3>
+    Zvolte výstavní skupiny, které pro které bude cena platit
+</div>
+
+<form method="post" asp-controller="Exhibition" asp-action="UpsertPriceStep1"
+      class="p-2 d-flex flex-column justify-content-center align-items-center">
+    <input type="hidden" asp-for="ExhibitionId"/>
+    <ul style="list-style-type: none; padding: 0; margin: 0">
+        @for (var i = 0; i < Model.AvailableGroups.Count; i++)
+        {
+            <li class="form-check">
+                <input type="hidden" asp-for="@Model.AvailableGroups[i].Id"/>
+                <input type="hidden" asp-for="@Model.AvailableGroups[i].LabelName"/>
+
+                <input class="form-check-input" type="checkbox" checked="@Model.AvailableGroups[i].IsChecked"
+                       asp-for="@Model.AvailableGroups[i].IsChecked" id="group-@Model.AvailableGroups[i].Id">
+                <label class="form-check-label" for="group-@Model.AvailableGroups[i].Id">
+                    @Model.AvailableGroups[i].LabelName
+                </label>
+            </li>
+        }
+    </ul>
+
+    @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+    <div class="col-12 row">
+        <div class="col-md-6">
+            <a class="btn btn-secondary" style="width: 100%" asp-action="EditExhibition" asp-controller="Exhibition"
+               asp-route-id="@Model.ExhibitionId">Zrušit</a>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary col-md-6 form-control" style="width: 100%">
+                Další
+            </button>
+        </div>
+    </div>
+</form>

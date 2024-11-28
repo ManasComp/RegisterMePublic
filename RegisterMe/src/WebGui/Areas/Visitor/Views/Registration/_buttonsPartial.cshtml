@@ -1,0 +1,42 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Enums
+@using WebGui.Areas.Visitor.Controllers
+@model WebGui.Areas.Visitor.Models.StepModel
+
+
+<div class="row">
+    @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+    <div class="col-2 justify-content-center align-items-center">
+        <a class="btn btn-outline-danger" asp-area="Visitor" asp-controller="Registration" asp-action="DeleteTemp"
+           asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+            <i class="bi bi-trash3"></i>
+        </a>
+    </div>
+    <div class="col-4">
+        @if (Model.Step > 0)
+        {
+            <a asp-area="Visitor" asp-controller="Registration" asp-action="NavigationInCatRegistrationForm"
+               asp-route-target=@Target.Backward asp-route-registrationToExhibitionID=@Model.RegistrationToExhibitionId
+               asp-route-disabled="@Model.Disabled" asp-route-step="@Model.Step"
+               class="btn btn-outline-secondary form-control text-center ">
+                Zpět
+            </a>
+        }
+    </div>
+
+    <div class="col-6">
+        @if (Model is { Step: < (int)StepInRegistration.StartedSummary })
+        {
+            <button type="submit" class="btn btn-primary form-control " id="myButton">
+                Další
+            </button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary form-control " id="myButton">
+                Dokončit
+            </button>
+        }
+    </div>
+</div>

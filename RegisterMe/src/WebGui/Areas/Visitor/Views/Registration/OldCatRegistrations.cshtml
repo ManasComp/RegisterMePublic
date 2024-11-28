@@ -1,0 +1,33 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.PrefillModel
+@{
+    ViewBag.Title = "Předvyplnění";
+}
+
+<div class="text-center justify-content-center align-items-center">
+    <h1 class="row text-center justify-content-center text-primary p-5">Registrace kočky</h1>
+    <div class="container px-4 text-center justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+
+            <p>
+                V minulosti jste si již kočku registrovali.
+            </p>
+            <p>
+                <b>
+                    Můžete si nechat údaje kočky předvyplnit.
+                </b>
+            </p>
+
+            <a asp-controller="Registration" asp-action="UpsertCat" asp-route-disabled="false"
+               asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId" class="btn btn-primary m-3">Nechci</a>
+
+            @foreach (var cat in Model.Cats)
+            {
+                <a asp-controller="Registration" asp-action="PrefillData"
+                   asp-route-registrationToExhibitionID="@Model.RegistrationToExhibitionId"
+                   asp-route-prefillFromCatRegistrationId="@cat.CatRegistrationId"
+                   class="btn btn-outline-primary m-1">@cat.Label</a>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Identity.Pages.Account.Manage
+@model WebGui.Areas.Identity.Pages.Account.Manage.DownloadPersonalDataModel
+@{
+    ViewData["Title"] = "Sáthnout osobní data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

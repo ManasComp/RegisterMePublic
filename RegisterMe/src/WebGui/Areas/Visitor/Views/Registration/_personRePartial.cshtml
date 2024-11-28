@@ -1,0 +1,82 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.PersonRegistrationModel
+
+<input asp-for="@Model.ExhibitorId" type="hidden"/>
+<input asp-for="@Model.ExhibitionId" type="hidden"/>
+<input asp-for="@Model.Disabled" type="hidden"/>
+
+@if (Model.Advertisements.Count() > 1)
+{
+    <div class="row py-3 col-md-6 align-items-center justify-content-center">
+        <div class="col-md-4 col-5">
+            Propagace
+            <i data-toggle="tooltip" data-placement="top"
+               title="Uděláme Vám reklamu v letáku. V případě výběru Vás kontaktujeme emailem.">
+                ?
+            </i>
+        </div>
+        <div class="col-md-8 col-12">
+            <select asp-items="@Model.Advertisements" asp-for="@Model.SelectedAdvertisementId"
+                    class="js-example-basic-single form-select" disabled="@Model.Disabled"></select>
+            <input asp-for="@Model.Advertisements" type="hidden"/>
+            Pozor, propagace bývá zpoplatněna
+        </div>
+    </div>
+}
+else
+{
+    <input asp-for="@Model.SelectedAdvertisementId" type="hidden"/>
+}
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <h4>Zkontrolujte si prosím Vaše údaje</h4>
+    <p>
+        <strong>Křestní jméno:</strong> @Model.FirstName
+        <input asp-for="@Model.FirstName" type="hidden"/>
+    </p>
+    <p>
+        <strong>Příjmení:</strong> @Model.LastName
+        <input asp-for="@Model.LastName" type="hidden"/>
+    </p>
+    <p>
+        <strong>Telefonní číslo:</strong> @Model.PhoneNumber
+        <input asp-for="@Model.PhoneNumber" type="hidden"/>
+    </p>
+    <p>
+        <strong>Email:</strong> @Model.Email
+        <input asp-for="@Model.Email" type="hidden"/>
+    </p>
+    <p>
+        <strong>Adresa:</strong> @Model.Address
+        <input asp-for="@Model.City" type="hidden"/>
+        <input asp-for="@Model.Country" type="hidden"/>
+        <input asp-for="@Model.Street" type="hidden"/>
+        <input asp-for="@Model.HouseNumber" type="hidden"/>
+        <input asp-for="@Model.ZipCode" type="hidden"/>
+
+    </p>
+    <p>
+        <strong>Asociace:</strong> @Model.Organization
+        <input asp-for="@Model.Organization" type="hidden"/>
+    </p>
+    <p>
+        <strong>Členské číslo:</strong> @Model.MemberNumber
+        <input asp-for="@Model.MemberNumber" type="hidden"/>
+    </p>
+    <p>
+        <strong>Datum narození:</strong> @Model.DateOfBirth.ToString("dd. MM. yyyy")
+        <input asp-for="@Model.DateOfBirth" type="hidden"/>
+    </p>
+    <p>
+        <strong>Člen ČSCH:</strong> @(Model.IsPartOfCsch ? "Ano" : "Ne")
+        <input asp-for="@Model.IsPartOfCsch" type="hidden"/>
+    </p>
+    <p>
+        <strong>Člen FIFe:</strong> @(Model.IsPartOfFife ? "Ano" : "Ne")
+        <input asp-for="@Model.IsPartOfFife" type="hidden"/>
+    </p>
+    <p>
+        <strong>Email Vaší organizace</strong> @Model.EmailToOrganization
+        <input asp-for="@Model.EmailToOrganization" type="hidden"/>
+    </p>
+</div>

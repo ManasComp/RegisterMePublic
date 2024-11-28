@@ -1,0 +1,271 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.input-group {
+    margin-top: 30px;
+    position: relative;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group-addon {
+    border: none;
+}
+
+.linkname {
+    display: none;
+}
+
+#copyButton {
+    cursor: pointer;
+}
+
+#copyTarget {
+    border-left: none;
+}
+
+.copied {
+    opacity: 1;
+    position: absolute;
+    left: 55px;
+}
+
+@media (min-width: 768px) {
+    .copied {
+        left: 135px;
+    }
+
+    .linkname {
+        display: block;
+    }
+}
+
+.form-background {
+    background-color: #f5d6d6;
+    box-shadow: 0 0 30px 30px #f5d6d6;
+}
+
+.signUpForm {
+    background-color: #ffffff;
+    margin: 40px 5px;
+    padding: 40px 5px;
+    box-shadow: 0px 6px 18px rgb(0 0 0 / 9%);
+    border-radius: 12px;
+}
+
+.signUpForm .form-header {
+    gap: 5px;
+    text-align: center;
+    font-size: .9em;
+}
+
+.signUpForm .form-header .stepIndicator {
+    position: relative;
+    flex: 1;
+    padding-bottom: 30px;
+}
+
+.signUpForm .form-header .stepIndicator.active {
+    font-weight: 600;
+    color: #ff00aa;
+    animation: scaleUp 0.8s;
+}
+
+.signUpForm .form-header .stepIndicator.finish {
+    font-weight: 600;
+    color: #b20e0e;
+
+}
+
+.signUpForm .form-header .stepIndicator::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 9;
+    width: 20px;
+    height: 20px;
+    background-color: #d5efed;
+    border-radius: 50%;
+    border: 3px solid #ecf5f4;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.signUpForm.form-header .stepIndicator.active::before {
+    background-color: #ff0000;
+    border: 5px solid #ff00a8;
+}
+
+.signUpForm .form-header .stepIndicator.finish::before {
+    background-color: #a21010;
+    border: 3px solid #b12080;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.signUpForm .form-header .stepIndicator::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 100%;
+    height: 3px;
+    background-color: #f3f3f3;
+    transition: 1s;
+}
+
+.signUpForm.form-header .stepIndicator.active::after {
+    transition: color 0.3s ease;
+}
+
+.signUpForm .form-header .stepIndicator.finish::after {
+    background-color: #b20e0e;
+}
+
+.signUpForm .form-header .stepIndicator:last-child:after {
+    display: none;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideaway {
+    from {
+        display: block;
+    }
+    to {
+        transform: translateY(-40px);
+        opacity: 0
+    }
+}
+
+@keyframes slideto {
+    from {
+        transform: translateY(-40px);
+        opacity: 0
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1
+    }
+}
+
+.hide {
+    animation: slideaway 500ms;
+}
+
+.show0 {
+    animation: slideto 500ms;
+}
+
+@keyframes slideaway1 {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0
+    }
+}
+
+@keyframes slideto1 {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+.hide1 {
+    animation: slideaway1 500ms;
+}
+
+.show1 {
+    animation: slideto1 500ms;
+}
+
+.my_text_muted {
+    --bs-text-opacity: 1;
+    color: #6c757d !important;
+    opacity: 0.3;
+}
+
+@media screen and (max-width: 768px) {
+    .multi-line-table thead, .multi-line-table tbody, .multi-line-table th, .multi-line-table td, .multi-line-table tr {
+        display: block;
+    }
+
+    .multi-line-table tr {
+        margin-bottom: 0.625rem;
+    }
+
+    .multi-line-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .multi-line-table td::before {
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+code {
+    white-space: pre;
+    font-family: Consolas, monospace;
+
+    .string {
+        color: maroon;
+    }
+
+    .number {
+        color: black;
+    }
+
+    .boolean,
+    .null {
+        color: blue;
+    }
+
+    .key {
+        color: teal;
+    }
+}

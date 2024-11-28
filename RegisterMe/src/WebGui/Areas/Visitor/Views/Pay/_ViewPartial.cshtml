@@ -1,0 +1,140 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Models
+@model WebGui.Areas.Visitor.Models.PayInformationVm
+
+<div class="container justify-content-center text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>
+                        Popis
+                    </th>
+                    @if (!Model.CatRegistrationStats.Any())
+                    {
+                        <th>
+                        </th>
+                    }
+                    else
+                    {
+                        @foreach (var x in Model.CatRegistrationStats)
+                        {
+                            <th>@x.Date.ToString("dd.MM.")</th>
+                        }
+                    }
+                </tr>
+                @if (Model.CatRegistrationStats.Any(x => x.NumberOfCats > 0))
+                {
+                    <tr>
+                        <td>
+                            <b>Počet koček</b>
+                        </td>
+                        @foreach (var x in Model.CatRegistrationStats)
+                        {
+                            <td>@x.NumberOfCats</td>
+                        }
+                    </tr>
+                }
+                @if (Model.CatRegistrationStats.Any(x => x.OwnCages > 0))
+                {
+                    <tr>
+                        <td>
+                            <b>Počet vlastních klecí</b>
+                        </td>
+                        @foreach (var x in Model.CatRegistrationStats)
+                        {
+                            <td>@x.OwnCages</td>
+                        }
+                    </tr>
+                }
+                @if (Model.CatRegistrationStats.Any(x => x.RentedCages.NumberOfSingleCages > 0))
+                {
+                    <tr>
+                        <td>
+                            <b>Počet půjčených jednoduchých klecí</b>
+                        </td>
+                        @foreach (var x in Model.CatRegistrationStats)
+                        {
+                            <td>@x.RentedCages.NumberOfSingleCages</td>
+                        }
+                    </tr>
+                }
+                @if (Model.CatRegistrationStats.Any(x => x.RentedCages.NumberOfDoubleCages > 0))
+                {
+                    <tr>
+                        <td>
+                            <b>Počet půjčených dvojitých klecí</b>
+                        </td>
+                        @foreach (var x in Model.CatRegistrationStats)
+                        {
+                            <td>@x.RentedCages.NumberOfDoubleCages</td>
+                        }
+                    </tr>
+                }
+
+                <tr>
+                    <td>
+                        <b>Celková cena </b>
+                    </td>
+                    <td colspan="@Model.CatRegistrationStats.Count" class="text-danger">
+                        @string.Join(" | ", Model.CurrencyUserCanPayIn.Select(x => Model.RegistrationToExhibitionPrice.GTotalPrice.GetStringForCurrency(x)))
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr class="bg-primary-subtle">
+                <th scope="col" class="bg-primary-subtle">Poplatek</th>
+                <th scope="col" class="bg-primary-subtle">Cena</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <b>Cena za registraci uživatele</b>
+                </td>
+                <td>
+                    <a asp-area="Visitor" asp-controller="Registration" asp-action="PersonReg"
+                       asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">Zobrazit</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Základní cena</td>
+                <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(currency => Model.RegistrationToExhibitionPrice.AdvertisementPrice.GetStringForCurrency(currency)))</td>
+            </tr>
+
+            @foreach (var x in Model.RegistrationToExhibitionPrice.CatRegistrationPrices)
+            {
+                <tr>
+                    <td>
+                        <b>Cena za registraci @x.CatName</b>
+                    </td>
+                    <td>
+                        <a asp-area="Visitor" asp-controller="Registration" asp-action="AllData"
+                           asp-route-catRegistrationId="@x.CatRegistrationId"
+                           asp-route-editor="@IsEditor.User">Zobrazit</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Základní cena</td>
+                    <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(currency => x.CatRegistrationPriceWithoutFees.GetStringForCurrency(currency)))</td>
+                </tr>
+                @foreach (var y in x.CatRegistrationFees)
+                {
+                    <tr>
+                        <td>@y.FeeName</td>
+                        <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(currency => y.Price.GetStringForCurrency(currency)))</td>
+                    </tr>
+                }
+            }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

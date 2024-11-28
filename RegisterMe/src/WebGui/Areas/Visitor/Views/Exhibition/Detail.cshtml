@@ -1,0 +1,150 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.IdentityModel.Tokens
+@using RegisterMe.Application.Exhibitions.Enums
+@model WebGui.Areas.Visitor.Models.ExhibitionDetailModel
+
+@{
+    ViewBag.Title = "Detail výstavy";
+}
+<div class="container">
+    <div class="row text-center">
+        <div class="p-5">
+            <h1 class="text-primary">@Model.Name</h1>
+            <a class="text-muted" asp-area="Visitor" asp-controller="Organization" asp-action="Detail"
+               asp-route-organizationId="@Model.OrganizationDto.Id">
+                <h2>@Model.OrganizationDto.Name</h2>
+            </a>
+        </div>
+
+        @if (Model.IsCancelled)
+        {
+            <div class="bg-primary border-3 text-center">
+                <b>Zrušeno</b>
+            </div>
+        }
+
+    </div>
+    <div class="row text-center justify-content-center">
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-calendar3 h1" style="color: red"></i>
+            </div>
+            <div class="col-9 col-sm-4 text-center">
+                Datum:
+                <h5> @Model.ExhibitionStart.Day.ToString() - @Model.ExhibitionEnd.ToString("dd. MM. yyyy")</h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-clock h1" style="color: red"></i>
+            </div>
+            <div class="col-9 col-sm-4 text-center">
+                Přihlásit do:
+                <h5>@Model.RegistrationEnd.ToString("dd. MM. yyyy")</h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-telephone-fill h1" style="color: red"></i>
+            </div>
+            <div class="col-9 col-sm-4 text-center">
+                Telefon:
+                <h5>
+                    <a href="tel:@Model.Phone">@Model.Phone</a>
+                </h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-envelope-at-fill h1" style="color: red"></i>
+            </div>
+            <div class="col-9 col-sm-4 text-center">
+                Email:
+                <h5>
+                    <a href="mailto:@Model.Email.">@Model.Email</a>
+                </h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-geo-alt-fill h1" style="color: red"></i>
+            </div>
+
+            <div id="copyButton" title="Click to copy" style="text-align: center;"
+                 class="col-9 col-sm-4  text-center img-fluid">
+                Kde:
+                <h5>@Model.AddressDto.StreetAddress</h5>
+                <div class="text-muted">
+                    @Model.AddressDto.Latitude N
+                    <br/>
+                    @Model.AddressDto.Longitude E
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <a href="@Model.Url" type="button" target="_blank" class="btn" style="color: red">
+                <i class="bi bi-paperclip h2"></i>
+                <h2>Informační leták</h2>
+            </a>
+        </div>
+    </div>
+    @if (!Model.GoogleApiKey.IsNullOrEmpty())
+    {
+        <div class="col-sm-12 row p-3 justify-content-center align-items-center">
+            <iframe
+                style="border:0; width: 100vw; height: 30vh;"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src="@($"https://www.google.com/maps/embed/v1/place?key={Model.GoogleApiKey}&q={Model.AddressDto.Latitude},{Model.AddressDto.Longitude}")">
+            </iframe>
+        </div>
+    }
+
+    @if (Model is { IsCancelled: false, IsPublished: true })
+    {
+        <div class="col-sm-12 row p-3 justify-content-center align-items-center">
+            @if (Model is { Status: ExhibitionStatus.RegistrationInProgress, IsRegistered: false })
+            {
+                <a class="btn btn-primary" asp-area="Visitor" asp-controller="Registration"
+                   asp-action="RegistrationOrLogin" asp-route-exhibitionId="@Model.Id"
+                   asp-route-returnUrl="@($"/Visitor/Registration/PersonRegistration?exhibitionId={Model.ExhibitionId}")">
+                    <h1>Registruj mě!</h1>
+                </a>
+                @if (!Model.IsExhibitionManager)
+                {
+                    <div class="w-25 justify-content-center align-items-center text-center" style="align-self: center">
+                        <a href="https://pixabay.com/illustrations/cat-kitten-cat-baby-paws-purr-7896080/">
+                            <img src="https://cdn.pixabay.com/photo/2023/04/03/06/32/cat-7896080_640.png"
+                                 class="img-fluid align-items-center" alt=""/>
+                        </a>
+                    </div>
+                }
+            }
+            else if (Model.IsRegistered)
+            {
+                <h1 class="text-center">Registrace už byla odeslaná</h1>
+            }
+            else
+            {
+                <h1 class="text-center">Registrace právě neprobíhá</h1>
+            }
+        </div>
+    }
+    @if (Model.IsExhibitionManager)
+    {
+        <div class="col-sm-12 row p-3 justify-content-center align-items-center">
+            <a class="btn btn-primary" asp-area="Visitor" asp-controller="RegistrationToExhibition"
+               asp-action="AdminIndex" asp-route-exhibitionId="@Model.Id">
+                <h1>Administrace</h1>
+            </a>
+        </div>
+    }
+</div>

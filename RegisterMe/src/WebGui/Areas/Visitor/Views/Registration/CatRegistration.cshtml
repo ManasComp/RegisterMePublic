@@ -1,0 +1,37 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Enums
+@model WebGui.Areas.Visitor.Models.CatModel
+@{
+    ViewBag.Title = "Registrace kočky";
+}
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+            @await Html.PartialAsync("_RegistrationPartial", Model.RegistrationType)
+            <h1 class="text-center">
+                @if (Model.Gender == Gender.Female)
+                {
+                    <h3 class="text-center"><i class="bi bi-gender-female"> </i> Matka </h3>
+                }
+                else
+                {
+                    <h3 class="text-center"><i class="bi bi-gender-male"> </i> Otec </h3>
+                }
+            </h1>
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="UpsertParent" class="row"
+                  id="formToSubmit">
+                <input asp-for="@Model.Step" type="hidden"/>
+                <input asp-for="@Model.Gender" type="hidden"/>
+                <input asp-for="@Model.Disabled" type="hidden"/>
+                <input asp-for="@Model.RegistrationToExhibitionId" type="hidden"/>
+                <partial name="_CatPartial" Model="@Model"/>
+                <partial name="_buttonsPartial" Model="@Model"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_scriptPartial" Model="@Model.Step"/>
+}

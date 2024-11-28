@@ -1,0 +1,112 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Constants
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.TagHelpers
+@model RegisterMe.Application.Organizations.Dtos.OrganizationDto
+@{
+    ViewBag.Title = "Detail organizace";
+}
+<div class="container">
+    <div class="row text-center">
+        <div class="p-5">
+            <h1 class="text-primary">@Model.Name</h1>
+        </div>
+
+        <a href="@Model.Website" type="button" class="btn btn-outline-info">
+            <i class="bi bi-paperclip h2"></i>
+            <h2>@Model.Website</h2>
+        </a>
+    </div>
+    <div class="row text-center justify-content-center">
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-calendar3 h1" style="color: red"></i>
+            </div>
+            <div class="col-5 col-sm-4 text-center">
+                IČO:
+                <h5>@Model.Ico</h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-telephone-fill h1" style="color: red"></i>
+            </div>
+            <div class="col-5 col-sm-4 text-center">
+                Telefon:
+                <h5>
+                    <a href="tel:@Model.TelNumber">@Model.TelNumber</a>
+                </h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-envelope-at-fill h1" style="color: red"></i>
+            </div>
+            <div class="col-5 col-sm-4 text-center">
+                Email:
+                <h5>
+                    <a href="mailto:@Model.Email">@Model.Email</a>
+                </h5>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="col-3 col-sm-2 align-items-center p-0">
+                <i class="bi bi-geo-alt-fill h1" style="color: red"></i>
+            </div>
+
+            <div id="copyButton" title="Click to copy" style="text-align: center;"
+                 class="col-9 col-sm-4  text-center img-fluid">
+                Adresa:
+                <h5>@Model.Address</h5>
+            </div>
+        </div>
+
+
+        @if (!Model.IsConfirmed)
+        {
+            <div class="bg-warning text-center m-3" style="border-radius: 5rem">
+                <b>Organizace ještě není potvrzena</b>
+            </div>
+            @if (User.IsInRole(Roles.Administrator))
+            {
+                <Confirmation asp-area="@nameof(Areas.Visitor)"
+                              asp-controller="@nameof(OrganizationController)"
+                              asp-action="@nameof(OrganizationController.ConfirmOrganization)"
+                              title="Jste si jistý/á?"
+                              text="Toto už nejde vrátit."
+                              confirm-text="Ano, potvrdit"
+                              class="btn btn-primary"
+                              form-data="@(new Dictionary<string, string> { { "OrganizationId", Model.Id.ToString() } })">
+                    Potvrdit organizaci
+                </Confirmation>
+
+                <Confirmation asp-area="@nameof(Areas.Visitor)"
+                              asp-controller="@nameof(OrganizationController)"
+                              asp-action="@nameof(OrganizationController.DeleteOrganization)"
+                              title="Jste si jistý/á?"
+                              text="Toto už nejde vrátit."
+                              confirm-text="Ano, odstranit"
+                              class="btn btn-primary m-3"
+                              form-data="@(new Dictionary<string, string> { { "OrganizationId", Model.Id.ToString() } })">
+                    Smazat organizaci
+                </Confirmation>
+            }
+        }
+    </div>
+
+    <div class="col-sm-12 row p-3 justify-content-center align-items-center">
+        <a class="btn btn-primary" asp-area="Visitor" asp-controller="Exhibition" asp-action="Index"
+           asp-route-organizationId="@Model.Id">
+            <h1>Spravované výstavy</h1>
+        </a>
+        <div class="w-25 justify-content-center align-items-center text-center" style="align-self: center">
+            <img src="https://cdn.pixabay.com/photo/2023/04/03/06/32/cat-7896080_640.png"
+                 class="img-fluid align-items-center" alt=""/>
+        </div>
+    </div>
+</div>

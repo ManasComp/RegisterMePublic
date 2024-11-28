@@ -1,0 +1,174 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Enums
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.TagHelpers
+@model WebGui.Areas.Visitor.Models.PayInformationVm
+
+@{
+    ViewBag.Title = "Platba";
+}
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+
+            <h1 class="text-center">Platba</h1>
+
+            <partial name="_ViewPartial" Model="@Model"/>
+            <input type="hidden" asp-for="@Model.RegistrationToExhibitionId"/>
+
+            <p>
+                <a class="col col-lg-4 btn btn-primary img-fluid w-100" asp-area="Visitor" asp-controller="Registration"
+                   asp-action="LitterOrCat" asp-route-editing="true"
+                   asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+                    Registrovat@(Model.CatRegistrationStats.Count > 0 ? " další" : "") kočku
+                </a>
+            </p>
+
+            <p>
+                <Confirmation asp-area="@nameof(Areas.Visitor)"
+                              asp-controller="@nameof(RegistrationController)"
+                              asp-action="@nameof(RegistrationController.DeleteRegistrationToRegistration)"
+                              title="Jste si jistý/á?"
+                              text="Smažete celou registraci"
+                              confirm-text="Ano"
+                              class="col col-lg-4 btn btn-outline-danger img-fluid w-100"
+                              form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() } })">
+                    <i class="bi bi-trash3"></i>
+                    Smazat registraci
+                    <i class="bi bi-trash3"></i>
+                </Confirmation>
+            </p>
+        </div>
+    </div>
+</div>
+
+@if (Model.CatRegistrationStats.Count > 0)
+{
+    <div class="form-background">
+        <div class="text-info text-center">
+            <h2>Po kliknutí na tlačítko zaplatit už nebude možné změnit údaje</h2>
+            <h3>Informace poskytnuté tímto systémem jsou pouze informativní, v případě nesrovnalostí má vždy pravdu
+                organizace, která výstavy pořádá. Vše zkontrolujte vůči propozicím.</h3>
+            <h3>
+                Odesláním potvrzujete, že uvedené údaje jsou pravdivé a jste seznámen(a) s <a
+                    href="https://www.schk.cz/rad_vyst.html" target=”_blank>výstavním řádem</a>, s výstavními podmínkami
+                a že pořadatel výstavy smí poskytnuté údaje uchovávat a používat při
+                zpracování této přihlášky, výstavního katalogu a výsledků.
+            </h3>
+            <h4 class="text-bg-secondary p-1">Klece máte zarezervované na omezenou dobu, zbytečně platbu neodkládejte.
+                Operace dokončení registrace chvíli trvá, neklikejte znovu.</h4>
+        </div>
+        <div method="post" class="row signUpForm" enctype="multipart/form-data">
+            <div class="step">
+                @foreach (var currency in Model.PaymentTypes.Where(x => x.PaymentType == PaymentType.PayOnlineByCard).Select(x => x.Currency))
+                {
+                    @if (Model.CanPay[currency])
+                    {
+                        <div>
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(PayController)"
+                                          asp-action="@nameof(PayController.PayOnline)"
+                                          title="Jste si jistý/á?"
+                                          text="Budete platit online"
+                                          confirm-text="Ano"
+                                          class="btn btn-primary form-control"
+                                          form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() }, { "currency", currency.ToString() } })">
+                                Zaplatit
+                                online @(Model.RegistrationToExhibitionPrice.GTotalPrice.GetStringForCurrency(currency))
+                            </Confirmation>
+
+                        </div>
+                        <hr/>
+                    }
+                }
+                @foreach (var currency in Model.PaymentTypes.Where(x => x.PaymentType == PaymentType.PayByBankTransfer).Select(x => x.Currency))
+                {
+                    <div>
+                        Registrace bude platná až po úspěšném uhrazení startovného. Zpráva MUSÍ mít následující formát,
+                        jinak nemusí být příjmuta.
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-8 col-12 table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <td>
+                                            <b>IBAN</b>
+                                        </td>
+                                        <td>@Model.Iban</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Účet</b>
+                                        </td>
+                                        <td>@Model.NormalAccount</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>VS</b>
+                                        </td>
+                                        <td>@Model.VariableSymbol</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Cena</b>
+                                        </td>
+                                        <td>@(Model.RegistrationToExhibitionPrice.GTotalPrice.GetStringForCurrency(currency))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Zpráva pro příjemce</b>
+                                        </td>
+                                        <td>@Model.Message</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-6 justify-content-center text-center">
+                                <div class="row justify-content-center text-center">
+                                    <img width="250" src="@Model.QrCodes[currency]" class="img img-responsive mx-auto"
+                                         alt="qr kod"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                      asp-controller="@nameof(PayController)"
+                                      asp-action="@nameof(PayController.PayByBankTransfer)"
+                                      title="Jste si jistý/á?"
+                                      text="Budete platit převodem"
+                                      confirm-text="Ano"
+                                      class="btn btn-primary form-control"
+                                      form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() }, { "currency", currency.ToString() } })">
+                            Se vším souhlasím, zaplatím převodem
+                        </Confirmation>
+
+                    </div>
+                    <hr/>
+                }
+                @foreach (var currency in Model.PaymentTypes.Where(x => x.PaymentType == PaymentType.PayInPlaceByCache).Select(x => x.Currency))
+                {
+                    <div class="align-items-center justify-content-center text-center">
+                        Platbu ve
+                        výši @(Model.RegistrationToExhibitionPrice.GTotalPrice.GetStringForCurrency(currency)) provedete
+                        na místě.
+
+                        <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                      asp-controller="@nameof(PayController)"
+                                      asp-action="@nameof(PayController.PayInPlace)"
+                                      title="Jste si jistý/á?"
+                                      text="Budete platit na až místě"
+                                      confirm-text="Ano"
+                                      class="btn btn-primary form-control"
+                                      form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() }, { "currency", currency.ToString() } })">
+                            Se vším souhlasím, zaplatím na místě
+                        </Confirmation>
+                    </div>
+                    <hr/>
+                }
+            </div>
+        </div>
+    </div>
+}

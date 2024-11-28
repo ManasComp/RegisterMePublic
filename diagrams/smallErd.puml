@@ -1,0 +1,74 @@
+@startuml
+!theme plain
+
+skinparam handwritten false
+hide circle
+hide empty members
+skinparam linetype ortho
+skinparam linetype polyline
+skinparam linetype disabled
+skinparam roundcorner 5
+skinparam shadowing false
+
+skinparam  class {
+    BackgroundColor<<RegistrationToExhibitionGroup>> #d3ffd8
+}
+class RegistrationToExhibition as "RegistrationToExhibition" <<RegistrationToExhibitionGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<CatRegistrationGroup>> #f6d6ad
+}
+class CatRegistrations as "CatRegistrations" <<CatRegistrationGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<ExhibitionGroup>> #cfb9ec
+}
+class Exhibitions as "Exhibitions" <<ExhibitionGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<UserGroup>> #f7c0c8
+}
+class Users as "Users" <<UserGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<CagesGroup>> #c9d8b8
+}
+class Cages as "Cages" <<CagesGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<system>> #f1f1f1
+}
+class Systems as "Systems" <<system>> {
+}
+
+skinparam  class {
+    BackgroundColor<<OrganizationGroup>> #ffc6c6
+}
+class Organizations as "Organizations" <<OrganizationGroup>> {
+}
+
+skinparam  class {
+    BackgroundColor<<WorkflowGroup>> #bae1ff
+}
+class Workflows as "Workflows" <<WorkflowGroup>> {
+}
+
+Organizations -- Users
+Organizations -- Exhibitions
+Exhibitions -- Workflows
+Exhibitions -- Cages
+Exhibitions -- Systems
+Exhibitions -- CatRegistrations
+CatRegistrations -- RegistrationToExhibition
+RegistrationToExhibition -- Users
+RegistrationToExhibition -- Exhibitions
+CatRegistrations -- Systems
+CatRegistrations -- Cages
+RegistrationToExhibition -- Cages
+
+@enduml

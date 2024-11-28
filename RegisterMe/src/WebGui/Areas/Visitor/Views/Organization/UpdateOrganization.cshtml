@@ -1,0 +1,89 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Controllers
+@model RegisterMe.Application.Organizations.Dtos.UpdateOrganizationDto
+
+@{
+    ViewBag.Title = "Aktualizace organizace";
+}
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1>Aktualizace organizace</h1>
+
+        <form method="post" asp-controller="Organization" asp-action="UpdateOrganization" class="row">
+            <input asp-for="@Model.Id" type="hidden"/>
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Název
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Name" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Email
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Email" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Telefonní číslo
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.TelNumber" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.TelNumber" class="text-danger"></span>
+            </div>
+
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Webová stránka
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Website" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Website" class="text-danger"></span>
+            </div>
+
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Adresa
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Address" id="autocomplete" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+            </div>
+
+            @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+            <div class="row col-12">
+                <div class="col-md-6">
+                    <a type="submit" class="btn btn-secondary form-control" asp-controller="Administrator"
+                       asp-action="Index">
+                        Zpět
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary form-control">
+                        Aktualizovat
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="../_OrganizationScriptPartial"/>
+}

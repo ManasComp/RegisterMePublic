@@ -1,0 +1,15 @@
+@using RegisterMe.Application.CatRegistrations.Enums
+@model RegisterMe.Application.CatRegistrations.Enums.RegistrationType
+
+<div class="row">
+    <div class="form-header d-flex mb-4">
+        <span class="stepIndicator">Kočka</span>
+        @if (Model != RegistrationType.HomeExhibitedCat)
+        {
+            <span class="stepIndicator">Otec</span>
+            <span class="stepIndicator">Matka</span>
+        }
+        <span class="stepIndicator">Výstava</span>
+        <span class="stepIndicator">Platba</span>
+    </div>
+</div>

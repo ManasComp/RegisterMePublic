@@ -1,0 +1,111 @@
+services:
+
+  postgresDb:
+    container_name: postgresDb
+    image: postgresdb
+    ports:
+      - ${DB_PORT}:5432
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./volumes/postgresData:/var/lib/postgresql/data
+    command: postgres -c ssl=on -c ssl_cert_file=/var/lib/postgresql/postgresdb.crt -c ssl_key_file=/var/lib/postgresql/postgresdb.key -c ssl_ca_file=/var/lib/postgresql/myCA.crt -c ssl_crl_file=/var/lib/postgresql/myCA.crl -c ssl_passphrase_command='echo admin' && echo 'hostssl all all all cert clientcert=verify-ca' > /var/lib/postgresql/data/pg_hba.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}" ]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  webgui:
+    container_name: webgui
+    ports:
+      - ${CLIENT_PORT}:8080
+      - ${CLIENT_HTTPS_PORT}:443
+    build:
+      context: .
+      dockerfile: src/WebGui/Dockerfile
+    depends_on:
+      postgresDb:
+        condition: service_healthy
+      webapi:
+        condition: service_healthy
+    environment:
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: ${CONNECTIONSTRINGS__DEFAULTCONNECTION}
+      ASPNETCORE_URLS: http://+:8080;https://+:443
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CLIENT_CERTIFICATE_PASSWORD}
+      ASPNETCORE_Kestrel__Certificates__Default__Path: ${CLIENT_CERTIFICATE_PATH}
+      EMAIL__HOST: ${EMAIL__HOST}
+      EMAIL__MAIL: ${EMAIL__MAIL}
+      EMAIL__PORT: ${EMAIL__PORT}
+      EMAIL__PASSWORD: ${EMAIL__PASSWORD}
+      STRIPE__SECRETKEY: ${STRIPE__SECRETKEY}
+      STRIPE__PUBLISHABLEKEY: ${STRIPE__PUBLISHABLEKEY}
+      GOOGLEMAPS__MAPAPIKEY: ${GOOGLEMAPS__MAPAPIKEY}
+      GOOGLEMAPS__AUTOCOMPLETEKEY: ${GOOGLEMAPS__AUTOCOMPLETEKEY}
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    volumes:
+      - ./certs/certificates:/https:ro
+
+  webapi:
+    healthcheck:
+      test: "curl -f http://localhost:8080/health"
+    container_name: webapi
+    image: webapi
+    ports:
+      - ${API_PORT}:8080
+      - ${API_HTTPS_PORT}:${API_HTTPS_PORT}
+    build:
+      context: .
+      dockerfile: src/WebApi/Dockerfile
+    depends_on:
+      postgresDb:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: ${CONNECTIONSTRINGS__DEFAULTCONNECTION}
+      ASPNETCORE_URLS: http://+:8080;https://+:${API_HTTPS_PORT}
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${API_CERTIFICATE_PASSWORD}
+      ASPNETCORE_Kestrel__Certificates__Default__Path: ${API_CERTIFICATE_PATH}
+      EMAIL__HOST: ${EMAIL__HOST}
+      EMAIL__MAIL: ${EMAIL__MAIL}
+      EMAIL__PORT: ${EMAIL__PORT}
+      EMAIL__PASSWORD: ${EMAIL__PASSWORD}
+      STRIPE__SECRETKEY: ${STRIPE__SECRETKEY}
+      STRIPE__PUBLISHABLEKEY: ${STRIPE__PUBLISHABLEKEY}
+      GOOGLEMAPS__MAPAPIKEY: ${GOOGLEMAPS__MAPAPIKEY}
+      GOOGLEMAPS__AUTOCOMPLETEKEY: ${GOOGLEMAPS__AUTOCOMPLETEKEY}
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    volumes:
+      - ./certs/certificates:/https:ro
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PG_PASSWORD}
+    ports:
+      - ${PG_PORT}:80
+    depends_on:
+      postgresDb:
+        condition: service_healthy
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+      - ./volumes/pgadmin_data:/var/lib/pgadmin
+    
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+    ports:
+      - ${SEQ_PORT}:80
+      - ${SEQ_HTTPS_PORT}:5341
+    volumes:
+      - ./volumes/logs:/data

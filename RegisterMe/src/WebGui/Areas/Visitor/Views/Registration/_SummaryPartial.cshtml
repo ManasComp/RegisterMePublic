@@ -1,0 +1,90 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Application.CatRegistrations.Enums
+@using RegisterMe.Domain.Enums
+@model WebGui.Areas.Visitor.Models.SummaryVm
+
+
+<div class="row">
+    @if (Model.CatRegistrationDto.ExhibitedCat != null)
+    {
+        <div class="col-md-6 py-3">
+            <h4>Informace o vystavované kočce</h4>
+            <p>
+                <strong>Jméno:</strong> @($"{Model.CatRegistrationDto.ExhibitedCat.TitleBeforeName} {Model.CatRegistrationDto.ExhibitedCat.Name} {Model.CatRegistrationDto.ExhibitedCat.TitleAfterName}".Trim())
+            </p>
+            <p>
+                <strong>EMS:</strong> @Model.CatRegistrationDto.ExhibitedCat.Ems
+            </p>
+            <p>
+                <strong>Plemeno:</strong> @Model.CatRegistrationDto.ExhibitedCat.Breed
+            </p>
+            <p>
+                <strong>Barva:</strong> @Model.CatRegistrationDto.ExhibitedCat.Colour
+            </p>
+            <p>
+                <strong>Číslo plemenné knihy:</strong> @Model.CatRegistrationDto.ExhibitedCat.PedigreeNumber
+            </p>
+            <p>
+                <strong>Datum
+                    narození:</strong> @Model.CatRegistrationDto.ExhibitedCat.BirthDate.ToString("dd. MM. yyyy")
+            </p>
+            <p>
+                <strong>Pohlaví:</strong> @(Model.CatRegistrationDto.ExhibitedCat.Sex == Gender.Female ? "Kočka" : "Kocour")
+            </p>
+            <p>
+                <strong>Kastrace:</strong> @(Model.CatRegistrationDto.ExhibitedCat.Neutered ? "Ano" : "Ne")
+            </p>
+        </div>
+    }
+    @if (Model.CatRegistrationDto.Litter != null)
+    {
+        <div class="col-md-6 py-3">
+            <h4>Informace o vystavovaném vrhu</h4>
+            <p>
+                <strong>Chovatel:</strong> @Model.CatRegistrationDto.Litter.Breed
+            </p>
+            <p>
+                <strong>Jméno chovné stanice:</strong> @Model.CatRegistrationDto.Litter.NameOfBreedingStation
+            </p>
+            <p>
+                <strong>Datum narození:</strong> @Model.CatRegistrationDto.Litter.BirthDate.ToString("dd. MM. yyyy")
+            </p>
+
+            <p>
+                <strong>Průkaz původu</strong> @(Model.CatRegistrationDto.Litter.PassOfOrigin ?? "Není k dispozici")
+            </p>
+        </div>
+    }
+
+    @if (Model.CatRegistrationDto.RegistrationType != RegistrationType.HomeExhibitedCat)
+    {
+        <partial name="__ParentPartional"
+                 Model="@(Model.CatRegistrationDto.ExhibitedCat?.Mother ?? Model.CatRegistrationDto.Litter!.Mother)"/>
+        <partial name="__ParentPartional"
+                 Model="@(Model.CatRegistrationDto.ExhibitedCat?.Father ?? Model.CatRegistrationDto.Litter!.Father)"/>
+    }
+    else
+    {
+        <div class="col-md-6  py-3">
+            Infomace o rodičích nejsou k dispozici
+        </div>
+    }
+
+    @if (Model.CatRegistrationDto.ExhibitedCat?.Breeder != null || Model.CatRegistrationDto.Litter != null)
+    {
+        <partial name="__breederPartional"
+                 Model="@(Model.CatRegistrationDto.ExhibitedCat?.Breeder ?? Model.CatRegistrationDto.Litter!.Breeder)"/>
+    }
+    else
+    {
+        <div class="col-md-6  py-3">
+            Infomace o chovateli nejsou k dispozici
+        </div>
+    }
+    <div class="col-md-6 py-3">
+        <p>
+            <strong>Poznámka:</strong> @Model.CatRegistrationDto.Note
+        </p>
+    </div>
+
+</div>

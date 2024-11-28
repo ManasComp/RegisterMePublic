@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.RegisterOrLoginModel
+@{
+    ViewBag.Title = "Registujte se nebo přihlaste";
+}
+
+<div class="text-center justify-content-center align-items-center">
+    <h1 class="row text-center justify-content-center text-primary p-5">Registrace na: @Model.Name</h1>
+    <div class="row text-center justify-content-center">
+        <h2>Pro registraci na výstavu musíte být přihlášen/a.</h2>
+        <br/>
+        <h3 class="text-muted">Registraci na výstavu může provést pouze vystavovatel kočky.</h3>
+        <br/>
+        <h2 class="pt-5">Máte už u nás účet?</h2>
+    </div>
+    <div class="container px-4 text-center justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-secondary img-fluid w-100 h-100" asp-area="Identity"
+                   asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl">
+                    <div>Ano</div>
+                    <h3>Přihlaš mě</h3>
+                </a>
+            </div>
+
+            <div class="d-none d-lg-block col-2 p-3w-25 justify-content-center align-items-center text-center"
+                 style="align-self: center">
+                <img src="https://img.icons8.com/pastel-glyph/100/cat--v3.png" alt="cat--v3"
+                     style="align-self: center"/>
+                <div><a href="https://icons8.com/icon/121371/cat">Cat</a> icon by <a
+                        href="https://icons8.com">Icons8</a></div>
+            </div>
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-primary img-fluid w-100" asp-area="Identity" asp-page="/Account/Register"
+                   asp-route-returnUrl="@Model.ReturnUrl">
+                    <div>Ne</div>
+                    <h3>Zaregistruj mě</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

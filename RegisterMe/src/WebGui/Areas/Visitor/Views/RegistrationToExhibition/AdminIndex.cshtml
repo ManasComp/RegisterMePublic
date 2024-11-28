@@ -1,0 +1,213 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.TagHelpers
+@model WebGui.Areas.Visitor.Models.AdminIndex
+
+@{
+    ViewBag.Title = "Administrace";
+}
+
+<div class="my-3">
+    <a class="btn btn-primary" asp-controller="Exhibition" asp-action="EditExhibition"
+       asp-route-id="@Model.ExhibitionId">Upravit údaje výstavy</a>
+    <a class="btn btn-secondary" asp-controller="Exhibition" asp-action="ExportData"
+       asp-route-exhibitionId="@Model.ExhibitionId">Exportovat do JSON</a>
+    <a class="btn btn-secondary" asp-controller="Registration" asp-action="DownloadExhibitionDataAsZip"
+       asp-route-exhibitionId="@Model.ExhibitionId">Stáhnout WORD</a>
+</div>
+
+@if (Model.HasDrafts)
+{
+    <div class="alert alert-info p-3 m-1">
+        <p>
+            V tabulce mohou být započítány i klece, jejichž registrace ještě nebyla dokončena.
+            Přejete-li si smazat všechny rozpracované registrace, počkejte @Model.DeleteAfterHours
+            @(Model.DeleteAfterHours == 1 ? "hodinu" : "hodin") nebo klikněte na tlačítko níže.
+        </p>
+        <Confirmation asp-area="@nameof(Areas.Visitor)"
+                      asp-controller="@nameof(RegistrationToExhibitionController)"
+                      asp-action="@nameof(RegistrationToExhibitionController.DeleteTemporaryRegistrations)"
+                      title="Jste si jistý/á?"
+                      text="Smažete všechny nedokončené registrace"
+                      confirm-text="Ano"
+                      class="btn btn-danger mt-2"
+                      form-data="@(new Dictionary<string, string> { { "exhibitionId", Model.ExhibitionId.ToString() } })">
+            Smazat nedokončené registrace
+        </Confirmation>
+    </div>
+}
+
+<div class="table-responsive">
+    <table style="width:100%" class="table table-borderedtext-center">
+        <thead>
+        <tr>
+            <th rowspan="2">Datum</th>
+            <th rowspan="2" class="bg-primary-subtle">Vlastní klece</th>
+            <th colspan="4" class="bg-secondary-subtle">Půjčené klece</th>
+        </tr>
+        <tr>
+            <th class="bg-secondary-subtle">Rozměry</th>
+            <th class="bg-secondary-subtle">Celkem</th>
+            <th class="bg-secondary-subtle">Použito</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.ExhibitionCagesInfos)
+        {
+            var rowspan = item.CageGroupInfos.Count == 0 ? 1 : item.CageGroupInfos.Count;
+
+            <tr style="vertical-align: middle;">
+                <td rowspan="@rowspan">@item.Date</td>
+                <td rowspan="@rowspan">
+                    <a asp-area="Visitor" asp-controller="Cages" asp-action="Index"
+                       asp-route-exhibitionDayId="@item.ExhibitionDayId"
+                       asp-route-disa=""> @item.NumberOfPersonCages</a>
+                </td>
+
+                @if (item.CageGroupInfos.Count > 0)
+                {
+                    var cageGroupInfo = item.CageGroupInfos[0].NumberOfUsedCages;
+                    var doubleCages = cageGroupInfo.NumberOfDoubleCages;
+                    var singleCages = cageGroupInfo.NumberOfSingleCages;
+                    var totalCages = cageGroupInfo.TotalNumber;
+                    <td>@($"{item.CageGroupInfos[0].Width} * {item.CageGroupInfos[0].Length} * {item.CageGroupInfos[0].Height}")</td>
+                    <td>@item.CageGroupInfos[0].TotalNumberOfRentedCages</td>
+                    <td>@($"{doubleCages}D + {singleCages}J  => {totalCages}")</td>
+                }
+                else
+                {
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                }
+            </tr>
+            for (var i = 1; i < item.CageGroupInfos.Count; i++)
+            {
+                var cageGroupInfo = item.CageGroupInfos[i].NumberOfUsedCages;
+                var doubleCages = cageGroupInfo.NumberOfDoubleCages;
+                var singleCages = cageGroupInfo.NumberOfSingleCages;
+                var totalCages = cageGroupInfo.TotalNumber;
+                <tr>
+                    <td>@($"{item.CageGroupInfos[i].Width} * {item.CageGroupInfos[i].Length} * {item.CageGroupInfos[i].Height}")</td>
+                    <td>@item.CageGroupInfos[i].TotalNumberOfRentedCages</td>
+                    <td>@($"{doubleCages}D + {singleCages}S  => {totalCages}")</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<hr/>
+<div class="text-center">
+    <a class="toggle-vis" data-column="0"
+       style="margin-right: 10px; text-decoration: none; color: #007bff;">Zaplaceno</a>
+    <a class="toggle-vis" data-column="1"
+       style="margin-right: 10px; text-decoration: none; color: #007bff;">Organizace</a>
+    <a class="toggle-vis" data-column="2" style="margin-right: 10px; text-decoration: none; color: #007bff;">Členské
+        číslo</a>
+    <a class="toggle-vis" data-column="3" style="margin-right: 10px; text-decoration: none; color: #007bff;">Jméno</a>
+    <a class="toggle-vis" data-column="4"
+       style="margin-right: 10px; text-decoration: none; color: #007bff;">Přijmení</a>
+    <a class="toggle-vis" data-column="5" style="margin-right: 10px; text-decoration: none; color: #007bff;">Editace</a>
+</div>
+
+<div class="table-responsive">
+    <table id="example" class="table table-sm is-striped table-hover display nowrap" style="width:100%">
+        <thead>
+        <tr>
+            <th scope="col">Zaplaceno</th>
+            <th scope="col">Organizace</th>
+            <th scope="col">Členské číslo</th>
+            <th scope="col">Jméno</th>
+            <th scope="col">Přijmení</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Registrations)
+        {
+            <tr>
+                <td data-priority="1">@(item.IsPaid ? "Ano" : "Ne")</td>
+                <td data-priority="1">@item.Organization</td>
+                <td data-priority="1">@item.MemberNumber</td>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td data-priority="2">
+                    <div class="row" style="width:150px;">
+                        <a asp-area="Visitor" asp-controller="RegistrationToExhibition" asp-action="Detail"
+                           asp-route-registrationToExhibitionId="@item.RegistrationToExhibitionId"
+                           class="btn btn-primary mx-2 col-3 d-flex justify-content-center align-items-center text-center">
+                            <small>
+                                <i class="bi bi-pencil-square"></i>
+                            </small>
+                        </a>
+                        <a asp-area="Visitor" asp-controller="Registration" asp-action="DownloadRegistrationAsZip"
+                           asp-route-registrationToExhibitionId="@item.RegistrationToExhibitionId"
+                           class="btn btn-info col-3 d-flex justify-content-center align-items-center text-center">
+                            <small>
+                                <i class="bi bi-save-fill"></i>
+                            </small>
+                        </a>
+
+                        <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                      asp-controller="@nameof(RegistrationController)"
+                                      asp-action="@nameof(RegistrationController.DeleteRegistrationToRegistrationAdmin)"
+                                      title="Jste si jistý/á?"
+                                      text="Smažete registraci"
+                                      confirm-text="Ano"
+                                      class="btn btn-danger mx-2 col-3 d-flex justify-content-center align-items-center text-center"
+                                      form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", item.RegistrationToExhibitionId.ToString() } })">
+                            <small>
+                                <i class="bi bi-trash-fill"></i>
+                            </small>
+                        </Confirmation>
+
+
+                    </div>
+                </td>
+            </tr>
+        }
+        <tfoot>
+        </tfoot>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script>
+        const table = new DataTable('#example', {
+            stateSave: true,
+            columnDefs: [
+                {
+                    target: 3,
+                    visible: true,
+                    searchable: true
+                },
+                {
+                    target: 4,
+                    visible: true
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/cs.json',
+            },
+            fixedHeader: true,
+            responsive: true,
+            scroller: true,
+            select: true,
+            scrollX: true
+        });
+
+        document.querySelectorAll('a.toggle-vis').forEach(el =>
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                let columnIdx = e.target.getAttribute('data-column');
+                let column = table.column(columnIdx);
+
+                column.visible(!column.visible());
+            }));
+    </script>
+}

@@ -1,0 +1,160 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Enums
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.Areas.Visitor.Models
+@using WebGui.TagHelpers
+@model WebGui.Areas.Visitor.Models.DetailVm
+@{
+    ViewBag.Title = "Detail";
+}
+
+<a href="#" onClick="history.go(-1); return false;">Zpět</a>
+
+<div class="justify-content-center text-center">
+    <div>
+        <a asp-area="Visitor" asp-controller="Exhibition" asp-action="Detail" asp-route-id="@Model.ExhibitionId">
+            <h2>
+                @Model.ExhibitionName
+            </h2>
+        </a>
+        <h3>Celková cena
+            je: @string.Join(" | ", Model.CurrencyUserCanPayIn.Select(x => Model.RegistrationToExhibitionPrice.GTotalPrice.GetStringForCurrency(x)))</h3>
+        <h3>Identifikátor je: @Model.RegistrationToExhibitionId</h3>
+        @if (!Model.EmsOk)
+        {
+            <h3 class="text-warning">V této registraci se vyskytuje přihláška s potenciálně nevalidním EMS kódem.
+                Prosím, zkontrolujte si, zda je vše v pořádku.</h3>
+        }
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Poplatek</th>
+                <th scope="col">Cena</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <b>Cena za registraci uživatele</b>
+                </td>
+                <td>
+                    <a asp-area="Visitor" asp-controller="Registration" asp-action="PersonReg"
+                       asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+                       asp-route-isAdmin="true">Zobrazit</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Základní cena</td>
+                <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(x => Model.RegistrationToExhibitionPrice.AdvertisementPrice.GetStringForCurrency(x)))</td>
+            </tr>
+
+            @foreach (var x in Model.RegistrationToExhibitionPrice.CatRegistrationPrices)
+            {
+                <tr>
+                    <td>
+                        <b>Cena za registraci @x.CatName</b>
+                    </td>
+                    <td>
+                        <a asp-area="Visitor" asp-controller="Registration" asp-action="AllData"
+                           asp-route-catRegistrationId="@x.CatRegistrationId" asp-route-editor="@IsEditor.Admin">Zobrazit</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Základní cena</td>
+                    <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(currency => x.CatRegistrationPriceWithoutFees.GetStringForCurrency(currency)))</td>
+                </tr>
+                @foreach (var y in x.CatRegistrationFees)
+                {
+                    <tr>
+                        <td>@y.FeeName</td>
+                        <td>@string.Join(" | ", Model.CurrencyUserCanPayIn.Select(currency => y.Price.GetStringForCurrency(currency)))</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Objednávka připravena k platbě</th>
+                <th scope="col">Typ platby</th>
+                <th scope="col">Měna</th>
+                <th scope="col">Datum platby</th>
+                <th scope="col">@(Model.PaymentCompletedDate != null ? "Zaplaceno" : "Zbývá zaplatit")</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    @Model.PaymentRequestDate.ToString("dd. MM. yyyy")
+                </td>
+                <td>
+                    @switch (Model.PaymentType)
+                    {
+                        case PaymentType.PayInPlaceByCache:
+                            <text>Platba na místě hotově</text>
+                            break;
+                        case PaymentType.PayByBankTransfer:
+                            <text>Platba bankovním převodem</text>
+                            break;
+                        case PaymentType.PayOnlineByCard:
+                            <text>Platba online kartou</text>
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                </td>
+                <td>
+                    @Model.Currency
+                </td>
+                <td>
+                    @(Model.PaymentCompletedDate != null ? Model.PaymentCompletedDate.Value.ToString("dd. MM. yyyy") : "-")
+                </td>
+                <td>
+                    @(Model.AmountPaid != null ? Model.AmountPaid : "-")
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    @if (Model.IsOrganizationAdministrator)
+    {
+        @if (Model.PaymentCompletedDate == null)
+        {
+            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                          asp-controller="@nameof(PayController)"
+                          asp-action="@nameof(PayController.ConfirmDelayedPayment)"
+                          title="Jste si jistý/á?"
+                          text="Toto už nejde vrátit."
+                          confirm-text="Ano, potvrdit přijatou platbu"
+                          class="col col-lg-4 btn btn-primary img-fluid w-100 m-1"
+                          form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() } })">
+                Potvrdit zaplacení registrace
+            </Confirmation>
+        }
+        else if (Model.AmountPaid != Model.RegistrationToExhibitionPrice.GTotalPrice.GetPriceForCurrency(Model.Currency))
+        {
+            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                          asp-controller="@nameof(PayController)"
+                          asp-action="@nameof(PayController.BalanceThePrice)"
+                          title="Jste si jistý/á?"
+                          text="Toto už nejde vrátit."
+                          confirm-text="Ano"
+                          class="col col-lg-4 btn btn-primary img-fluid w-100 m-1"
+                          form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", Model.RegistrationToExhibitionId.ToString() } })">
+                Potvrdit vyrovnání peněz
+            </Confirmation>
+        }
+
+        <a class="col col-lg-4 btn btn-secondary img-fluid w-100 m-1" asp-area="Visitor" asp-controller="Registration"
+           asp-action="LitterOrCat" asp-route-editing="true"
+           asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+            Registrovat další kočku
+        </a>
+    }
+
+</div>

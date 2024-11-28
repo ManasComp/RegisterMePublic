@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.PersonRegistrationModel
+@{
+    ViewBag.Title = "Registrace vystavovatele";
+}
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+
+            <h1 class="text-center p-1">@ViewBag.Title</h1>
+
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="PersonRegistration"
+                  class="row justify-content-center align-items-center">
+
+                <partial name="_personRePartial" Model="@Model"/>
+                @if (!Model.Disabled)
+                {
+                    <p class="text-center">
+                        Je něco špatně? Upravte prosím tyto informace v nastavení. Později již není možné to změnit.
+                        <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Manage/Exhibitor"
+                           asp-route-returnUrl="/Visitor/Registration/PersonRegistration?exhibitionId=@Model.ExhibitionId">
+                            Přejít do nastavení
+                        </a>
+                    </p>
+                }
+                <button type="submit" class="btn btn-primary form-control " id="myButton">
+                    Přejít na registraci kočky
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const button = document.getElementById("myButton");
+
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                placeholder: "Vyberte...",
+                minimumResultsForSearch: -1
+            });
+        });
+    </script>
+}

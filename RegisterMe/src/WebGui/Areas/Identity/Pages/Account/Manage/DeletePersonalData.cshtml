@@ -1,0 +1,40 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Identity.Pages.Account.Manage
+@model WebGui.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Odstranění osobních dat";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>
+            Pro odstranění všech zánamů o Vás (včetně například mailů a logů) prosím kontaktujte správce systému - více
+            <a href="http://0.0.0.0:5212/Visitor/Home/Privacy">zde</a>.
+            Odstraněním dat pomocí formuláře níže nevratně smažete (pouze) Váš účet. Účet nelze obnovit.
+        </strong>
+    </p>
+</div>
+
+<div>
+    <form id="delete-user" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        @if (Model.RequirePassword)
+        {
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+                       aria-required="true" placeholder="Napište prosím Vaše heslo"/>
+                <label asp-for="Input.Password" class="form-label"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        }
+        <button class="w-100 btn btn-lg btn-danger" type="submit">Smazat data a zrušit můj účet</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

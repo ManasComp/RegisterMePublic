@@ -1,0 +1,154 @@
+﻿@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Domain.Constants
+@inject IAntiforgery Antiforgery
+
+@{
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - RegisterMe</title>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="~/css/Layout.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowgroup/1.4.0/css/rowGroup.dataTables.min.css"/>
+    <script src="
+    https://cdn.jsdelivr.net/npm/jsoneditor@10.0.3/dist/jsoneditor.min.js
+    "></script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/jsoneditor@10.0.3/dist/jsoneditor.min.css
+    " rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="p-1 navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow mb-3 bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Zaregistruj Mě</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Visitor" asp-controller="Exhibition" asp-action="Index">Výstavy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Visitor" asp-controller="Organization"
+                           asp-action="Index">Organizace</a>
+                    </li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Visitor" asp-controller="RegistrationToExhibition"
+                               asp-action="UserIndex">Moje registrace</a>
+                        </li>
+                    }
+                    @if (User.IsInRole(Roles.OrganizationAdministrator))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Visitor" asp-controller="Administrator"
+                               asp-action="Index">Administrace</a>
+                        </li>
+                    }
+                    <li class="bg-black">
+                        <div>
+                            <li class="nav-item d-lg-none">
+                                <partial name="_LoginPartial" class="d-none d-lg-block"/>
+                            </li>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="d-none d-lg-block">
+            <partial name="_LoginPartial" class="d-none d-lg-block"/>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <partial name="_CookieConsentPartial"/>
+    <main role="main" class="pb-3">
+        <partial name="_NotificationPartial"/>
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2024 - RegisterMe - <a asp-area="Visitor" asp-controller="Home" asp-action="Privacy">Osobní údaje</a>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js"></script>
+<script src="https://rawgit.com/select2/select2/4.0.5/dist/js/select2.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+@await RenderSectionAsync("Scripts", false)
+
+<script>
+    function ShowConfirmation(url, data, title, text, confirm) {
+        console.log(data);
+        console.log(url);
+        Swal.fire({
+            title,
+            text,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirm,
+            cancelButtonText: 'Zrušit'
+        }).then(result => {
+            if (result.isConfirmed) {
+                const form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", url);
+
+                const postData = {
+                    ...data,
+                    "__RequestVerificationToken": '@requestToken'
+                };
+
+                for (let key in postData) {
+                    if (postData.hasOwnProperty(key)) {
+                        const hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", postData[key]);
+
+                        form.appendChild(hiddenField);
+                    }
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

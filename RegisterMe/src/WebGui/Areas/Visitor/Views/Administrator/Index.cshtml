@@ -1,0 +1,22 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.AdministratorModel
+
+@{
+    ViewBag.Title = "Administrace";
+}
+
+<div class="col-md-12 justify-content-center text-center m-2">
+    <h2>Administrace mé organizace a jejích výstav</h2>
+</div>
+
+<a class="btn btn-primary" style="width: 100%" asp-controller="Organization" asp-action="UpdateOrganization"
+   asp-route-organizationId="@Model.OrganizationDto.Id">Editovat organizaci</a>
+
+<hr class="my-4"/>
+
+<a class="btn btn-outline-primary" style="width: 100%" asp-controller="Exhibition" asp-action="CreateExhibition"
+   asp-route-organizationId="@Model.OrganizationDto.Id">Vytvořit novou výstavu</a>
+
+<div>
+    <partial name="../_partialExhibitions" model="Model.Exhibitions"/>
+</div>

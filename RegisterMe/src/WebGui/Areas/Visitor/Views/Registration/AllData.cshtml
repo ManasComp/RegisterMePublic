@@ -1,0 +1,129 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.TagHelpers
+@model WebGui.Areas.Visitor.Models.AllVm
+
+@{
+    ViewBag.Title = "Všechny údaje";
+}
+
+<nav class="navbar sticky-top navbar-light bg-light px-3 justify-content-center align-items-center p-1"
+     data-bs-spy="scroll" id="navbar-example2">
+    <a class="navbar-brand" href="#"></a>
+
+    <a class="m-1" href="#" onClick="history.go(-1); return false;">Zpět</a>
+
+    @if (Model.CanBeEdited)
+    {
+        @if (Model.ExhibitedCatModel != null)
+        {
+            <a class="m-1" asp-area="Visitor" asp-controller="Registration" asp-action="UpsertCat"
+               asp-route-disabled="false" asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-catRegistrationId="@Model.CatRegistrationId">Upravit</a>
+        }
+        else
+        {
+            <a class="m-1" asp-area="Visitor" asp-controller="Registration" asp-action="UpsertLitter"
+               asp-route-disabled="false" asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-catRegistrationId="@Model.CatRegistrationId">Upravit</a>
+        }
+
+        <Confirmation asp-area="@nameof(Areas.Visitor)"
+                      asp-controller="@nameof(RegistrationController)"
+                      asp-action="@nameof(RegistrationController.DeleteCatRegistration)"
+                      title="Jste si jistý/á?"
+                      text="Smažete registraci"
+                      confirm-text="Ano"
+                      class="m-1 btn btn-danger mx-2 col-3 d-flex justify-content-center align-items-center text-center"
+                      form-data="@(new Dictionary<string, string> { { "catRegistrationId", Model.CatRegistrationId.ToString() } })">
+            Odstranit
+        </Confirmation>
+    }
+
+    <ul class="nav nav-pills d-flex align-self-center justify-content-center align-items-center text-center">
+        <li class="nav-item">
+            <a class="nav-link" href="#scrollspyHeading1">Vystavovaná kočka</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#scrollspyHeading2">Otec</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#scrollspyHeading3">Matka</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#scrollspyHeading4">Výstava</a>
+        </li>
+    </ul>
+</nav>
+
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="row scrollspy-example"
+     tabindex="0">
+    @if (Model.ExhibitedCatModel == null)
+    {
+        <h2 id="scrollspyHeading1" class="text-center">Vystavovaný vrh</h2>
+        <partial name="_litterPartial" Model="@Model.LitterModel"/>
+    }
+    else
+    {
+        <h2 id="scrollspyHeading1" class="text-center">Vystavovaná kočka</h2>
+        <partial name="_exhibitedCatPartial" Model="@Model.ExhibitedCatModel"/>
+    }
+    <hr style="border-top: 8px solid #000000; border-radius: 5px;">
+
+
+    <h2 id="scrollspyHeading2" class="text-center">Otec</h2>
+    @if (Model.FatherModel == null)
+    {
+        <div>
+            Bez otce
+        </div>
+    }
+    else
+    {
+        <partial name="_CatPartial" Model="@Model.FatherModel"/>
+    }
+    <hr style="border-top: 8px solid #000000; border-radius: 5px;">
+
+
+    <h2 id="scrollspyHeading3" class="text-center">Matka</h2>
+    @if (Model.MotherModel == null)
+    {
+        <div>
+            Bez matky
+        </div>
+    }
+    else
+    {
+        <partial name="_CatPartial" Model="@Model.MotherModel"/>
+    }
+    <hr style="border-top: 8px solid #000000; border-radius: 5px;">
+
+
+    <h2 id="scrollspyHeading4" class="text-center">Výstava</h2>
+    <partial name="_ExhibitionPartial" Model="@Model.ExhibitionVm"/>
+</div>
+
+@section Scripts {
+    <partial name="_ExhibitionScript" Model="@Model.ExhibitionVm"/>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2({
+                placeholder: "Vyberte si kategorii",
+                allowClear: true,
+                closeOnSelect: true,
+                dropdownAutoWidth: true,
+                scrollAfterSelect: true,
+                disabled: true
+            });
+        });
+
+        const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+            target: '#navbar-example2'
+        });
+
+        $(".js-example-basic-single").select2({
+            allowClear: true
+        });
+    </script>
+}

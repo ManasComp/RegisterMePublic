@@ -1,0 +1,497 @@
+@using System.Text.Json
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using JsonSerializer = System.Text.Json.JsonSerializer
+@model WebGui.Areas.Visitor.Models.EditExhibitionModel
+
+@{
+    ViewBag.Title = "Editace výstavy";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-12 justify-content-center text-center m-2">
+        <h2>Editace výstavy</h2>
+        <h5>O výstavě</h5>
+        <p>
+            <b>Jméno: </b>@Model.Exhibition.Name
+        </p>
+        <p>
+            <b>Popis:</b> @Model.Exhibition.Description
+        </p>
+        @if (!Model.Exhibition.IsCancelled)
+        {
+            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                          asp-controller="@nameof(ExhibitionController)"
+                          asp-action="@nameof(ExhibitionController.DeleteOrCancelExhibition)"
+                          title="Jste si jistý/á?"
+                          text="Toto už nejde vrátit."
+                          confirm-text="Ano, odstranit"
+                          class="btn btn-outline-secondary m-2"
+                          form-data="@(new Dictionary<string, string> { { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                Smazat výstavu
+            </Confirmation>
+            @if (Model.Exhibition.CanBeEdited)
+            {
+                <a asp-action="EditExhibitionData" asp-route-exhibitionId="@Model.Exhibition.Id"
+                   class="btn btn-outline-primary" style="width: 100%">Upravit Údaje</a>
+            }
+        }
+        else
+        {
+            <h5>Výstava je určena pouze ke čtení, protože byla zrušena</h5>
+        }
+        @if (!Model.Exhibition.IsPublished)
+        {
+            <div class="row align-items-center border border-danger p-3 m-2">
+                <div class="col">
+                    <p class="mb-0">Výstava ještě nebyla publikována, publikujte ji až bude nastavena podle vašich
+                        představ</p>
+                </div>
+                <div class="col-auto">
+                    <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                  asp-controller="@nameof(ExhibitionController)"
+                                  asp-action="@nameof(ExhibitionController.PublishExhibition)"
+                                  title="Jste si jistý/á?"
+                                  text="Lidé uvidí tuto výstavu"
+                                  confirm-text="Ano, publikovat"
+                                  class="btn btn-primary"
+                                  form-data="@(new Dictionary<string, string> { { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                        Publikovat
+                    </Confirmation>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h5 class="text-danger">Výstava je publikována, tudíž už nelze upravovat</h5>
+        }
+    </div>
+    <div class="col-md-6">
+        <h5>Datumy</h5>
+        <p>
+            <b>Začátek registrace:</b> @Model.Exhibition.RegistrationStart
+        </p>
+        <p>
+            <b>Konec registrace:</b> @Model.Exhibition.RegistrationEnd
+        </p>
+        <p>
+            <b>Začátek výstavy</b> @Model.Exhibition.ExhibitionStart
+        </p>
+        <p>
+            <b>Konec výstavy:</b> @Model.Exhibition.ExhibitionEnd
+        </p>
+
+        <h5>Účty</h5>
+        <p>
+            <b>IBAN:</b> @Model.Exhibition.Iban
+        </p>
+        <p>
+            <b>Číslo účtu: </b>@Model.Exhibition.BankAccount
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h5>Kontaktní údaje</h5>
+        <p>
+            <b>Email:</b> @Model.Exhibition.Email
+        </p>
+        <p>
+            <b>Telefon:</b> @Model.Exhibition.Phone
+        </p>
+        <p>
+            <b>Webová stránka:</b> <a href="@Model.Exhibition.Url">@Model.Exhibition.Url</a>
+        </p>
+
+        <h5>Místo konání</h5>
+        <p>
+            <b>Zeměpisná šířka (N)</b> @Model.Exhibition.Address.Latitude
+        </p>
+        <p>
+            <b>Zeměpisná délka (E):</b> @Model.Exhibition.Address.Longitude
+        </p>
+        <p>
+            <b>Adresa:</b> @Model.Exhibition.Address.StreetAddress
+        </p>
+    </div>
+
+</div>
+
+<div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+    <div class="p-2 bd-highlight">
+        <h3>Publikace vystavovatelů</h3>
+    </div>
+    <div class="p-2 bd-highlight">
+        @if (Model.Exhibition.CanBeEdited)
+        {
+            <a asp-controller="Exhibition" asp-action="UpsertAdvertisement"
+               asp-route-exhibitionId="@Model.Exhibition.Id" class="btn btn-primary">
+                Přidat publikaci <i class="bi bi-plus-circle"></i>
+            </a>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" style="vertical-align: middle">
+        <thead>
+        <tr>
+            <th>
+                Název publikace
+            </th>
+            <th>
+                Cena Kč
+            </th>
+            <th>
+                Cena Eur
+            </th>
+            <th>
+                Je základní
+            </th>
+            @if (Model.Exhibition.CanBeEdited)
+            {
+                <th></th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var advertisement in Model.Advertisements)
+        {
+            <tr>
+                <td>
+                    @advertisement.Description
+                </td>
+                <td>
+                    @advertisement.Price.PriceCzk
+                </td>
+                <td>
+                    @advertisement.Price.PriceEur
+                </td>
+                <td>
+                    @(advertisement.IsDefault ? "Ano" : "Ne")
+                </td>
+                @if (Model.Exhibition.CanBeEdited)
+                {
+                    <td>
+
+                        <div class="w-100 btn btn-group" role="group">
+                            <a asp-controller="Exhibition" asp-action="UpsertAdvertisement"
+                               asp-route-exhibitionId="@Model.Exhibition.Id"
+                               asp-route-advertisementId="@advertisement.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(ExhibitionController)"
+                                          asp-action="@nameof(ExhibitionController.DeleteAdvertisement)"
+                                          title="Jste si jistý/á?"
+                                          text="Toto už nejde vrátit."
+                                          confirm-text="Ano, odstranit"
+                                          class="btn btn-danger mx-2"
+                                          form-data="@(new Dictionary<string, string> { { "advertisementId", advertisement.Id.ToString() }, { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                                <i class="bi bi-trash-fill"></i>
+                            </Confirmation>
+                        </div>
+
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+    <div class="p-2 bd-highlight">
+        <h3>Ceník</h3>
+    </div>
+    <div class="p-2 bd-highlight">
+        @if (Model.Exhibition.CanBeEdited && !Model.IsFullyRegistered)
+        {
+            <a asp-controller="Exhibition" asp-action="UpsertPriceStep1" asp-route-isFirs="true"
+               asp-route-exhibitionId="@Model.Exhibition.Id" class="btn btn-primary">
+                Přidat cenu <i class="bi bi-plus-circle"></i>
+            </a>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered centered-table table-responsive">
+        <thead>
+        <tr>
+            <th>
+                Skupiny
+            </th>
+            <th>
+                Dny
+            </th>
+            <th>
+                Cena Kč
+            </th>
+            <th>
+                Cena Eur
+            </th>
+            @if (Model.Exhibition.CanBeEdited)
+            {
+                <th></th>
+            }
+        </tr>
+        </thead>
+        <tbody class="align-items-center" style="vertical-align: middle">
+        @foreach (var group in Model.Prices)
+        {
+            <tr>
+                <td rowspan=@group.Prices.Count>
+                    @group.Groups
+                </td>
+                @{ var recordl = group.Prices.First(); }
+                <td>
+                    @string.Join(", ", recordl.ExhibitionDays.Select(x => x.Date.Day))
+                </td>
+                <td>
+                    @recordl.Price.PriceCzk
+                </td>
+                <td>
+                    @recordl.Price.PriceEur
+                </td>
+                @if (Model.Exhibition.CanBeEdited)
+                {
+                    <td rowspan=@group.Prices.Count>
+
+                        <div class="w-100 btn btn-group" role="group">
+                            <a asp-controller="Exhibition" asp-action="UpsertPriceStep1" asp-route-isFirs="true"
+                               asp-route-exhibitionId="@Model.Exhibition.Id" asp-route-pricesIds="@group.PriceIds"
+                               class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(ExhibitionController)"
+                                          asp-action="@nameof(ExhibitionController.DeletePriceGroup)"
+                                          title="Jste si jistý/á?"
+                                          text="Toto už nejde vrátit."
+                                          confirm-text="Ano, odstranit"
+                                          class="btn btn-danger mx-2"
+                                          form-data="@(new Dictionary<string, string> { { "PriceIds", group.PriceIds }, { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                                <i class="bi bi-trash-fill"></i>
+                            </Confirmation>
+                        </div>
+
+                    </td>
+                }
+            </tr>
+
+            @foreach (var record in group.Prices.Skip(1))
+            {
+                <tr>
+                    <td>
+                        @string.Join(", ", record.ExhibitionDays.Select(x => x.Date.Day))
+                    </td>
+                    <td>
+                        @record.Price.PriceCzk
+                    </td>
+                    <td>
+                        @record.Price.PriceEur
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+    <div class="p-2 bd-highlight">
+        <h3>Povolené platby</h3>
+    </div>
+    <div class="p-2 bd-highlight">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+           aria-controls="collapseExample">
+            Zobrazit/skrýt
+        </a>
+        @if (Model.Exhibition.CanBeEdited)
+        {
+            <a asp-controller="Exhibition" asp-action="Info" class="btn btn-info">
+                Info <i class="bi bi-info-circle"></i>
+            </a>
+            <a asp-controller="Exhibition" asp-action="UpdatePaymentMethods"
+               asp-route-exhibitionId="@Model.Exhibition.Id" class="btn btn-secondary" type="button">
+                Upravit
+            </a>
+        }
+    </div>
+</div>
+<div class="collapse" id="collapseExample">
+    @if (!Model.CanPayByCard)
+    {
+        <div style="color: red;">POZOR: Platby kartou aktuálně nejsou dostupné</div>
+    }
+    <pre class="prettyprint">
+        <code>
+            @Html.Raw(JsonConvert.SerializeObject(Model.PaymentTypes, Formatting.Indented))
+        </code>
+    </pre>
+</div>
+
+<div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+    <div class="p-2 bd-highlight">
+        <h3>Úpravy cen</h3>
+    </div>
+    <div class="p-2 bd-highlight">
+        @if (Model.Exhibition.CanBeEdited)
+        {
+            <a asp-controller="Exhibition" asp-action="UpsertDiscount" asp-route-exhibitionId="@Model.Exhibition.Id"
+               asp-route-discountId="@null" class="btn btn-primary">
+                Přidat úpravu ceny <i class="bi bi-plus-circle"></i>
+            </a>
+            <a asp-controller="Exhibition" asp-action="Info" class="btn btn-info">
+                Info <i class="bi bi-info-circle"></i>
+            </a>
+        }
+    </div>
+</div>
+
+@{ var indexedDiscounts = Model.Discounts.Select((discount, index) => new { discount, index }); }
+<div class="accordion accordion-flush" id="accordionExample">
+    @foreach (var discount in indexedDiscounts)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="@("heading" + discount.index)">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="@("#collapse" + discount.index)" aria-expanded="false"
+                        aria-controls="@("collapse" + discount.index)">
+                    @discount.discount.WorkflowName
+                </button>
+            </h2>
+            <div id="@("collapse" + discount.index)" class="accordion-collapse collapse"
+                 aria-labelledby="@("heading" + discount.index)" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    @if (Model.Exhibition.CanBeEdited)
+                    {
+                        <div class="d-flex justify-content-center">
+                            <a asp-controller="Exhibition" asp-action="UpsertDiscount"
+                               asp-route-exhibitionId="@Model.Exhibition.Id"
+                               asp-route-discountId="@discount.discount.Id" class="btn btn-outline-primary"
+                               type="button">
+                                Upravit
+                            </a>
+
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(ExhibitionController)"
+                                          asp-action="@nameof(ExhibitionController.DeleteDiscount)"
+                                          title="Jste si jistý/á?"
+                                          text="Toto už nejde vrátit."
+                                          confirm-text="Ano, odstranit"
+                                          class="btn btn-danger mx-2"
+                                          form-data="@(new Dictionary<string, string> { { "DiscountId", discount.discount.Id.ToString() }, { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                                <i class="bi bi-trash-fill"></i>
+                            </Confirmation>
+
+                        </div>
+                    }
+                    <pre class="prettyprint">
+                    <code>
+                        @Html.Raw(JsonSerializer
+                            .Serialize<object?>(discount, new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true })
+                            .Replace(@"\u0022", "\\\"")
+                            .Replace(@"\u003E", ">")
+                            .Replace(@"\u003C", "<")
+                            .Replace(@"\u0026", "&"))
+                    </code>
+                </pre>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+    <div class="p-2 bd-highlight">
+        <h3>Klece</h3>
+    </div>
+    <div class="p-2 bd-highlight">
+        @if (Model.Exhibition.CanBeEdited)
+        {
+            <a asp-controller="Exhibition" asp-action="UpsertRentedCages" asp-route-exhibitionId="@Model.Exhibition.Id"
+               class="btn btn-primary">
+                Přidat klec k půjčení <i class="bi bi-plus-circle"></i>
+            </a>
+        }
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered centered-table">
+        <thead>
+        <th>
+            Výška (cm)
+        </th>
+        <th>
+            Šířka (cm)
+        </th>
+        <th>
+            Délka (cm)
+        </th>
+        <th>
+            Výstavní dny
+        </th>
+        <th>
+            Typy
+        </th>
+        <th>
+            Počet
+        </th>
+        @if (Model.Exhibition.CanBeEdited)
+        {
+            <th></th>
+        }
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Cages)
+        {
+            <tr>
+                <td>
+                    @item.Height
+                </td>
+                <td>
+                    @item.Width
+                </td>
+                <td>
+                    @item.Length
+                </td>
+                <td>
+                    @string.Join(", ", item.ExhibitionDays.Select(x => x.Date.Day))
+                </td>
+                <td>
+                    @string.Join(", ", item.RentedTypes.Select(ExhibitionController.GetRentedTypeAsString))
+                </td>
+                <td>
+                    @item.Count
+                </td>
+                @if (Model.Exhibition.CanBeEdited)
+                {
+                    <td>
+
+                        <div class="w-100 btn btn-group" role="group">
+                            <a asp-controller="Exhibition" asp-action="UpsertRentedCages"
+                               asp-route-exhibitionId="@Model.Exhibition.Id" asp-route-cagesId="@item.Ids"
+                               class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(ExhibitionController)"
+                                          asp-action="@nameof(ExhibitionController.DeleteCages)"
+                                          title="Jste si jistý/á?"
+                                          text="Toto už nejde vrátit."
+                                          confirm-text="Ano, odstranit"
+                                          class="btn btn-danger mx-2"
+                                          form-data="@(new Dictionary<string, string> { { "CagesId", item.Ids }, { "ExhibitionId", Model.Exhibition.Id.ToString() } })">
+                                <i class="bi bi-trash-fill"></i>
+                            </Confirmation>
+
+                        </div>
+
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

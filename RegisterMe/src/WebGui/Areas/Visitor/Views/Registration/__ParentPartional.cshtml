@@ -1,0 +1,21 @@
+@using RegisterMe.Domain.Enums
+@model RegisterMe.Application.CatRegistrations.Dtos.ParentDto
+
+<div class="col-md-6  py-3">
+    <h4>Informace o @(Model.Sex == Gender.Male ? "otci" : "matce")</h4>
+    <p>
+        <strong>Jméno:</strong> @($"{Model.TitleBeforeName} {Model.Name} {Model.TitleAfterName}".Trim())
+    </p>
+    <p>
+        <strong>EMS:</strong> @Model.Ems
+    </p>
+    <p>
+        <strong>Číslo plemenné knihy:</strong> @Model.PedigreeNumber
+    </p>
+    <p>
+        <strong>Chovatel:</strong> @Model.Breed
+    </p>
+    <p>
+        <strong>Barva:</strong> @Model.Colour
+    </p>
+</div>

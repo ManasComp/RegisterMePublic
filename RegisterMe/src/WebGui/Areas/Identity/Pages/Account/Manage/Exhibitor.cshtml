@@ -1,0 +1,163 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Identity.Pages.Account.Manage
+@model WebGui.Areas.Identity.Pages.Account.Manage.RegisterExhibitorModel
+@{
+    ViewData["Title"] = "Exhibitor data";
+    ViewData["ActivePage"] = ManageNavPages.UpsertExhibitor;
+}
+
+<div class="card shadow border-0">
+
+    <div class="card-body p-4">
+        <div class="row pt-3">
+            <div class="col-md-12">
+                <h1>Správa vystavovatele</h1>
+                <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    @if (!Model.UserIsRegisteredAsExhibitor)
+                    {
+                        <div class="alert" role="alert">
+                            Abyste se mohl/a přihlásit na výstavu, musíte být registrován/a jako vystavovatel.
+                        </div>
+                    }
+                    <div class="form-floating mb-3 col-md-6">
+                        <select asp-items="@Model.Input.Countries" asp-for="Input.Country"
+                                class="js-example-basic-single form-select" style="width: 100%"></select>
+                        <label asp-for="Input.Country" class="ms-2 my_text_muted">Země</label>
+                        <span asp-validation-for="Input.Country" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.City" class="form-control" placeholder="name@example.com"
+                               autocomplete="address-level2"/>
+                        <label asp-for="Input.City" class="ms-2 my_text_muted">Město (např. Brno)</label>
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.ZipCode" class="form-control" placeholder="name@example.com"
+                               autocomplete="postal-code"/>
+                        <label asp-for="Input.ZipCode" class="ms-2 my_text_muted">PSČ (např. 602 00)</label>
+                        <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Street" class="form-control" autocomplete="address-level3"/>
+                        <label asp-for="Input.Street" class="ms-2 my_text_muted">Ulice</label>
+                        <span asp-validation-for="Input.Street" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.HouseNumber" class="form-control" placeholder="name@example.com"/>
+                        <label asp-for="Input.HouseNumber" class="ms-2 my_text_muted">Číslo domu</label>
+                        <span asp-validation-for="Input.HouseNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Organization" class="form-control" placeholder="name@example.com"/>
+                        <label asp-for="Input.Organization" class="ms-2 my_text_muted">Organizace(např. ZO
+                            36-Brno)</label>
+                        <span asp-validation-for="Input.Organization" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.MemberNumber" class="form-control" placeholder="name@example.com"/>
+                        <label asp-for="Input.MemberNumber" class="ms-2 my_text_muted">Číslo průkazu (např.
+                            1235456)</label>
+                        <span asp-validation-for="Input.MemberNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                        <div class="col-md-8">
+                            <label asp-for="Input.IsPartOfCsch" class="ms-2">Jste členem/kou ČSCH?</label>
+                        </div>
+                        <div class="form-floating col-md-4 text-start">
+                            <input type="checkbox"
+                                   id="cschButton"
+                                   asp-for="Input.IsPartOfCsch"
+                                   data-toggle="toggle"
+                                   data-onlabel="Ano"
+                                   data-offlabel="Ne"
+                                   data-onstyle="success"
+                                   data-offstyle="danger">
+                        </div>
+                        <span asp-validation-for="Input.IsPartOfCsch" class="text-danger"></span>
+                    </div>
+
+                    <div id="target">
+                        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                            <div class="col-md-8">
+                                <label asp-for="Input.IsPartOfFife" class="ms-2">Jste členem/kou FIFe?</label>
+                            </div>
+                            <div class="form-floating col-md-4 text-start">
+                                <input type="checkbox" style="width: 100%"
+                                       id="fifeButton"
+                                       asp-for="Input.IsPartOfFife"
+                                       data-toggle="toggle"
+                                       data-onlabel="Ano"
+                                       data-offlabel="Ne"
+                                       data-onstyle="success"
+                                       data-offstyle="danger">
+                            </div>
+                            <span asp-validation-for="Input.IsPartOfFife" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Input.EmailToOrganization" class="form-control" placeholder="name@example.com"/>
+                        <label asp-for="Input.EmailToOrganization" class="ms-2 my_text_muted">Email Vaší
+                            organizace</label>
+                        <span asp-validation-for="Input.EmailToOrganization" class="text-danger"></span>
+                    </div>
+
+                    @if (!Model.UserIsRegisteredAsExhibitor)
+                    {
+                        <p>Registrací souhlasíte s poskytnutím osobních údajů. Tyto údaje budou uloženy na serveru a
+                            budou předány případným organizátorům výstav.</p>
+                    }
+                    <div class="col-12">
+                        <button id="registerSubmit" type="submit"
+                                class="w-100 btn btn-lg btn-primary">@(Model.UserIsRegisteredAsExhibitor ? "Aktualizovat data" : "Zaregistrovat se jako vystavovatel")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+        const cschButton = document.getElementById('cschButton');
+        const fifeButton = document.getElementById('fifeButton');
+        const button = document.getElementById('target');
+
+        function toggleElementVisibility() {
+            if (cschButton.checked) {
+
+                button.classList.remove("show0");
+                button.classList.add("hide");
+                fifeButton.bootstrapToggle('on');
+                setTimeout(() => {
+                    button.style.display = 'none';
+                }, 500);
+            } else {
+
+                button.style.display = 'block';
+                button.classList.remove("hide");
+                button.classList.add("show0");
+            }
+        }
+
+        cschButton.addEventListener('change', toggleElementVisibility);
+
+        button.style.display = cschButton.checked ? 'none' : 'block';
+
+    </script>
+}

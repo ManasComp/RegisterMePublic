@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model int
+@{
+    ViewBag.Title = "Co dále";
+}
+<div class="text-center justify-content-center align-items-center">
+    <h1 class="row text-center justify-content-center text-primary p-5">Co dále?</h1>
+    <div class="row text-center justify-content-center">
+    </div>
+    <div class="container px-4 text-center justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-primary img-fluid w-100" asp-area="Visitor" asp-controller="Pay"
+                   asp-action="PayInformation" asp-route-registrationToExhibitionId="@Model">
+                    <h1>Dokončit a přejít k platbě</h1>
+                </a>
+            </div>
+
+            <div class="d-none d-lg-block col-2 p-3w-25 justify-content-center align-items-center text-center"
+                 style="align-self: center">
+                <img src="https://img.icons8.com/pastel-glyph/100/cat--v3.png" alt="cat--v3"
+                     style="align-self: center"/>
+                <div><a href="https://icons8.com/icon/121371/cat">Cat</a> icon by <a
+                        href="https://icons8.com">Icons8</a></div>
+            </div>
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-primary img-fluid w-100" asp-area="Visitor" asp-controller="Registration"
+                   asp-action="LitterOrCat" asp-route-editing="true" asp-route-registrationToExhibitionId="@Model">
+                    <h1>Zaregistrovar další kočku</h1>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

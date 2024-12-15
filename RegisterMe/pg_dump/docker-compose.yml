@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  pg-dump:
+    build: .
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+      BACKUP_HOST: "db"
+      BACKUP_DB: "mydatabase"
+      BACKUP_USER: "myuser"
+      BACKUP_PASSWORD: "mypassword"
+    volumes:
+      - ./backups:/backups
+    entrypoint: >
+      sh -c '
+      mkdir -p /backups &&
+      PGPASSWORD=${BACKUP_PASSWORD} pg_dump --host=${BACKUP_HOST} --username=${BACKUP_USER} --dbname=${BACKUP_DB} > /backups/$(date +"%Y-%m-%d_%H-%M-%S")_pg_bck.sql
+      '

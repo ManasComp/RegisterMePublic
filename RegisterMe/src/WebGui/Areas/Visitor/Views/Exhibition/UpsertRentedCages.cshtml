@@ -1,0 +1,126 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Controllers
+@model WebGui.Areas.Visitor.Models.CreateCageModel
+
+@* ReSharper disable AccessToModifiedClosure *@
+
+@{
+    ViewBag.Title = "Nové klece";
+}
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1>Nové klece</h1>
+
+        <form method="post" asp-controller="Exhibition" asp-action="UpsertRentedCages" class="row">
+
+            <input asp-for="@Model.CagesIds" type="hidden"/>
+            <input asp-for="@Model.ExhibitionId" type="hidden"/>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Výška (cm)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Height" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Height" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Šířka (cm)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Width" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Width" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Délka (cm)
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Length" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Length" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6 align-items-center justify-content-center">
+                <div class="form-floating col-md-4">
+                    Počet
+                </div>
+                <div class="form-floating col-md-8">
+                    <input asp-for="@Model.Count" class="form-control"/>
+                </div>
+                <span asp-validation-for="@Model.Count" class="text-danger"></span>
+            </div>
+
+            <div class="row py-3 col-md-6">
+                <span class="py-2">
+                    <b>Dny, kdy bude klec dostupná:</b>
+                </span>
+                @for (var i = 0; i < Model.ExhibitionDaysId.Count; i++)
+                {
+                    <div class=" d-flex align-content-center align-items-center text-start justify-content-center">
+                        <div class="col-3 mx-3 my-1">
+                            <label asp-for="@Model.ExhibitionDaysId[i].IsChecked">
+                                @Model.ExhibitionDaysId[i].LabelName
+                            </label>
+                        </div>
+                        <input asp-for="@Model.ExhibitionDaysId[i].Id" type="hidden"/>
+                        <input type="checkbox" checked="@Model.ExhibitionDaysId[i].IsChecked"
+                               asp-for="@Model.ExhibitionDaysId[i].IsChecked">
+                    </div>
+
+                    <span asp-validation-for="@Model.ExhibitionDaysId[i].IsChecked" class="text-danger"></span>
+                }
+            </div>
+
+            <div class="row py-3 col-md-6 align-content-center align-items-center text-center justify-content-center">
+                <span class="py-2">
+                    <b>Klec bude dostupná jako:</b>
+                </span>
+                @for (var i = 0; i < Model.RentedCageTypes.Count; i++)
+                {
+                    <div class="d-flex align-content-center align-items-center text-start justify-content-center">
+                        <div class="col-3 mx-3 my-1">
+                            <label asp-for="@Model.RentedCageTypes[i].IsChecked">
+                                @Model.RentedCageTypes[i].LabelName
+                            </label>
+                        </div>
+                        <input asp-for="@Model.RentedCageTypes[i].Id" type="hidden"/>
+                        <input type="checkbox" checked="@Model.RentedCageTypes[i].IsChecked"
+                               asp-for="@Model.RentedCageTypes[i].IsChecked">
+                    </div>
+
+                    <span asp-validation-for="@Model.RentedCageTypes[i].IsChecked" class="text-danger"></span>
+                }
+            </div>
+
+            @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+            <div class="col-12 row">
+                <div class="col-md-6">
+                    <a class="btn btn-secondary" style="width: 100%" asp-action="EditExhibition"
+                       asp-controller="Exhibition" asp-route-id="@Model.ExhibitionId">Zpět</a>
+                </div>
+                <div class="col-md-6">
+
+                    <button type="submit" class="btn btn-primary col-md-6 form-control" style="width: 100%">
+                        @if (Model.CagesIds != null)
+                        {
+                            <span>Upravit</span>
+                        }
+                        else
+                        {
+                            <span>Přidat</span>
+                        }
+
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

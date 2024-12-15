@@ -1,0 +1,150 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.ExhibitedCatModel
+@{
+    ViewBag.Title = "Registrace na výstavu";
+}
+
+<div class="form-background">
+    <h1 class="text-center fs-4">Registrace na výstavu</h1>
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+            @await Html.PartialAsync("_RegistrationPartial", Model.RegistrationType)
+            <h1 class="text-center">Kočka</h1>
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="UpsertCat" class="row"
+                  id="formToSubmit">
+                <input asp-for="@Model.Step" type="hidden"/>
+                <input asp-for="@Model.RegistrationToExhibitionId" type="hidden"/>
+                <partial name="_ExhibitedCatPartial" Model="@Model"/>
+                <partial name="_buttonsPartial" Model="@Model"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_scriptPartial" Model="@Model.Step"/>
+    <script>
+        const toggleButton = document.getElementById('toggleButton');
+        const targetElement = document.getElementById('targetElement1');
+
+        const hasBreederBtn = document.getElementById('hasBreederBtn');
+        const breederInfo = document.getElementById('targetElement');
+
+        const hasBreederButton = document.getElementById('hasBreederButton');
+        const homeCatBtn = document.getElementById('homeCat');
+
+        const nameInput = document.getElementById("Breeder.name");
+        const surnameInput = document.getElementById("Breeder.surname");
+        const countryInput = document.getElementById("Breeder.country");
+
+        const emsInput = document.getElementById("emsInput");
+        const group = document.getElementById("group");
+        const groupInput = document.getElementById("groupInput");
+
+        function toggleElementVisibility() {
+            if (toggleButton.checked) {
+
+                targetElement.classList.remove("show0");
+                targetElement.classList.add("hide");
+                hasBreederBtn.bootstrapToggle('on');
+                setTimeout(() => {
+                    targetElement.style.display = 'none';
+                }, 500);
+            } else {
+                nameInput.value = '';
+                surnameInput.value = '';
+                countryInput.value = '';
+                targetElement.style.display = 'block';
+                targetElement.classList.remove("hide");
+                targetElement.classList.add("show0");
+            }
+        }
+
+        function toggleButtonVisibitlity() {
+            if (!homeCatBtn.checked) {
+                hasBreederBtn.bootstrapToggle('on');
+                hasBreederButton.classList.remove("show0");
+                hasBreederButton.classList.add("hide");
+                setTimeout(() => {
+                    hasBreederButton.style.display = 'none';
+                }, 500);
+
+                nameInput.value = '';
+                surnameInput.value = '';
+                countryInput.value = '';
+                breederInfo.style.display = 'block';
+                breederInfo.classList.remove("hide");
+                breederInfo.classList.add("show0");
+            } else {
+                hasBreederButton.style.display = 'block';
+                hasBreederButton.classList.remove("hide");
+                hasBreederButton.classList.add("show0");
+            }
+        }
+
+        function toggleBreederVisibility() {
+            let result = hasBreederBtn.checked;
+            if (result === null) {
+                result = false;
+            }
+            if (!result) {
+                nameInput.value = '';
+                surnameInput.value = '';
+                countryInput.value = '';
+                breederInfo.classList.remove("show0");
+                breederInfo.classList.add("hide");
+                setTimeout(() => {
+                    breederInfo.style.display = 'none';
+                }, 500);
+            } else {
+                breederInfo.style.display = 'block';
+                breederInfo.classList.remove("hide");
+                breederInfo.classList.add("show0");
+            }
+        }
+
+        function check(input) {
+
+            let ip = '@TempData["requiresGroup"]';
+            ip += "?ems=" + encodeURIComponent(input);
+
+            const result = ($.ajax({
+                url: ip,
+                type: "GET",
+                async: false
+            })).responseText;
+
+            return result === "false";
+        }
+
+        function checkGroup(e) {
+            if (check(e.target.value)) {
+                groupInput.value = '';
+                group.classList.remove("show0");
+                group.classList.add("hide");
+                setTimeout(() => {
+                    group.style.display = 'none';
+                }, 0);
+            } else {
+                group.style.display = 'flex';
+                group.classList.remove("hide");
+                group.classList.add("show0");
+            }
+        }
+
+        toggleButton.addEventListener('change', toggleElementVisibility);
+        hasBreederBtn.addEventListener('change', toggleBreederVisibility);
+        emsInput.addEventListener('input', checkGroup);
+        homeCatBtn.addEventListener('change', toggleButtonVisibitlity);
+
+        targetElement.style.display = toggleButton.checked ? 'none' : 'block';
+        group.style.display = check(emsInput.value) ? 'none' : 'flex';
+        hasBreederButton.style.display = homeCatBtn.checked ? 'block' : 'none';
+        breederInfo.style.display = hasBreederBtn.checked ? 'block' : 'none';
+
+        $.validator.setDefaults({
+            onkeyup: false
+        })
+
+    </script>
+}

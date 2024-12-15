@@ -1,0 +1,146 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Identity.Pages.Account.RegisterModel
+
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2 text-white">Registrace</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pt-3">
+            <div class="col-md-12">
+                <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.User.FirstName" class="form-control" placeholder="name@example.com"
+                               autocomplete="given-name"/>
+                        <label asp-for="Input.User.FirstName" class="ms-2 my_text_muted">Křestní jméno (např.
+                            Jan)</label>
+                        <span asp-validation-for="Input.User.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.User.LastName" class="form-control" placeholder="name@example.com"
+                               autocomplete="family-name"/>
+                        <label asp-for="Input.User.LastName" class="ms-2 my_text_muted">Přijmení (např. Novotný)</label>
+                        <span asp-validation-for="Input.User.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="date" asp-for="Input.User.DateOfBirth" class="form-control" autocomplete="bday"
+                               id="DateOfBirth" onchange="checkAge()"/>
+                        <label asp-for="Input.User.DateOfBirth" class="ms-2 my_text_muted">Datum narození</label>
+                        <span asp-validation-for="Input.User.DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="tel" asp-for="Input.User.PhoneNumber" class="form-control"
+                               placeholder="name@example.com" autocomplete="tel"/>
+                        <label asp-for="Input.User.PhoneNumber" class="ms-2 my_text_muted">Telefonní číslo (např. +420
+                            777 666 555)</label>
+                        <span asp-validation-for="Input.User.PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true"
+                               placeholder="name@example.com"/>
+                        <label asp-for="Input.Email" class="ms-2 my_text_muted">Email (např. jan@gmail.com)</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <p class="text-center">Heslo musí minimálně 6 znaků, velké a malé písmeno, číslo a libovolný
+                        tisknutelný nealfanumerický znak.</p>
+                    <div id="password" class="mb-3 col-md-6 d-flex align-items-center">
+                        <div class="form-floating col">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password"
+                                   aria-required="true" placeholder="password"/>
+                            <label asp-for="Input.Password" class="ms-2 my_text_muted">Heslo</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <a href="#" class="col-md-1 text-center">
+                            <btn class="btn btn-outline-secondary border-0">
+                                <i class="bi bi-eye h2" aria-hidden="true"></i>
+                            </btn>
+                        </a>
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password"
+                               aria-required="true" placeholder="password"/>
+                        <label asp-for="Input.ConfirmPassword" class="ms-2 my_text_muted">Potvrzení hesla</label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <p class="text-center">
+                        Registrací souhlasíte s poskytnutím osobních údajů. Tyto údaje budou uloženy na serveru a budou
+                        předány případným organizátorům výstav.
+                    <p>
+                    <h3 id="ageWarning" class="text-danger text-center">Ještě Vám nebylo 18 let. Registrací potvrzujete,
+                        že Vaši rodiče o registraci ví a souhlasí s ní.</h3>
+
+                    <div class="col-12">
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registruj mě!
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+        function checkAge() {
+            const dateOfBirth = new Date(document.getElementById("DateOfBirth").value);
+            const today = new Date();
+            let age = today.getFullYear() - dateOfBirth.getFullYear();
+            const monthDiff = today.getMonth() - dateOfBirth.getMonth();
+            const dayDiff = today.getDate() - dateOfBirth.getDate();
+
+            if (monthDiff < 0 || monthDiff === 0 && dayDiff < 0) {
+                age--;
+            }
+
+            const warning = document.getElementById("ageWarning");
+            console.log(age);
+            if (age < 18) {
+                warning.classList.remove("hide");
+                warning.classList.add("show0");
+                warning.style.display = "block";
+            } else {
+                warning.classList.remove("show0");
+                warning.classList.add("hide");
+                setTimeout(() => {
+                    warning.style.display = 'none';
+                }, 500);
+            }
+        }
+
+        $(document).ready(function () {
+            document.getElementById("ageWarning").style.display = "none";
+            $("#password a").on('click', function (event) {
+                event.preventDefault();
+                var passwordInput = $('#password input');
+                var passwordIcon = $('#password i');
+
+                if (passwordInput.attr("type") === "text") {
+                    passwordInput.attr('type', 'password');
+                    passwordIcon.addClass("bi-eye-slash");
+                    passwordIcon.removeClass("bi-eye");
+                } else if (passwordInput.attr("type") === "password") {
+                    passwordInput.attr('type', 'text');
+                    passwordIcon.removeClass("bi-eye-slash");
+                    passwordIcon.addClass("bi-eye");
+                }
+            });
+        });
+
+    </script>
+}

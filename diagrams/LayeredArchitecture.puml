@@ -1,0 +1,14 @@
+@startuml
+top to bottom direction
+hide empty members
+
+GUI : ASP.NET Core MVC
+API : ASP.NET Core Minimal API
+BusinessLayer : knihovna tříd, obsahuje služby
+DataAcessLayer : knihovna tříd, obsahuje databázové migrace, konfigurace a inicializace, databázové entity
+
+GUI --> BusinessLayer
+API --> BusinessLayer
+
+BusinessLayer --> DataAcessLayer
+@enduml

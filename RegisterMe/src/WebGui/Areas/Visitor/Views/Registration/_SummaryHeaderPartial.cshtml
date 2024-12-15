@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Application.CatRegistrations.Enums
+@model WebGui.Areas.Visitor.Models.SummaryHeaderPartialHeader
+
+<div class="row">
+    <div class="form-header d-flex mb-4">
+
+        @if (Model.IsLitter)
+        {
+            <a class="stepIndicator" asp-controller="Registration" asp-action="UpsertLitter"
+               asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-disabled="@Model.Disabled" asp-route-catRegistrationId="@Model.CatRegistrationId">
+                <span>Kočka</span>
+            </a>
+        }
+        else
+        {
+            <a class="stepIndicator" asp-controller="Registration" asp-action="UpsertCat"
+               asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-disabled="@Model.Disabled" asp-route-catRegistrationId="@Model.CatRegistrationId">
+                <span>Kočka</span>
+            </a>
+        }
+
+        @if (Model.RegistrationType != RegistrationType.HomeExhibitedCat)
+        {
+            <a class="stepIndicator" asp-controller="Registration" asp-action="UpsertParent" asp-route-gender="Male"
+               asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-disabled="@Model.Disabled">
+                <span>Otec</span>
+            </a>
+            <a class="stepIndicator" asp-controller="Registration" asp-action="UpsertParent" asp-route-gender="Female"
+               asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+               asp-route-disabled="@Model.Disabled">
+                <span>Matka</span>
+            </a>
+        }
+        <a class="stepIndicator" asp-controller="Registration" asp-action="UpsertExhibition"
+           asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId"
+           asp-route-disabled="@Model.Disabled">
+            <span>Výstava</span>
+        </a>
+        <span class="stepIndicator">Platba</span>
+    </div>
+</div>

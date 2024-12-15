@@ -1,0 +1,81 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas
+@using WebGui.Areas.Visitor.Controllers
+@using WebGui.TagHelpers
+@model List<WebGui.Areas.Visitor.Models.RegistrationToExhibitionAdminIndexModel>
+
+@{
+    ViewBag.Title = "Moje registrace";
+}
+
+<div class="table-responsive">
+    <table id="example" class="display is-striped nowrap" style="width:100%">
+        <thead>
+        <tr>
+            <th scope="col">Výstava</th>
+            <th scope="col">Status</th>
+            <th scope="col">Počet koček</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td data-priority="1">@item.ExhibitionName </td>
+                <td data-priority="1">@item.Status </td>
+                <td>@item.NumberOfCats</td>
+                <td data-priority="2">
+                    <div class="row" style="width:150px;">
+                        <a asp-area="Visitor" asp-controller="RegistrationToExhibition" asp-action="Detail"
+                           asp-route-registrationToExhibitionId="@item.RegistrationToExhibitionId"
+                           class="btn btn-primary mx-2 col-3 d-flex justify-content-center align-items-center text-center">
+                            <small>
+                                <i class="bi bi-pencil-square"></i>
+                            </small>
+                        </a>
+                        <a asp-area="Visitor" asp-controller="Registration" asp-action="DownloadRegistrationAsZip"
+                           asp-route-registrationToExhibitionId="@item.RegistrationToExhibitionId"
+                           class="btn btn-info col-3 d-flex justify-content-center align-items-center text-center">
+                            <small>
+                                <i class="bi bi-save-fill"></i>
+                            </small>
+                        </a>
+                        @if (!item.IsSend)
+                        {
+                            <Confirmation asp-area="@nameof(Areas.Visitor)"
+                                          asp-controller="@nameof(RegistrationController)"
+                                          asp-action="@nameof(RegistrationController.DeleteRegistrationToRegistration)"
+                                          title="Jste si jistý/á?"
+                                          text="Smažete registraci"
+                                          confirm-text="Ano"
+                                          class="btn btn-danger mx-2 col-3 d-flex justify-content-center align-items-center text-center"
+                                          form-data="@(new Dictionary<string, string> { { "registrationToExhibitionId", item.RegistrationToExhibitionId.ToString() } })">
+                                <small>
+                                    <i class="bi bi-trash-fill"></i>
+                                </small>
+                            </Confirmation>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+        <tfoot>
+        </tfoot>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script>
+        const table = new DataTable('#example', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/cs.json',
+            },
+            fixedHeader: true,
+            responsive: true,
+            scroller: true,
+            select: true,
+        });
+    </script>
+}

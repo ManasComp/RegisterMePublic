@@ -1,0 +1,116 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.LitterModel
+
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Průkaz původu
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.PassOfOrigin" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.PassOfOrigin" class="ms-2 my_text_muted">např. ČSCH LO 594/10/PER</label>
+        <span asp-validation-for="@Model.PassOfOrigin" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Plemeno
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.Breed" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.Breed" class="ms-2 my_text_muted">např. Perská</label>
+        <span asp-validation-for="@Model.Breed" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Jméno chovné stanice
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.NameOfBreedingStation" class="form-control"
+               placeholder="545454"/>
+        <label asp-for="@Model.NameOfBreedingStation" class="ms-2 my_text_muted">např. Wincat</label>
+        <span asp-validation-for="@Model.NameOfBreedingStation" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="col-md-4">
+        <label asp-for="@Model.DateOfBirth">Datum narození</label>
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" type="date" class="form-control" asp-for="@Model.DateOfBirth"/>
+        <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
+    </div>
+</div>
+
+<hr/>
+<div class="container-fluid py-3 d-flex justify-content-center">
+    <div class="row py-3 col-md-6 align-items-center justify-content-center">
+        <div class="col-md-8 col-8 text-center">
+            Jste chovatel této kočky?
+        </div>
+        <div class="form-floating col-md-4 col-4">
+            <input disabled="@Model.Disabled" type="checkbox"
+                   id="toggleButton"
+                   asp-for="@Model.IsSameAsExhibitor"
+                   data-toggle="toggle"
+                   data-onlabel="Ano"
+                   data-offlabel="Ne"
+                   data-onstyle="success"
+                   data-offstyle="danger">
+        </div>
+    </div>
+</div>
+
+<span id="targetElement">
+    <p class="text-center text-info">
+        Doplňte, prosím, informace o chovateli tohoto vrhu.
+    </p>
+    <div class="row">
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="form-floating col-md-4">
+                Jméno
+            </div>
+            <div class="form-floating col-md-8">
+                <input disabled="@Model.Disabled" id="Breeder.name" asp-for="@Model.BreederName" class="form-control"
+                       placeholder="545454"/>
+                <label asp-for="@Model.BreederName" class="ms-2 my_text_muted">Např. Josef</label>
+                <span asp-validation-for="@Model.BreederName" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+
+            <div class="form-floating col-md-4">
+                Přijmení
+            </div>
+            <div class="form-floating col-md-8">
+                <input disabled="@Model.Disabled" id="Breeder.surname" asp-for="@Model.BreederSurname"
+                       class="form-control" placeholder="545454"/>
+                <label asp-for="@Model.BreederSurname" class="ms-2 my_text_muted">např. Novotný</label>
+                <span asp-validation-for="@Model.BreederSurname" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row py-3 col-md-6 align-items-center justify-content-center">
+            <div class="form-floating col-md-4">
+                Země
+            </div>
+            <div class="form-floating col-md-8">
+                <select disabled="@Model.Disabled" asp-items="@Model.Countries" id="Breeder.country"
+                        asp-for="@Model.BreederCountry" class="js-example-basic-single form-select"
+                        style="width: 100%; height: 100%">
+                    <option></option>
+                </select>
+                <label asp-for="@Model.BreederCountry" class="ms-2 my_text_muted">např. Česko</label>
+                <span asp-validation-for="@Model.BreederCountry" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+</span>

@@ -1,0 +1,116 @@
+@model WebGui.Areas.Visitor.Models.MultipleExhibitionVm
+
+<div class="container-fluid">
+    @for (var i = 0; i < Model.DayDetails.Count; i++)
+    {
+        <input asp-for="@Model.DayDetails[i].ExhibitionDayId" type="hidden">
+        @for (var j = 0; j < Model.DayDetails[i].ExistingCages.Count; j++)
+        {
+            <input asp-for="@Model.DayDetails[i].ExistingCages[j].Value" type="hidden">
+            <input asp-for="@Model.DayDetails[i].ExistingCages[j].Text" type="hidden">
+            <input asp-for="@Model.DayDetails[i].ExistingCages[j].Group" type="hidden">
+            <input asp-for="@Model.DayDetails[i].ExistingCages[j].Group.Name" type="hidden">
+        }
+
+        <table class="table table-hover">
+            <colgroup>
+                <col style="width: 30%">
+                <col style="width: 70%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th colspan="2">
+                    <p class="h3 text-primary text-center">
+                        <b> @Model.DayDetails[i].Date</b>
+                    </p>
+                </th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Účast</td>
+                <td>
+                    <input disabled="@Model.Disabled"
+                           asp-for="@Model.DayDetails[i].Attendance"
+                           type="checkbox"
+                           data-toggle="toggle"
+                           data-onlabel="Ano"
+                           data-offlabel="Ne"
+                           data-onstyle="success"
+                           data-offstyle="danger"
+                           style="width: 100%"
+                           class="dayToggle">
+                    <span asp-validation-for="@Model.DayDetails[i].Attendance" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Skupiny</td>
+                <td>
+
+                    @{
+                        var i1 = i;
+                    }
+                    <select style="width: 100%" disabled="@Model.Disabled"
+                            asp-items="@Model.DayDetails[i].GroupsYouCanRegisterTo"
+                            asp-for="@Model.DayDetails[i].SelectedGroupsPerDay"
+                            class="js-example-basic-multiple form-select disabled" multiple="multiple"
+                            id="@string.Join("cages", Model.DayDetails[i1].Date).GetHashCode()"></select>
+                    <span asp-validation-for="@Model.DayDetails[i].SelectedGroupsPerDay" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Předvolené</td>
+                <td>
+                    <input disabled="@Model.Disabled"
+                           asp-for="@Model.DayDetails[i].SelectDefaultCage"
+                           type="checkbox"
+                           data-toggle="toggle"
+                           data-onlabel="Ano"
+                           data-offlabel="Ne"
+                           data-onstyle="success"
+                           data-offstyle="danger"
+                           style="width: 100%"
+                           class="dayToggle">
+                    <span asp-validation-for="@Model.DayDetails[i].SelectDefaultCage" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Vyberte</td>
+                <td>
+                    <select disabled="@Model.Disabled" asp-items="@Model.DayDetails[i].ExistingCages"
+                            asp-for="@Model.DayDetails[i].SelectedCage" class="js-example-basic-single form-select"
+                            style="width: 100%"></select>
+                    <span asp-validation-for="@Model.DayDetails[i].SelectedCage" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Šířka (cm)</td>
+                <td>
+                    <input disabled="@Model.Disabled" type="number" class="form-control"
+                           asp-for="@Model.DayDetails[i].Width" style="width: 100%">
+                    <span asp-validation-for="@Model.DayDetails[i].Width" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Délka (cm)</td>
+                <td>
+                    <input disabled="@Model.Disabled" type="number" class="form-control"
+                           asp-for="@Model.DayDetails[i].Length" style="width: 100%">
+                    <span asp-validation-for="@Model.DayDetails[i].Length" class="text-danger"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    }
+    <span asp-validation-for="@Model.DayDetails" class="text-danger"></span>
+
+    <div class="row py-3 col-md-12 align-items-center justify-content-center">
+        <div class="form-floating col-md-2">
+            Poznámka
+        </div>
+        <div class="form-floating col-md-10">
+            <input disabled="@Model.Disabled" asp-for="@Model.Note" class="form-control" placeholder="545454"/>
+            <label asp-for="@Model.Note" class="ms-2 my_text_muted">např. Chci sedět vedle Pepy Novávka...</label>
+            <span asp-validation-for="@Model.Note" class="text-danger"></span>
+        </div>
+    </div>
+</div>

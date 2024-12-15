@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  net:
+    build: ./Net
+    volumes:
+      - ./certificates:/certificates
+    environment:
+      - PASSWORD=admin
+      - APP_CERTIFICATE_PFX=appCertificate.pfx
+      - POSTGRESDB_KEY=postgresdb.key
+      - POSTGRESDB_CRT=postgresdb.crt
+      - ROOT_CRT=root.crt
+    entrypoint: ["/NetEntryPoint.sh"]
+    
+  go:
+    build: ./Go
+    volumes:
+      - ./certificates:/certificates
+    environment:
+      - PASSWORD=admin
+      - MY_CA=myCA
+    entrypoint: ["/GoEntryPoint.sh"]

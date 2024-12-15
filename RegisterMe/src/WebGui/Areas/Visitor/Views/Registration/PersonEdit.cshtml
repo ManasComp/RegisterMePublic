@@ -1,0 +1,42 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.PersonRegistrationModel
+
+@{
+    ViewBag.Title = "Registrace";
+}
+<nav class="navbar sticky-top navbar-light bg-light px-3" data-bs-spy="scroll" sticky-top id="navbar-example2">
+    <a href="#" onClick="history.go(-2); return false;">Zpět</a>
+</nav>
+
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+
+            <h1 class="text-center">Registrace</h1>
+
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="PersonEdit" class="row">
+                <input asp-for="@Model.RegistrationToExhibitionId" type="hidden"/>
+
+                <partial name="_personRePartial" Model="@Model"/>
+
+                <button type="submit" class="btn btn-primary form-control " id="myButton">
+                    Dokončit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const button = document.getElementById("myButton");
+
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                placeholder: "Vyberte...",
+                minimumResultsForSearch: -1
+            });
+        });
+    </script>
+}

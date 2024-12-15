@@ -1,0 +1,76 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.CatModel
+
+<p class="text-info text-center">Dodržujte velká a malá písmena, prosím.</p>
+<div class="row py-3 col-md-12 align-items-center justify-content-center">
+    <div class="form-floating col-md-2">
+        Jméno
+    </div>
+    <div class="form-floating col-md-10 ">
+        <div class="row">
+            <div class="col-md-3 text-center form-floating">
+                <input disabled="@Model.Disabled" asp-for="@Model.TitleBeforeName" class="form-control"
+                       placeholder="545454"/>
+                <label asp-for="@Model.TitleBeforeName" class="ms-2 my_text_muted">Titul</label>
+                <span asp-validation-for="@Model.TitleBeforeName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 text-center form-floating">
+                <input disabled="@Model.Disabled" asp-for="@Model.Name" class="form-control" placeholder="545454"/>
+                <label asp-for="@Model.Name" class="ms-2 my_text_muted">Jméno (např. Cecilka z Klajdovky)</label>
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-3 text-center form-floating">
+                <input disabled="@Model.Disabled" asp-for="@Model.TitleAfterName" class="form-control"
+                       placeholder="545454"/>
+                <label asp-for="@Model.TitleAfterName" class="ms-2 my_text_muted">Titul</label>
+                <span asp-validation-for="@Model.TitleAfterName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Název a číslo plemenné knihy
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.PedigreeNumber" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.PedigreeNumber" class="ms-2 my_text_muted" style="opacity: 0.3;">např. ČSCH LO
+            594/10/PER</label>
+        <span asp-validation-for="@Model.PedigreeNumber" class="text-danger"></span>
+    </div>
+</div>
+
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        EMS kód
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.Ems" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.Ems" class="ms-2 my_text_muted">např. PER a</label>
+        <span asp-validation-for="@Model.Ems" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Plemeno
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.Breed" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.Breed" class="ms-2 my_text_muted">např. Perská</label>
+        <span asp-validation-for="@Model.Breed" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row py-3 col-md-6 align-items-center justify-content-center">
+    <div class="form-floating col-md-4">
+        Barva
+    </div>
+    <div class="form-floating col-md-8">
+        <input disabled="@Model.Disabled" asp-for="@Model.Colour" class="form-control" placeholder="545454"/>
+        <label asp-for="@Model.Colour" class="ms-2 my_text_muted">např. modrá</label>
+        <span asp-validation-for="@Model.Colour" class="text-danger"></span>
+    </div>
+</div>

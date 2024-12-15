@@ -1,0 +1,26 @@
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Web_HostAddress = http://localhost:5000/api/v1/
+@AuthCookieName = .AspNetCore.Identity.Application
+@AuthCookieValue = <AuthCookieValue>
+
+# POST Identity Account Login
+@Email=525025@muni.cz
+@Password=Admin123*
+@TwoFactorCode=string
+@TwoFactorRecoveryCode=string
+
+POST {{Web_HostAddress}}users/login?useSessionCookies=true
+Content-Type: application/json
+
+{
+  "email": "{{Email}}",
+  "password": "{{Password}}",
+  "twoFactorCode": "{{TwoFactorCode}}",
+  "twoFactorRecoveryCode": "{{TwoFactorRecoveryCode}}"
+}
+
+###
+
+# GET UserInformation
+GET {{Web_HostAddress}}/users/manage/info
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}

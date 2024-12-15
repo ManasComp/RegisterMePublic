@@ -1,0 +1,60 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Controllers
+@model WebGui.Areas.Visitor.Models.PriceModels.PriceModelStep3
+
+@{
+    ViewBag.Title = "Cena 3/3";
+    Layout = "_Layout";
+}
+
+<div class="container align-items-center text-center">
+    <h1>Cena 3/3</h1>
+    <h3>Částky</h3>
+    Zvolte částky, které budou platit pro dané dny/skupiny dnů
+</div>
+
+<form method="post" asp-controller="Exhibition" asp-action="UpsertPriceStep3" class="row">
+    <input type="hidden" asp-for="ExhibitionId"/>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <th>Dny</th>
+            <th>Cena Kč</th>
+            <th>Cena Eur</th>
+            </thead>
+            <tbody>
+            @for (var i = 0; i < Model.PriceDays.Count; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < Model.PriceDays[i].ExhibitionDays.Count; j++)
+                    {
+                        <input type="hidden" asp-for="@Model.PriceDays[i].ExhibitionDays[j].Id"/>
+                    }
+                    <td>@(string.Join(", ", Model.PriceDays[i].ExhibitionDays.Select(x => x.Date.ToString("d. M."))))</td>
+                    <td>
+                        <input type="number" asp-for="@Model.PriceDays[i].PriceCzk" step="1" style="width: 100%"/>
+                    </td>
+                    <td>
+                        <input type="number" asp-for="@Model.PriceDays[i].PriceEur" step="1" style="width: 100%"/>
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+    </div>
+
+    @Html.ValidationMessage(BaseController.CommandValidation, new { @class = "text-danger" })
+
+    <div class="col-12 row">
+        <div class="col-md-6">
+            <a class="btn btn-secondary" style="width: 100%" asp-action="UpsertPriceStep2" asp-controller="Exhibition"
+               asp-route-exhibitionId="@Model.ExhibitionId">Zpět</a>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary col-md-6 form-control" style="width: 100%">
+                Upravit
+            </button>
+        </div>
+    </div>
+</form>

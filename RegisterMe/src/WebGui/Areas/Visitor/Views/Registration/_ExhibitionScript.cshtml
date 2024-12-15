@@ -1,0 +1,66 @@
+@model WebGui.Areas.Visitor.Models.MultipleExhibitionVm
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dayContainers = document.querySelectorAll('.container-fluid > table');
+        dayContainers.forEach(function (container) {
+            const attendanceCheckbox = container.querySelector('input[data-val-required][name*=".Attendance"]');
+            const groupField = container.querySelector('select[name*=".SelectedGroupsPerDay"]');
+            const selectDefaultCageCheckbox = container.querySelector('input[data-val-required][name*=".SelectDefaultCage"]');
+            const widthField = container.querySelector('input[data-val-required][name*=".Width"]');
+            const lengthField = container.querySelector('input[data-val-required][name*=".Length"]');
+            const selectField = container.querySelector('select[name*=".SelectedCage"]');
+
+            const groupFieldRow = groupField ? groupField.closest('tr') : null;
+            const widthFieldRow = widthField ? widthField.closest('tr') : null;
+            const lengthFieldRow = lengthField ? lengthField.closest('tr') : null;
+            const selectFieldRow = selectField ? selectField.closest('tr') : null;
+            const selectDefaultCageCheckboxRow = selectDefaultCageCheckbox ? selectDefaultCageCheckbox.closest('tr') : null;
+
+            if (attendanceCheckbox && selectDefaultCageCheckbox) {
+                const otherFieldsPreselected = [selectFieldRow, widthFieldRow, lengthFieldRow].filter(Boolean);
+                const otherFieldsAll = [groupFieldRow, selectDefaultCageCheckboxRow, selectFieldRow, widthFieldRow, lengthFieldRow].filter(Boolean);
+                toggleAllFields(attendanceCheckbox.checked, selectDefaultCageCheckbox.checked, otherFieldsAll);
+                toggleFields(attendanceCheckbox.checked, selectDefaultCageCheckbox.checked, otherFieldsPreselected);
+                if (@Model.IsConfirmation.ToString().ToLower())
+                {
+                    selectDefaultCageCheckboxRow.style.display = 'none';
+                }
+                else
+                {
+                    attendanceCheckbox.addEventListener('change', function () {
+                        toggleAllFields(this.checked, selectDefaultCageCheckbox.checked, otherFieldsAll);
+                        toggleFields(attendanceCheckbox.checked, this.checked, otherFieldsPreselected);
+                        selectDefaultCageCheckbox.bootstrapToggle('on');
+                    });
+
+                    selectDefaultCageCheckbox.addEventListener('change', function () {
+                        toggleAllFields(attendanceCheckbox.checked, this.checked, otherFieldsAll);
+                        toggleFields(attendanceCheckbox.checked, this.checked, otherFieldsPreselected);
+                    });
+                }
+            }
+        });
+
+        function toggleAllFields(isAttendanceChecked, isSelectDefaultChecked, fields) {
+
+            fields.filter(x => x != null).forEach(function (field) {
+                field.style.display = isAttendanceChecked ? '' : 'none';
+            });
+        }
+
+        function toggleFields(isAttendanceChecked, isSelectDefaultChecked, fields) {
+
+            if (isAttendanceChecked) {
+                if (isSelectDefaultChecked && fields[0]) { // Select Field Row
+                    fields[1].style.display = 'none'; // widthFieldRow
+                    fields[2].style.display = 'none'; // lengthFieldRow
+                    fields[0].style.display = ''; // selectFieldRow
+                } else {
+                    if (fields[1]) fields[1].style.display = ''; // widthFieldRow
+                    if (fields[2]) fields[2].style.display = ''; // lengthFieldRow
+                    if (fields[0]) fields[0].style.display = 'none'; // selectFieldRow
+                }
+            }
+        }
+    });
+</script>

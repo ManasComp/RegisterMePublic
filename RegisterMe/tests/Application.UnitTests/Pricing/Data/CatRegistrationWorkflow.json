@@ -1,0 +1,52 @@
+[
+  {
+    "WorkflowName": "MnozstevniSleva",
+    "Rules": [
+      {
+        "RuleName": "MassDiscountForOneAndTwoDays",
+        "Expression": "catRegistration.SortedAscendingByPriceIndex >= 2",
+        "Actions": {
+          "OnSuccess": {
+            "Name": "OutputExpression",
+            "Context": {
+              "Expression": "utils.SetPrice(catRegistration, catRegistration.NumberOfVisitedDays == 1 ? utils.MultiCurrency(600, 20) : utils.MultiCurrency(900, 40))"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "WorkflowName": "VelkaPujcenaKlec",
+    "Operator": "Or",
+    "Rules": [
+      {
+        "RuleName": "PriceForOneDayDoubleCage",
+        "SuccessEvent": "300,12",
+        "Expression": "catRegistration.CountOfUsedCagesPerRentedCageType[DoubleCageSingleCat] == 1 && !catRegistration.IsLitter"
+      },
+      {
+        "RuleName": "PriceForTwoDaysDoubleCage",
+        "SuccessEvent": "600,24",
+        "Expression": "catRegistration.CountOfUsedCagesPerRentedCageType[DoubleCageSingleCat]==2 && !catRegistration.IsLitter"
+      }
+    ]
+  },
+  {
+    "WorkflowName": "VelkaVlastniKlec",
+    "RuleName": "Rule1",
+    "Operator": "Or",
+    "Rules": [
+      {
+        "RuleName": "PriceForOneDayLargeCage",
+        "SuccessEvent": "300,12",
+        "Expression": "utils.FindAnyCage(catRegistration.OwnCages, 60, 60, 60, SingleCat, 1) && !catRegistration.IsLitter"
+      },
+      {
+        "RuleName": "PriceFOrTwoDaysLargeCage",
+        "SuccessEvent": "600,24",
+        "Expression": "utils.FindAnyCage(catRegistration.OwnCages, 60, 60, 60, SingleCat, 2) && !catRegistration.IsLitter"
+      }
+    ]
+  }
+]

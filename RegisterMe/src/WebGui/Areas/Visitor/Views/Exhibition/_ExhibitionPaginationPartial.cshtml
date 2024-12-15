@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.ExhibitionModel
+
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-sm n justify-content-center">
+        @if (Model.Exhibitions.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-searchString="@Model.ExhibitionsFilterDto.SearchString"
+                   asp-route-exhibitionStatus="@Model.ExhibitionsFilterDto.ExhibitionRegistrationStatus"
+                   asp-route-pageNumber="@(Model.Exhibitions.PageNumber - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+        @for (var i = 1; i <= Model.Exhibitions.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.Exhibitions.PageNumber ? "active" : "")">
+
+                @{
+                    var i1 = i;
+                }
+                <a class="page-link" asp-action="Index"
+                   asp-route-searchString="@Model.ExhibitionsFilterDto.SearchString"
+                   asp-route-exhibitionStatus="@Model.ExhibitionsFilterDto.ExhibitionRegistrationStatus"
+                   asp-route-pageNumber="@i1">@i1</a>
+            </li>
+        }
+
+        @if (Model.Exhibitions.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-searchString="@Model.ExhibitionsFilterDto.SearchString"
+                   asp-route-exhibitionStatus="@Model.ExhibitionsFilterDto.ExhibitionRegistrationStatus"
+                   asp-route-pageNumber="@(Model.Exhibitions.PageNumber + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

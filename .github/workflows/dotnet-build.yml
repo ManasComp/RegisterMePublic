@@ -1,0 +1,28 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main", "features" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -p:SkipNSwag=True
+
+      - name: Tests
+        run: |
+          dotnet test --no-build --logger "trx;LogFileName=testresults.trx" --results-directory ./TestResults --verbosity normal

@@ -1,0 +1,41 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.LitterOrCatModel
+
+@{
+    ViewBag.Title = "Registrace";
+}
+
+<div class="text-center justify-content-center align-items-center">
+    <h1 class="row text-center justify-content-center text-primary p-5">Registrace</h1>
+    <div class="container px-4 text-center justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-secondary img-fluid w-100 h-100"
+                   asp-action="DeleteTempAndUpsertCatRegistration"
+                   asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+                    <div>Nebo kocoura</div>
+                    <h3>Zaregistrovat kočku</h3>
+                </a>
+            </div>
+
+            <div class="col col-lg-4">
+                <a class="col col-lg-4 btn btn-primary img-fluid w-100" asp-action="DeleteTempAndUpsertLitter"
+                   asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+                    <div>Vrh je 3 a více koťat</div>
+                    <h3>Zaregistrovat vrh</h3>
+                </a>
+            </div>
+
+            @if (Model.IsTemporary)
+            {
+                <p>
+                    <a class="btn btn-outline-primary img-fluid w-100 my-3" asp-action="ContinueInExistingRegistration"
+                       asp-route-registrationToExhibitionId="@Model.RegistrationToExhibitionId">
+                        Existuje nedokončená registrace, pokračovat v registraci
+                    </a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

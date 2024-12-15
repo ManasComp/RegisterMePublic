@@ -1,0 +1,15 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Identity.Pages.Account.ConfirmEmailModel
+@{
+    ViewData["Title"] = "Potvrzení emailu";
+}
+
+<h1>@ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
+@if (Model.WasSuccessful)
+{
+    <div class="align-content-center">
+        <a asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Přihlásit se</a>
+    </div>
+}

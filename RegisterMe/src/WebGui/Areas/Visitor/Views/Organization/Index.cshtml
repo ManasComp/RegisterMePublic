@@ -1,0 +1,63 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Application.Organizations.Enums
+@using RegisterMe.Domain.Constants
+@model WebGui.Areas.Visitor.Models.OrganizationModel
+
+@{
+    ViewBag.Title = "Organizace";
+    Layout = "_Layout";
+}
+
+<div class="container align-items-center text-center">
+    <h1>Organizace</h1>
+    <form asp-controller="Organization" asp-action="Index" method="get">
+        <div class="input-group mb-3">
+            @if (User.IsInRole(Roles.Administrator))
+            {
+                <div class="input-group-prepend" style="flex: 1;">
+                    <select asp-for="@Model.OrganizationsFilterDto.OrganizationConfirmationStatus" class="form-select"
+                            name="organizationConfirmationStatus" aria-label="Filter Options">
+                        <option value="@OrganizationConfirmationStatus.All">Vše</option>
+                        <option value="@OrganizationConfirmationStatus.Confirmed">Pouze potvrzené</option>
+                        <option value="@OrganizationConfirmationStatus.NotConfirmed">Nepotvrzené</option>
+                    </select>
+                </div>
+            }
+            <input asp-for="@Model.OrganizationsFilterDto.SearchString" type="text" class="form-control rounded-2"
+                   placeholder="Hledat..." name="searchString" aria-label="Search" style="flex: 2;">
+            <div class="input-group-prepend" style="flex: 0;">
+                <button type="submit" class="btn btn-outline-secondary">🔍</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@if (Model.Organizations.Items.Count == 0)
+{
+    <p>Žádné organizace nebyly nalezeny</p>
+}
+else
+{
+    @foreach (var organization in Model.Organizations.Items)
+    {
+        <div class="card m-2">
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <div>
+                        <b class="card-title">@organization.Name</b>
+                    </div>
+                    <p class="card-text">@organization.Ico</p>
+
+                    <a class="btn btn-primary" asp-area="Visitor" asp-action="Detail"
+                       asp-route-organizationId="@organization.Id">
+                        Detail
+                    </a>
+                </div>
+                <b class="card-text">@organization.ExhibitionIds.Count @(organization.ExhibitionIds.Count == 1 ? "výstava" : "výstav") </b>
+            </div>
+        </div>
+    }
+}
+
+<partial name="_OrganizationPaginationPartial" model="Model"/>

@@ -1,0 +1,77 @@
+@using System.Text.Json
+@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.UpdateDiscountMethodsModel
+@inject IAntiforgery Antiforgery
+
+@{
+    ViewBag.Title = "Editace úpravy cen";
+    Layout = "_Layout";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<div class="container align-items-center text-center">
+    <h1>Editace úpravy cen</h1>
+</div>
+
+<div id="jsoneditor"></div>
+
+<div class="col-12 row">
+    <div class="col-md-6">
+        <a class="btn btn-secondary" style="width: 100%" asp-action="EditExhibition" asp-controller="Exhibition"
+           asp-route-id="@Model.ExhibitionId">Zpět</a>
+    </div>
+    <div class="col-md-6">
+        <button onclick="Send('/visitor/exhibition/UpsertDiscount')" class="btn btn-primary col-md-6 form-control"
+                style="width: 100%">
+            Odeslat
+        </button>
+    </div>
+</div>
+
+@section Scripts
+
+
+
+{
+    <script>
+        const container = document.getElementById("jsoneditor");
+        const options = {};
+        const editor = new JSONEditor(container, options);
+        const data = '@Html.Raw(JsonSerializer.Serialize<object?>(Model.DiscountWorkflow, new JsonSerializerOptions(JsonSerializerDefaults.Web)))';
+        const initialJson = JSON.parse(data);
+        editor.set(initialJson);
+
+        function Send(url) {
+            const form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", url);
+
+            const postData = {
+                ExhibitionId: @Model.ExhibitionId,
+                DiscountWorkflowString: JSON.stringify(editor.get()),
+                "__RequestVerificationToken": '@requestToken'
+            };
+            @if (Model.DiscountId != null)
+            {
+                <text>postData.DiscountId = @Model.DiscountId;</text>
+            }
+            ;
+
+            for (let key in postData) {
+                if (postData.hasOwnProperty(key)) {
+                    const hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", postData[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    </script>
+}

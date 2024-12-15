@@ -1,0 +1,37 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model RegisterMe.Application.Common.Models.PaginatedList<RegisterMe.Application.Exhibitions.Dtos.ExhibitionDto>
+
+@if (Model.Items.Count == 0)
+{
+    <p>Žádné výstavy nebyly nalezeny</p>
+}
+else
+{
+    @foreach (var exhibitionVm in Model.Items)
+    {
+        <div class="card m-2">
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <div>
+                        <b class="card-title">@exhibitionVm.Name</b>
+                    </div>
+                    <p class="card-text">@exhibitionVm.Location</p>
+
+                    <a class="btn btn-primary" asp-area="Visitor" asp-controller="Exhibition" asp-action="Detail"
+                       asp-route-id="@exhibitionVm.Id">
+                        Detail
+                    </a>
+                </div>
+                <div>
+                    <b class="card-text">@exhibitionVm.ExhibitionStart.ToString("dd. MM. yyyy") - @exhibitionVm.ExhibitionEnd.ToString("dd. MM. yyyy")</b>
+                    @if (exhibitionVm.IsCancelled)
+                    {
+                        <div class="bg-primary border-3 text-center">
+                            <b>Zrušeno</b>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

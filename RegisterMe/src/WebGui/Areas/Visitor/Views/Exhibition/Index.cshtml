@@ -1,0 +1,54 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RegisterMe.Application.Exhibitions.Enums
+@model WebGui.Areas.Visitor.Models.ExhibitionModel
+
+@{
+    ViewBag.Title = "Výstavy";
+    Layout = "_Layout";
+}
+
+<div class="container align-items-center text-center">
+    <h1>Výstavy</h1>
+    <form asp-controller="Exhibition" asp-action="Index" method="get">
+        <div class="row mb-3 g-2 justify-content-center">
+            <div class="col-md-6 col-lg-4 col-12">
+                <select asp-for="@Model.ExhibitionsFilterDto.ExhibitionRegistrationStatus"
+                        class="form-select"
+                        name="exhibitionStatus"
+                        aria-label="Filter Options">
+                    <option value="@ExhibitionRegistrationStatus.All">Vše</option>
+                    <option value="@ExhibitionRegistrationStatus.CanRegisterTo">Probíhající registrace</option>
+                    <option value="@ExhibitionRegistrationStatus.Future">Nadcházející registrace</option>
+                    <option value="@ExhibitionRegistrationStatus.Old">Uzavřené registrace</option>
+                </select>
+            </div>
+
+            @if (Model.OrganizationId != null)
+            {
+                <div class="col-md-6 col-lg-4 col-12">
+                    <select disabled="disabled" asp-for="@Model.ExhibitionsFilterDto.OrganizationId"
+                            asp-items="@Model.Organizations"
+                            class="form-select"
+                            name="organizationId"
+                            aria-label="Filter Options">
+                    </select>
+                </div>
+            }
+
+            <div class="col-md-5 col-lg-6 col-12">
+                <input asp-for="@Model.ExhibitionsFilterDto.SearchString"
+                       type="text"
+                       class="form-control rounded-2"
+                       placeholder="Hledat..."
+                       name="searchString"
+                       aria-label="Search">
+            </div>
+            <div class="col-md-1 col-lg-2 col-12 d-grid">
+                <button type="submit" class="btn btn-outline-secondary">🔍</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<partial name="../_partialExhibitions" model="Model.Exhibitions"/>
+<partial name="_ExhibitionPaginationPartial" model="Model"/>

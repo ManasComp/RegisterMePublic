@@ -1,0 +1,174 @@
+@startuml
+  skinparam actor {
+    BackgroundColor #87CEFA
+    BorderColor #1E90FF
+    FontColor Black
+  }
+  
+  skinparam usecase {
+    BackgroundColor #FFFACD
+    BorderColor #FFA500
+    FontColor Black
+  }
+
+  skinparam rectangle {
+    BackgroundColor #F0F8FF
+    BorderColor #228B22
+  }
+
+  skinparam arrow {
+    Color #FF6347
+    Thickness 2
+  }
+
+  top to bottom direction
+  left to right direction
+
+  actor "Nepřihlášený uživatel" as anonym
+  actor "Platební Brána" as gate
+  actor "Uživatel" as user
+  user <-- anonym
+  actor "Přihlášený uživatel" as logged
+  user <-- logged
+
+  actor "Vystavovatel" as exhibitor
+  logged <-- exhibitor
+  actor "Správce organizace" as manager
+  logged <-- manager
+  actor "Administrátor" as admin
+  logged <-- admin
+
+  actor "Exhibitor" as SecondaryExhibitor
+  actor "Manager" as SecondaryManager
+
+  rectangle RegisterMe {
+    
+    usecase "Zobrazit všechny potvrzené organizace" as usecase1
+    user --> usecase1
+    
+    usecase "Zobrazit všechny publikované výstavy" as usecase2
+    user --> usecase2
+    
+    usecase "Vytvořit novou organizaci" as usecase3
+    logged --> usecase3
+    
+    usecase "Vytvořit / upravit výstavu" as usecase4
+    manager --> usecase4
+    
+    usecase "Registrovat se na výstavu" as usecase5
+    exhibitor --> usecase5
+    usecase5 -----> SecondaryManager
+    
+    usecase "Prohlížet své registrace" as usecase33
+    exhibitor --> usecase33
+
+    usecase usecase6 as "Zobrazit statistiky výstavy
+    --
+    Půjčené a vlastní klece
+    Zobrazení přihlášek"
+     manager --> usecase6
+    
+    usecase "Potvrdit / smazat organizaci" as usecase10
+    admin --> usecase10
+    
+    usecase "Potvrdit přijetí platby" as usecase13
+    manager --> usecase13
+    usecase13 -----> SecondaryExhibitor
+    
+    usecase "Přihlásit / registrovat se" as usecase14
+    anonym --> usecase14
+    
+    usecase "Zobrazit všechny organizace" as usecase15
+    admin --> usecase15
+
+    together {
+      usecase "Nabídnout předvyplnění údajů na základě předešlých registrací" as usecase34
+      usecase5 <.. usecase34 : << extends >>
+    
+      usecase "Zobrazit dostupné skupiny klecí" as usecase16
+      usecase5 ..> usecase16 : << include >>
+      
+      usecase "Zobrazit dostupné výstavní skupiny" as usecase37
+      usecase5 ..> usecase37 : << include >>
+         
+      usecase "Odstranit registraci na výstavu" as usecase17
+      usecase5 <.. usecase17 : << extends >>
+      
+      usecase "Vypočítat cenu" as usecase11
+      usecase5 ..> usecase11 : << include >>
+        
+      usecase usecase12 as "Platba 
+      --
+      Hotovostí na místě
+      Převodem na účet
+      Online kartou"
+      usecase11 ..> usecase12 : << include >>
+      
+      usecase "Vygenerovat zprávu pro příjemce a QR kód" as usecase29
+      usecase12 <.. usecase29 : << extends >>
+      
+       usecase "Zahájit platbu kartou" as usecase32
+       usecase12 <.. usecase32 : << extends >>
+       usecase32 --> gate
+    }
+       
+    together {
+      usecase "Správa klecí" as usecase7
+      usecase4 ..> usecase7 : << include >>
+     
+      usecase "Správa slev a poplatků" as usecase8
+      usecase4 ..> usecase8  : << include >>
+      
+      usecase "Správa ceníku" as usecase9
+      usecase4 ..> usecase9 : << include >>
+   
+      usecase "Editace možností plateb" as usecase18
+      usecase4 ..> usecase18  : << include >>
+      
+      usecase "Správa publikací vystavovatelů" as usecase19
+      usecase4 ..> usecase19  : << include >>
+      
+      usecase "Publikovat výstavu" as usecase36
+      usecase4 <.. usecase36  : << extends >>
+    }
+                                  
+    usecase "Odstranit nedokončené registrace" as usecase20
+    manager --> usecase20
+    usecase20 --> SecondaryExhibitor
+                            
+    usecase "Registrovat se jako vystavovatel" as usecase21
+    logged --> usecase21
+                                                        
+    usecase "Upravit si profil" as usecase22
+    logged --> usecase22
+    
+    usecase "Upravit si údaje vystavovatele" as usecase23
+    exhibitor --> usecase23
+    
+    usecase "Upravit organizaci" as usecase24
+    manager --> usecase24
+      
+    usecase "Upravit odeslanou přihlášku" as usecase25
+    manager --> usecase25
+    
+    usecase "Smazat / zrušit výstavu" as usecase35
+    manager --> usecase35
+      
+    usecase "Vyrovnat peníze" as usecase26
+    usecase25 <.. usecase26 : extends
+    
+    usecase "Exportovat data do JSON nebo WORD" as usecase27
+    exhibitor --> usecase27
+    manager --> usecase27
+    
+    usecase "Validace EMS" as usecase28
+    usecase5 ..> usecase28 : << include >>
+      
+    usecase "Potvrdit email" as usecase30
+    anonym --> usecase30
+    
+    usecase "Stáhnout / odstranit osobní data" as usecase31
+    logged --> usecase31
+  }
+
+@enduml

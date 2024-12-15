@@ -1,0 +1,92 @@
+﻿@model WebGui.Areas.Visitor.Models.EmailModel
+
+@{
+    ViewData["Title"] = "Osobní údaje";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+Sbíráme pouze to, co je nezbytné pro registraci na výstavu. Data sdílíme pouze organizátorovi výstavy.
+
+<h2>Témata:</h2>
+<ol>
+    <li>
+        <a href="#section1">Jaké údaje shromažďujeme?</a>
+    </li>
+    <li>
+        <a href="#section2">Jak shromažďujeme vaše údaje?</a>
+    </li>
+    <li>
+        <a href="#section3">Jak budeme vaše údaje používat?</a>
+    </li>
+    <li>
+        <a href="#section4">Právní základ pro zpracování osobních údajů</a>
+    </li>
+    <li>
+        <a href="#section5">Jak uchováváme vaše údaje?</a>
+    </li>
+</ol>
+
+
+<h2 id="section1">1. Jaké údaje shromažďujeme?</h2>
+<p>
+    Shromažďujeme následující údaje:
+</p>
+<ul>
+    <li>Osobní identifikační údaje (jméno, e-mailová adresa, telefonní číslo, adresa bydliště atd.) - vše, co zadáte při
+        registraci účtu respektive účtu vystavovatele.
+    </li>
+    <li>Údaje poskytnuté při registraci na výstavu.</li>
+    <li>Údaje poskytnuté při vytváření a editace výstav respektive organizací.</li>
+</ul>
+
+
+<h2 id="section2">2. Jak shromažďujeme vaše údaje?</h2>
+<p>
+    Data od vás shromažďujeme prostřednictvím následujících způsobů:
+</p>
+<ul>
+    <li>Při registraci, při přihlášení na výstavu nebo při jiných uživatelských akcích.</li>
+    <li>Když dobrovolně vyplníte průzkum zákazníků nebo jinak poskytnete zpětnou vazbu (například prostřednictvím
+        e-mailu).
+    </li>
+    <li>Když používáte nebo prohlížíte náš web.</li>
+</ul>
+
+
+<h2 id="section3">3. Jak budeme vaše údaje používat?</h2>
+<p>
+    Vaše údaje shromažďujeme pro následující účely:
+</p>
+<ul>
+    <li>Pro odeslání registrace na výstavu.</li>
+    <li>Pro zlepšení našeho webu a uživatelského zážitku.</li>
+</ul>
+
+
+<h2 id="section4">4. Právní základ pro zpracování osobních údajů</h2>
+<p>
+    Zpracováváme vaše osobní údaje na základě jednoho nebo více následujících právních důvodů:
+</p>
+<ul>
+    <li>Souhlas: Získáváme váš souhlas pro konkrétní zpracování údajů.</li>
+    <li>Legitimní zájmy: Zpracování je nezbytné pro naše oprávněné zájmy nebo zájmy třetí strany, pokud tyto zájmy
+        nejsou překryty vašimi právy a zájmy.
+    </li>
+</ul>
+
+
+<h2 id="section5">5. Jak uchováváme vaše údaje?</h2>
+<p>
+    Vaše údaje bezpečně uchováváme pomocí standardních bezpečnostních opatřeních.
+</p>
+
+<p>
+    V případě nesrovnalostí má vždy pravdu organizátor výstav. V případě jakýhkoliv otázek neváhejte kontaktovat správce
+    systému na e-mailu: <a href="mailto: @Model.Email"> @Model.Email</a>.
+</p>
+
+<p>
+    Citováno z: <a href="https://gdpr.eu/privacy-notice/">GDPR.eu</a>
+</p>

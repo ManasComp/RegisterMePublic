@@ -1,0 +1,95 @@
+@model WebGui.Areas.Visitor.Models.EmailModel
+
+@{
+    ViewBag.Title = "Informace k nastavování slev/poplatků a možností platby";
+    Layout = "_Layout";
+}
+@* use this for accessing github repository https://emgithub.com *@
+
+<nav class="navbar sticky-top navbar-light bg-light px-3 text-center d-flex align-items-center justify-content-center">
+    <a href="#" onClick="history.go(-1); return false;">Zpět</a>
+</nav>
+
+<h2>Informace k nastavování slev/poplatků a možností platby</h2>
+<p>
+    Systém plně podporuje nástroj <a href="https://microsoft.github.io/RulesEngine/">RulesEngine</a>.
+</p>
+
+<h3>Úprava ceny</h3>
+<p>V těchto pravidlech máte přístup k registraci kočky a můžete ji nastavit poplatky/slevy.</p>
+<h4>Argumenty:</h4>
+
+<p>
+    <b>
+        <i>catRegistration</i>
+    </b> - registrace kočky
+</p>
+<div class="code-container">
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FPricing%2FDtos%2FCatRegistrationStructure.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FPricing%2FDtos%2FPricingCage.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FServices%2FEnums%2FCagesAndCatsEnum.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Fsrc%2FApplication%2FServices%2FEnums%2FOwnCageEnum.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FValueTypes%2FMultiCurrencyPrice.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+<hr/>
+
+<p>
+    <b>
+        <i>utils</i>
+    </b> - pomocné metody
+</p>
+<div class="code-container">
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FPricing%2FIUtils.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+<hr/>
+
+<hr/>
+
+<b>Příklad použití</b>
+<div class="code-container">
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Ftests%2FApplication.UnitTests%2FPricing%2FData%2FCatRegistrationWorkflow.json&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+
+<h3>Úprava možností plateb</h3>
+<p>V těchto pravidlech máte přístup k registraci na výstavu a podle toho můžete nastavovat, jak může uživatel
+    platit.</p>
+<h4>Argumenty:</h4>
+
+<p>
+    <b>
+        <i>registrationToExhibition</i>
+    </b> - registrace na výstavu
+</p>
+<div class="code-container">
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FRegistrationToExhibition%2FDtos%2FRegistrationToExhibitionDto.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Fsrc%2FApplication%2FRegistrationToExhibition%2FDtos%2FPaymentInfoDto.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Fsrc%2FDomain%2FEnums%2FPaymentType.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Fsrc%2FDomain%2FEnums%2FCurrency.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Fsrc%2FApplication%2FRegistrationToExhibition%2FDtos%2FPersonRegistrationDto.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fdd28f634ad560316c9fda1c101f44e1e0f299171%2FRegisterMe%2Fsrc%2FApplication%2FRegistrationToExhibition%2FDtos%2FCreateRegistrationToExhibitionDto.cs&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+<hr/>
+
+<b>Příklad použití</b>
+<div class="code-container">
+    <script
+        src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FManasComp%2FRegisterMePublic%2Fblob%2Fmain%2FRegisterMe%2Ftests%2FApplication.UnitTests%2FPricing%2FData%2FPayments.json&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></script>
+</div>
+
+<p>
+    Potřebujete poradit? Přidat novou pomocnou metodu? Kontaktujte nás na <a
+        href="mailto: @Model.Email">@Model.Email</a>.
+</p>

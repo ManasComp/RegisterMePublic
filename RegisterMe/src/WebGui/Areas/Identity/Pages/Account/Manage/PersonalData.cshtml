@@ -1,0 +1,43 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Identity.Pages.Account.Manage
+@model WebGui.Areas.Identity.Pages.Account.Manage.PersonalDataModel
+@{
+    ViewData["Title"] = "Osobní data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>Váš učet obsahuje osobní údaje, které jste nám poskytl/a. Tato stránka umožňuje tato data stáhnout nebo
+            odstranit.</p>
+        <p>Pokud jste se registroval/a na výstavu a přejete si data smazat, kontaktujte prosím organizátora dané
+            výstavy. Pro prohlédnutí, kam jste se registroval/a, jděte do <a asp-area="Visitor"
+                                                                             asp-controller="RegistrationToExhibition"
+                                                                             asp-action="UserIndex">Moje registrace</a>.
+        </p>
+        <p>
+            <strong>Odstranění dat nevratně smaže Váš účet. Účet nelze obnovit.</strong>
+        </p>
+
+        <div class="row">
+            <div class="col-6">
+                <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                    <button class="btn btn-primary" type="submit">Stáhnout</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Odstranit</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

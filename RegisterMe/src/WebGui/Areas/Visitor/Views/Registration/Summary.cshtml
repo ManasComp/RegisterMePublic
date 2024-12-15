@@ -1,0 +1,37 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebGui.Areas.Visitor.Models
+@model WebGui.Areas.Visitor.Models.SummaryVm
+@{
+    ViewBag.Title = "Souhrn";
+}
+
+<div class="form-background">
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="Summary" class="row">
+                @await Html.PartialAsync("_SummaryHeaderPartial", new SummaryHeaderPartialHeader
+                {
+                    CatRegistrationId = Model.CatRegistrationDto.Id,
+                    Disabled = Model.Disabled,
+                    IsLitter = Model.CatRegistrationDto.Litter != null,
+                    RegistrationToExhibitionId = Model.RegistrationToExhibitionId,
+                    RegistrationType = Model.RegistrationType
+                })
+                <div class="text-center justify-content-center">
+                    <h1 class="text-center justify-content-center align-items-center">Registrace</h1>
+                    <h2>Rekapitulace</h2>
+                </div>
+
+                <input asp-for="@Model.RegistrationToExhibitionId" type="hidden"/>
+                <input asp-for="@Model.Step" type="hidden"/>
+                <partial name="_SummaryPartial" Model="@Model"/>
+                <partial name="_buttonsPartial" Model="@Model"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_scriptPartial" Model="@Model.Step"/>
+}

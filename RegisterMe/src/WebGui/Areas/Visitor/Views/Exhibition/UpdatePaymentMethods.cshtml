@@ -1,0 +1,78 @@
+@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.UpdatePaymentMethodsModel
+@inject IAntiforgery Antiforgery
+
+@{
+    ViewBag.Title = "Editace povolených plateb";
+    Layout = "_Layout";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<div class="container align-items-center text-center">
+    <h1>Editace povolených plateb</h1>
+</div>
+
+@if (!Model.CanPayByCard)
+{
+    <div class="text-center" style="color: red;">POZOR: Platby kartou aktuálně nejsou dostupné</div>
+}
+
+
+<div id="jsoneditor"></div>
+
+<div class="col-12 row">
+    <div class="col-md-6">
+        <a class="btn btn-secondary" style="width: 100%" asp-action="EditExhibition" asp-controller="Exhibition"
+           asp-route-id="@Model.ExhibitionId">Zpět</a>
+    </div>
+    <div class="col-md-6">
+        <button onclick="Send('/visitor/exhibition/UpdatePaymentMethods')" class="btn btn-primary col-md-6 form-control"
+                style="width: 100%">
+            Odeslat
+        </button>
+    </div>
+</div>
+
+@section Scripts
+
+
+
+{
+    <script>
+        const container = document.getElementById("jsoneditor");
+        const options = {};
+        const editor = new JSONEditor(container, options);
+
+        const initialJson = JSON.parse('@Html.Raw(Json.Serialize(Model.PaymentTypes))');
+        editor.set(initialJson);
+
+        function Send(url) {
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", url);
+
+            var postData = {
+                ExhibitionId: @Model.ExhibitionId,
+                PaymentTypesString: JSON.stringify(editor.get()),
+                "__RequestVerificationToken": '@requestToken'
+            };
+            console.log(postData);
+
+            for (var key in postData) {
+                if (postData.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", postData[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    </script>
+}

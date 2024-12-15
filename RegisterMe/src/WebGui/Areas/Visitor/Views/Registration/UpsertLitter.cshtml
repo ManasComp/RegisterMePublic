@@ -1,0 +1,85 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebGui.Areas.Visitor.Models.LitterModel
+
+@{
+    ViewBag.Title = "Registrace na výstavu";
+}
+
+
+<div class="form-background">
+    <h1 class="text-center fs-4">Registrace na výstavu</h1>
+    <div method="post" class="row signUpForm" enctype="multipart/form-data">
+        <div class="step">
+            @await Html.PartialAsync("_RegistrationPartial", Model.RegistrationType)
+            <h1 class="text-center">Vrh</h1>
+            <form method="post" asp-area="Visitor" asp-controller="Registration" asp-action="UpsertLitter" class="row"
+                  id="formToSubmit">
+                <input asp-for="@Model.Step" type="hidden"/>
+                <input asp-for="@Model.RegistrationToExhibitionId" type="hidden"/>
+                <partial name="_litterPartial" Model="@Model"/>
+                <partial name="_buttonsPartial" Model="@Model"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_scriptPartial" Model="@Model.Step"/>
+    <script>
+        // JavaScript
+        const toggleButton = document.getElementById('toggleButton');
+        const targetElement = document.getElementById('targetElement');
+
+        const nameInput = document.getElementById("Breeder.name");
+        const surnameInput = document.getElementById("Breeder.surname");
+        const countryInput = document.getElementById("Breeder.country");
+
+        const emsInput = document.getElementById("emsInput");
+        const group = document.getElementById("group");
+        const groupInput = document.getElementById("groupInput");
+
+        function toggleElementVisibility() {
+            if (toggleButton.checked) {
+                nameInput.value = '';
+                surnameInput.value = '';
+                countryInput.value = '';
+                targetElement.classList.remove("show0");
+                targetElement.classList.add("hide");
+                setTimeout(() => {
+                    targetElement.style.display = 'none';
+                }, 500);
+            } else {
+                targetElement.style.display = 'block';
+                targetElement.classList.remove("hide");
+                targetElement.classList.add("show0");
+            }
+        }
+
+        function checkGroup(e) {
+
+            if (check(e.target.value)) {
+                groupInput.value = '';
+                group.classList.remove("show0");
+                group.classList.add("hide");
+                setTimeout(() => {
+                    group.style.display = 'none';
+                }, 500);
+            } else {
+                group.style.display = 'flex';
+                group.classList.remove("hide");
+                group.classList.add("show0");
+            }
+        }
+
+        toggleButton.addEventListener('change', toggleElementVisibility);
+
+
+        targetElement.style.display = toggleButton.checked ? 'none' : 'block';
+
+        $.validator.setDefaults({
+            onkeyup: false
+        })
+
+    </script>
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "WorkflowName": "Payment",
+    "Rules": [
+      {
+        "RuleName": "PayByBankTransfer_CZK",
+        "Expression": "registrationToExhibition.PersonRegistration.IsPartOfCsch"
+      },
+      {
+        "RuleName": "PayOnlineByCard_CZK",
+        "Expression": "false"
+      },
+      {
+        "RuleName": "PayInPlaceByCache_CZK",
+        "Expression": "registrationToExhibition.PersonRegistration.IsPartOfCsch"
+      },
+      {
+        "RuleName": "PayByBankTransfer_EUR",
+        "Expression": "!registrationToExhibition.PersonRegistration.IsPartOfCsch"
+      },
+      {
+        "RuleName": "PayOnlineByCard_EUR",
+        "Expression": "false"
+      },
+      {
+        "RuleName": "PayInPlaceByCache_EUR",
+        "Expression": "!registrationToExhibition.PersonRegistration.IsPartOfCsch"
+      }
+    ]
+  }
+]
